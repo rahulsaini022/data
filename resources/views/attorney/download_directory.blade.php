@@ -104,7 +104,7 @@
                                 {!! Form::open(['method' => 'POST','route' => ['attorney.delete_download_file', Auth::user()->id],'style'=>'display:inline']) !!}
 
                                     {!! Form::hidden('file_name', $file_data->getFilename() , array('class' => 'form-control')) !!}
-                                    {!! Form::submit('Delete', ['class' => 'btn btn-danger mb-1 confirm-delete', 'onclick' => 'return ConfirmDelete();']) !!}
+                                    {!! Form::submit('Delete', ['class' => 'btn btn-danger mb-1 confirm-delete', 'onclick' => 'return ConfirmDelete(event);']) !!}
 
                                 {!! Form::close() !!}
 
@@ -126,14 +126,6 @@
 </div>
 
 <script>
-  function ConfirmDelete()
-  {
-      var x = confirm("Are you sure you want to delete this file?");
-      if (x)
-          return true;
-      else
-        return false;
-  }
 
   $(window).on('load', function(){
 

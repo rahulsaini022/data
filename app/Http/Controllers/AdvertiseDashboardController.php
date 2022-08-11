@@ -147,7 +147,7 @@ $image=[];
             'title'=>'required',
             'AD_price'=>'required|numeric||min:0|not_in:0',
             'description'=>'required'
-        ],);
+        ]);
         // dd($request->all());
         if ($request->hasfile('images')) {
           
@@ -400,9 +400,9 @@ $image=[];
     {
         $up = DB::table('advertiser_listings')->where('id', $id)->update(['status' => $status]);
         if ($status == 0) {
-            $message = "Deactivated successfully";
+            $message = "Listing deactivated successfully";
         } else {
-            $message = "Activate successfully";
+            $message = "listing activate successfully";
         }
         return redirect()->route('advertise.new_listing')->with('success', $message);
     }

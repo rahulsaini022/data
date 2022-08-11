@@ -75,7 +75,7 @@
 
                                             {!! Form::open(['method' => 'DELETE', 'route' => ['prospects.destroy', $prospects->id], 'style' => 'display:inline']) !!}
 
-                                            {!! Form::submit('Delete', ['class' => 'btn btn-danger mb-1 confirm-delete', 'onclick' => 'return ConfirmDelete();']) !!}
+                                            {!! Form::submit('Delete', ['class' => 'btn btn-danger mb-1 confirm-delete', 'onclick' => 'return ConfirmDelete(event);']) !!}
 
                                             {!! Form::close() !!}
 
@@ -167,14 +167,7 @@
         </div>
     </div>
     <script>
-        function ConfirmDelete() {
-            var x = confirm("Are you sure you want to delete this Prospect Record.");
-            if (x)
-                return true;
-            else
-                return false;
-        }
-
+      
 
         $(document).ready(function() {
 

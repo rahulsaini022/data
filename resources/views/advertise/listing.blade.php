@@ -98,11 +98,11 @@
                                                 @endif
                                                 @if ($val->status == 1)
                                                     <a class="btn btn-danger mb-1"
-                                                        onclick="return confirm('Do you want to deactivate')"
+                                                        onclick="return ConfirmStatus(event)"
                                                         href="{{ route('advertise.status', ['id' => $val->id, 'status' => 0]) }}">Deactivate</a>
                                                 @else
                                                     <a class="btn btn-success mb-1"
-                                                        onclick="return confirm('Do you want to activate')"
+                                                        onclick="return ConfirmStatus(event)"
                                                         href="{{ route('advertise.status', ['id' => $val->id, 'status' => 1]) }}">Activate</a>
                                                 @endif
                                             @endif
@@ -124,20 +124,6 @@
             bInfo: true
         });
 
-        function ConfirmDeActivate() {
-            var x = confirm("Are you sure you want to deactivate this record?");
-            if (x)
-                return true;
-            else
-                return false;
-        }
-
-        function ConfirmActivate() {
-            var x = confirm("Are you sure you want to activate this record?");
-            if (x)
-                return true;
-            else
-                return false;
-        }
+      
     </script>
 @endsection

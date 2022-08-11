@@ -102,7 +102,7 @@
                                         <td>
                                             <a class="btn btn-primary mb-2"
                                                 href="{{ route('cases.edit_party', ['user_id' => $party->id, 'case_id' => $case_id, 'type' => $party->type, 'number' => $num_top]) }}">Edit</a>
-                                            <a class="btn btn-danger mb-2" onclick="return ConfirmDelete();"
+                                            <a class="btn btn-danger mb-2" onclick="return ConfirmStatus(event);"
                                                 href="{{ route('cases.delete_party', ['user_id' => $party->id, 'case_id' => $case_id, 'type' => $party->type, 'party_group' => $party->party_group]) }}">Delete</a>
                                             <!-- activate/deactivate party button checks -->
                                             @if ($num_top == 1 && $case_data->payment_status == '1' && $case_data->case_payment_package_id == '14')
@@ -194,7 +194,7 @@
                                             <td>
                                                 <a class="btn btn-primary mb-2"
                                                     href="{{ route('cases.edit_party', ['user_id' => $party->id, 'case_id' => $case_id, 'type' => $party->type, 'number' => $num_bottom]) }}">Edit</a>
-                                                <a class="btn btn-danger mb-2" onclick="return ConfirmDelete();"
+                                                <a class="btn btn-danger mb-2" onclick="return ConfirmStatus(event);"
                                                     href="{{ route('cases.delete_party', ['user_id' => $party->id, 'case_id' => $case_id, 'type' => $party->type, 'party_group' => $party->party_group]) }}">Delete</a>
                                                 @if ($num_bottom == 1 && $case_data->payment_status == '1' && $case_data->case_payment_package_id == '14')
                                                     <?php
@@ -287,7 +287,7 @@
                                             <td>
                                                 <a class="btn btn-primary mb-2"
                                                     href="{{ route('cases.edit_party', ['user_id' => $party->id, 'case_id' => $case_id, 'type' => 'third', 'number' => $num_top_third]) }}">Edit</a>
-                                                <a class="btn btn-danger mb-2" onclick="return ConfirmDelete();"
+                                                <a class="btn btn-danger mb-2" onclick="return ConfirmStatus(event);"
                                                     href="{{ route('cases.delete_party', ['user_id' => $party->id, 'case_id' => $case_id, 'type' => 'third', 'party_group' => $party->party_group]) }}">Delete</a>
                                             </td>
                                         </tr>
@@ -344,7 +344,7 @@
                                             <td>
                                                 <a class="btn btn-primary mb-2"
                                                     href="{{ route('cases.edit_party', ['user_id' => $party->id, 'case_id' => $case_id, 'type' => 'third', 'number' => $num_bottom_third]) }}">Edit</a>
-                                                <a class="btn btn-danger mb-2" onclick="return ConfirmDelete();"
+                                                <a class="btn btn-danger mb-2" onclick="return ConfirmStatus(event);"
                                                     href="{{ route('cases.delete_party', ['user_id' => $party->id, 'case_id' => $case_id, 'type' => 'third', 'party_group' => $party->party_group]) }}">Delete</a>
                                             </td>
                                         </tr>
@@ -1377,13 +1377,7 @@
             });
         });
         // confirm before deletion
-        function ConfirmDelete() {
-            var x = confirm("Are you sure you want to delete this party.");
-            if (x)
-                return true;
-            else
-                return false;
-        }
+      
         // client-opponent selected zip, city, state, county
         var cl = document.getElementById('clzip');
         test(cl);

@@ -60,8 +60,8 @@
                                                     @csrf
                                                     <input type="hidden" name="license_type"
                                                         value="{{ $val->plan_name }}">
-                                                    <button onclick="return confirm('Do you wand to resume your Subscription')" class="btn btn-primary"
-                                                        type="submit">{{ __('Resume') }}</button>
+                                                    <input onclick="return ConfirmDelete(event)" class="btn btn-primary"
+                                                        type="submit" value="{{ __('Resume') }}" >
                                                 </form>
                                             @else
                                                 <!-- <a class="btn btn-primary" href="" onclick="event.preventDefault(); document.getElementById('cancel-main-form').submit();">
@@ -73,8 +73,8 @@
                                                     @csrf
                                                     <input type="hidden" name="license_type"
                                                         value="{{ $val->plan_name }}">
-                                                    <button  onclick="return confirm('Do you wand to cancel your Subscription')" class="btn btn-primary"
-                                                        type="submit">{{ __('Cancel') }}</button>
+                                                    <input  onclick="return ConfirmDelete(event)" class="btn btn-primary"
+                                                        type="submit" value="{{ __('Cancel') }}" >
                                                 </form>
                                             @endif
                                         </td>
@@ -90,13 +90,7 @@
         </div>
     </div>
     <script>
-        function ConfirmDelete() {
-            var x = confirm("Are you sure you want to delete this user? All data related to this user will be deleted.");
-            if (x)
-                return true;
-            else
-                return false;
-        }
+       
         $(document).ready(function() {
             $('.users-table').DataTable({
                 pageLength: 10,

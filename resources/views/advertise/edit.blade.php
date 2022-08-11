@@ -144,7 +144,7 @@ i.fa.fa-trash.delete.custom-delete {
 <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1"
         role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog " role="document">
             <div class="modal-content">
                 
                 <!--Modal body with image-->
@@ -193,7 +193,6 @@ i.fa.fa-trash.delete.custom-delete {
         confirmButtonText: "Yes, delete it!",
     }).then((result) => {
         if (result.isConfirmed) {
-            // Swal.fire("Deleted!", "success");
             $.ajax({
 			url: dltUrl,
 			type: "DELETE",

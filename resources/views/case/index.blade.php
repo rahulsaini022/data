@@ -113,7 +113,7 @@
 
                             <!-- {!! Form::open(['method' => 'DELETE','route' => ['cases.destroy', $case->id],'style'=>'display:inline']) !!}
 
-                                {!! Form::submit('Delete', ['class' => 'btn btn-danger confirm-delete mb-2', 'onclick' => 'return ConfirmDelete();']) !!}
+                                {!! Form::submit('Delete', ['class' => 'btn btn-danger confirm-delete mb-2', 'onclick' => 'return ConfirmDelete(event);']) !!}
 
                             {!! Form::close() !!} -->
                             @if($case->hidden_at && !$case->deactivated_at)
@@ -121,15 +121,15 @@
 
                                   {{ Form::hidden('show_hide', 'show') }}
 
-                                  {!! Form::submit('Show', ['class' => 'btn btn-success confirm-activate mb-2', 'onclick' => 'return ConfirmShow();']) !!}
+                                  {!! Form::submit('Show', ['class' => 'btn btn-success confirm-activate mb-2', 'onclick' => 'return ConfirmDelete(event);']) !!}
 
                                 {!! Form::close() !!}
                             @elseif(!$case->hidden_at && !$case->deactivated_at)
                                 {!! Form::open(['method' => 'POST','route' => ['cases.show_hide',$case->id],'style'=>'display:inline']) !!}
 
                                   {{ Form::hidden('show_hide', 'hide') }}
-
-                                  {!! Form::submit('Hide', ['class' => 'btn btn-danger confirm-deactivate mb-2', 'onclick' => 'return ConfirmHide();']) !!}
+            
+                                  {!! Form::submit('Hide', ['class' => 'btn btn-danger confirm-deactivate mb-2','data-text'=>'Hidden cases with no activity for 6 months will automatically be Deactivated and will require a case Registration fee to be reactivated and that, when a case is Deactivated for 6 months(Not Family Law) and 36 months(Family Law), it will be automatically Deleted. Are you sure you want to hide this case?', 'onclick' => 'return ConfirmHide(event);']) !!}
 
                                 {!! Form::close() !!}
                             @endif
@@ -190,32 +190,7 @@
   </div>
     <!-- Modal End-->
 <script>
-  function ConfirmShow()
-  {
-      var x = confirm("Are you sure you want to show this case?");
-      if (x)
-          return true;
-      else
-        return false;
-  }
-
-  function ConfirmHide()
-  {
-      var x = confirm("Hidden cases with no activity for 6 months will automatically be Deactivated and will require a case Registration fee to be reactivated and that, when a case is Deactivated for 6 months(Not Family Law) and 36 months(Family Law), it will be automatically Deleted. Are you sure you want to hide this case?");
-      if (x)
-          return true;
-      else
-        return false;
-  }
-
-  function ConfirmDelete()
-  {
-      var x = confirm("Are you sure you want to delete this case?");
-      if (x)
-          return true;
-      else
-        return false;
-  }
+ 
 
   function setCaseCustody(case_id, state_id)
   {

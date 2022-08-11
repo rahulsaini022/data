@@ -104,7 +104,7 @@
                                             <!-- <a class="btn btn-primary mb-2" href="">Edit</a> -->
                                             <a class="btn btn-info mb-2"
                                                 href="{{ route('cases.show_update_party_attorney_form', ['party_id' => $case_party_user->user_id, 'case_id' => $case_id, 'attorney_id' => $partyattorney->id, 'party_number' => $party_number]) }}">Edit</a>
-                                            <a class="btn btn-danger mb-2" onclick="return ConfirmDelete();"
+                                            <a class="btn btn-danger mb-2" onclick="return ConfirmStatus(event);"
                                                 href="{{ route('cases.delete_party_attorney', ['party_id' => $case_party_user->user_id, 'case_id' => $case_id, 'attorney_id' => $partyattorney->id, 'party_number' => $party_number]) }}">Delete</a>
                                         </td>
                                     </tr>
@@ -1428,14 +1428,7 @@
                 }
             });
         });
-        // confirm before deletion
-        function ConfirmDelete() {
-            var x = confirm("Are you sure you want to delete this attorney.");
-            if (x)
-                return true;
-            else
-                return false;
-        }
+
         // prefill form with logged in attorney info if customer attorney
         function isCustomerAttorney(input_data) {
             if ($(input_data).is(':checked')) {

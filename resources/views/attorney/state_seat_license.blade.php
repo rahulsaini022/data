@@ -74,12 +74,11 @@
                                     <td> {{ date('d/m/Y h:i:s' ,$subscription_data->current_period_start)}}</td>
                                      <td> {{ date('d/m/Y h:i:s' ,$subscription_data->current_period_end)}}</td>
                                     <td>
-                                        <a class="btn btn-primary" href="" onclick="return confirmResume(event)">
-                                            {{ __('Resume') }}
-                                        </a>
-                                        <form id="resume-main-form" action="{{ route('attorney.resume_cancelled_state_seat_license_subscription') }}" method="POST" style="display: none;">
+                                        
+                                        <form id="resume-main-form" action="{{ route('attorney.resume_cancelled_state_seat_license_subscription') }}" method="POST" >
                                             @csrf
                                             <input type="hidden" name="license_type" value="main">
+                                             <input type="submit"  value="Resume" onclick="return ConfirmDelete(event)" class="btn btn-primary">
                                         </form>
                                     </td>
                                     @else
@@ -98,12 +97,11 @@
                                         <td> {{ date('d/m/Y h:i:s' ,$subscription_data->current_period_start)}}</td>
                                          <td> {{ date('d/m/Y h:i:s' ,$subscription_data->current_period_end)}}</td>
                                         <td>
-                                            <a class="btn btn-primary" href="" onclick="return confirmCancel(event)">
-                                                {{ __('Cancel') }}
-                                            </a>
-                                            <form id="cancel-main-form" action="{{ route('attorney.cancel_state_seat_license_subscription') }}" method="POST" style="display: none;">
+                                          
+                                            <form id="cancel-main-form" action="{{ route('attorney.cancel_state_seat_license_subscription') }}" method="POST" >
                                                 @csrf
                                                 <input type="hidden" name="license_type" value="main">
+                                                 <input type="submit"  value="Cancle" onclick="return ConfirmDelete(event)" class="btn btn-primary">
                                             </form>
                                         </td>
                                     @endif
@@ -183,12 +181,11 @@
                                         You have cancelled the second state seat license plan subscription. You subscription will end on {{ $attorney->subscription('second_state_seat_license_plan')->ends_at->format('m-d-Y H:i:s') }}.
                                     </td>
                                     <td>
-                                        <a class="btn btn-primary" href="" onclick="event.preventDefault(); document.getElementById('resume-second-form').submit();">
-                                            {{ __('Resume') }}
-                                        </a>
-                                        <form id="resume-second-form" action="{{ route('attorney.resume_cancelled_state_seat_license_subscription') }}" method="POST" style="display: none;">
+                                        
+                                        <form id="resume-second-form" action="{{ route('attorney.resume_cancelled_state_seat_license_subscription') }}" method="POST" >
                                             @csrf
                                             <input type="hidden" name="license_type" value="second_state_seat_license_plan">
+                                             <input type="submit"  value="Resume" onclick="return ConfirmDelete(event)" class="btn btn-primary">
                                         </form>
                                     </td>
                                     @else
@@ -196,12 +193,11 @@
                                             You have subscribed to second state seat license plan.
                                         </td>
                                         <td>
-                                            <a class="btn btn-primary" href="" onclick="event.preventDefault(); document.getElementById('cancel-second-form').submit();">
-                                                {{ __('Cancel') }}
-                                            </a>
-                                            <form id="cancel-second-form" action="{{ route('attorney.cancel_state_seat_license_subscription') }}" method="POST" style="display: none;">
+                                            
+                                            <form id="cancel-second-form" action="{{ route('attorney.cancel_state_seat_license_subscription') }}" method="POST" >
                                                 @csrf
                                                 <input type="hidden" name="license_type" value="second_state_seat_license_plan">
+                                             <input type="submit"  value="Cancle" onclick="return ConfirmDelete(event)" class="btn btn-primary">
                                             </form>
                                         </td>
                                     @endif
@@ -287,12 +283,11 @@
                                             You have cancelled the third state seat license plan subscription. You subscription will end on {{ $attorney->subscription('third_state_seat_license_plan')->ends_at->format('m-d-Y H:i:s') }}.
                                         </td>
                                         <td>
-                                            <a class="btn btn-primary" href="" onclick="event.preventDefault(); document.getElementById('resume-third-form').submit();">
-                                                {{ __('Resume') }}
-                                            </a>
-                                            <form id="resume-third-form" action="{{ route('attorney.resume_cancelled_state_seat_license_subscription') }}" method="POST" style="display: none;">
+                                           
+                                            <form id="resume-third-form" action="{{ route('attorney.resume_cancelled_state_seat_license_subscription') }}" method="POST" >
                                                 @csrf
                                                 <input type="hidden" name="license_type" value="third_state_seat_license_plan">
+                                                 <input type="submit"  value="Resume" onclick="return ConfirmDelete(event)" class="btn btn-primary">
                                             </form>
                                         </td>
                                         @else
@@ -300,12 +295,12 @@
                                                 You have subscribed to third state seat license plan.
                                             </td>
                                             <td>
-                                                <a class="btn btn-primary" href="" onclick="event.preventDefault(); document.getElementById('cancel-third-form').submit();">
-                                                    {{ __('Cancel') }}
-                                                </a>
-                                                <form id="cancel-third-form" action="{{ route('attorney.cancel_state_seat_license_subscription') }}" method="POST" style="display: none;">
+                                               
+                                                <form id="cancel-third-form" action="{{ route('attorney.cancel_state_seat_license_subscription') }}" method="POST" >
                                                     @csrf
                                                     <input type="hidden" name="license_type" value="third_state_seat_license_plan">
+                                                    <input type="submit"  value="Cancle" onclick="return ConfirmDelete(event)" class="btn btn-primary">
+                                                
                                                 </form>
                                             </td>
                                         @endif
@@ -470,25 +465,25 @@ $(document).ready(function(){
     });
 });
 
-function confirmCancel()
-{
-    var x=confirm('Are you want to cancel your subscription?');
-    if(x){
-event.preventDefault(); 
-document.getElementById('cancel-main-form').submit();
-return true;
-    }
-     else{return false;}
-}
-function confirmResume()
-{
-    var x=confirm('Are you want to resume your subscription?');
-    if(x){
-event.preventDefault(); 
-document.getElementById('resume-main-form').submit();
-return true;
-    }
-    else{return false;}
-}
+// function confirmCancel()
+// {
+//     var x=confirm('Are you want to cancel your subscription?');
+//     if(x){
+// event.preventDefault(); 
+// document.getElementById('cancel-main-form').submit();
+// return true;
+//     }
+//      else{return false;}
+// }
+// function confirmResume()
+// {
+//     var x=confirm('Are you want to resume your subscription?');
+//     if(x){
+// event.preventDefault(); 
+// document.getElementById('resume-main-form').submit();
+// return true;
+//     }
+//     else{return false;}
+// }
 </script>
 @endsection
