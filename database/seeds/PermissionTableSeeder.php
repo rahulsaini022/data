@@ -1,0 +1,40 @@
+<?php
+
+use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
+
+class PermissionTableSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        $permissions = [
+           'role-list',
+           'role-create',
+           'role-edit',
+           'role-delete',
+           'attorney-list',
+           'attorney-create',
+           'attorney-edit',
+           'attorney-delete',
+           'case-list',
+           'case-create',
+           'case-edit',
+           'case-delete',
+           'permission-list',
+           'permission-create',
+           'permission-edit',
+           'permission-delete'
+        ];
+
+
+        foreach ($permissions as $permission) {
+             Permission::create(['name' => $permission]);
+        }
+
+    }
+}

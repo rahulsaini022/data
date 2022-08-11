@@ -1,0 +1,27 @@
+1. create table in database for Ad functionality  . create new table advertisers ,advertiser_bids ,advertiser_listings,
+   advertiser_listing_images,advertiser_services, advertiser_subscription,bids.
+
+2. create advertiser view section in resources/view/advertise.
+3. create new model in App folder ADlistingImage.php,Advertisers.php,AdvertiserServices.php,AdvertiseListing
+ make some changes in User.php and County.php to make relations.
+4. create new controllers in App/Http/controllers folder AdminAdvertiserController,AdvertiserController .Make some changes in AttorneyController .
+5. Create new route in routes/wep.php .
+6. create new css file in public/css/Ads_style.css for Ads detail page.make some changes in public/css/style.css file .
+7. create new folder in resources/views/admin/advertiser  for advertiser manage section at admin side .create new file in resources/views/reports/advertiser_reports for advertiser user report .
+
+8. create new files in resources/views/attorney  (adsDetails.blade.php and adsListing.blade.php) files for showing ads at attorney dashboard view .
+9.  create new file edit.blade.php in resources/views/advertise for edit listing data .
+10. Add new link in menu section at file resources/views/layouts/app.blade.php .
+
+Q.A changes :
+ > Attorney registration page at resources/views/auth/register.blade.php . 
+ > Advertiser login page at resources/views/auth/login.blade.php .
+ > text correction at advertiser now page  resources/views/advertise/advertise_now.blade .
+ > filter button set alignment and  position  .Changes at   resources/views/case/index.blade.php .
+ > Typo corser should be blink at the end of text  changes at resources/views/layouts/app.blade .
+ > Border dispaly  outside the check box  changes at public/js/custom.js .
+ > After cancelled the subscription, the status changed  .Changes at resources/views/attorney/state_seat_license.blade.php .
+ > show message after document deleted . changes at  resources/views/attorney/download_directory.blade.php .
+ > set  the validation error position for Case Action(s)* input field at  case create and edit page.Changes at  resourse/views/case/edit_case.blade.php .
+ > set validation for document upload  .Changes in resourse/views/uploadnewdocument.blade.php , app/Http/Controllers/HomeController.php and app/CustomerUploads.php .
+ > Set phone number format validation error on emial us page .changes at  resources/views/email_us.blade.php .
