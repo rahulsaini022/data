@@ -96,16 +96,16 @@
 
                               <td>
                                  @if($affidavit->active=='1')
-                                    <a class="btn btn-danger mb-1 confirm-deactivate"  onclick="return ConfirmDeActivate();" href="{{ route('affidavit_sheet.deactivate',$affidavit->id) }}">Deactivate</a>
+                                    <a class="btn btn-danger  confirm-deactivate "  onclick="return ConfirmStatus(event);" href="{{ route('affidavit_sheet.deactivate',$affidavit->id) }}">Deactivate</a>
 
-                                    <form method="POST" action="{{route('show_affidavit_of_basic_information_sheet_form')}}" id="affidavit_form">
+                                    <form method="POST" action="{{route('show_affidavit_of_basic_information_sheet_form')}}" id="affidavit_form" class="d-inline-flex">
                                         @csrf
                                         <input type="hidden" name="state_id" value="{{$affidavit->state_id}}">
                                         <input type="hidden" name="prefill_selected_affidavit" value="{{$affidavit->id}}">       
-                                        <input type="submit" id="affidavit-btn" class="btn btn-success btn-affidavit new-btn new-btn-green" value="Prefill Affidavit">   
+                                        <input type="submit" id="affidavit-btn" style="width: auto!important;" class="btn btn-success" value="Prefill Affidavit">   
                                     </form>
                                  @else
-                                    <a class="btn btn-success mb-1 confirm-activate"  onclick="return ConfirmActivate();" href="{{ route('affidavit_sheet.activate',$affidavit->id) }}">Activate</a>
+                                    <a class="btn btn-success mb-1 confirm-activate"  onclick="return ConfirmStatus(event);" href="{{ route('affidavit_sheet.activate',$affidavit->id) }}">Activate</a>
                                  @endif
                               </td>
 
@@ -123,24 +123,6 @@
 <script src="{{ asset('js/polyfiller.js') }}"></script>
 
 <script type="text/javascript">
-
-    function ConfirmDeActivate()
-    {
-        var x = confirm("Are you sure you want to deactivate this record?");
-        if (x)
-              return true;
-        else
-            return false;
-    }
-
-    function ConfirmActivate()
-    {
-        var x = confirm("Are you sure you want to activate this record?");
-        if (x)
-              return true;
-        else
-            return false;
-    }
 
     $(document).ready(function(){
         $(window).keydown(function(event){

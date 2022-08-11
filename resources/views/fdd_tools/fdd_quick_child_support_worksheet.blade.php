@@ -30,7 +30,7 @@
                             <form method="POST" action="#" id="computation_sheet_form">
                                 @csrf
                                 <input type="hidden" id="selected_state" value="{{$attorney_data->state_id}}">
-                                <input type="hidden" name="sheet_state" value="35">
+                                 <input type="hidden" name="sheet_state" value="35">
                                 <div class="row">
                                     <!-- div class="col-sm-3 column-box-width">    
                                         <select id="sheet_state" name="sheet_state" class="form-control" required="" autofocus="">
@@ -109,7 +109,7 @@
 
                               <td class="wid">
                                  @if($computation_sheet->active=='1')
-                                    <a class="btn btn-danger  confirm-deactivate"  onclick="return ConfirmDeActivate();" href="{{ route('computations_sheet.deactivate',$computation_sheet->id) }}">Deactivate</a>
+                                    <a class="btn btn-danger  confirm-deactivate"  onclick="return ConfirmStatus(event);" href="{{ route('computations_sheet.deactivate',$computation_sheet->id) }}">Deactivate</a>
                                     
                                     <form method="POST" action="{{route('computations.sole-shared')}}" id="computation_form" class="d-inline-flex">
                                         @csrf
@@ -120,7 +120,7 @@
                                         <input type="submit" id="prefill-computation" style="width: auto!important;" class="btn btn-success " value="Prefill computation">   
                                     </form>
                                  @else
-                                    <a class="btn btn-success confirm-activate"  onclick="return ConfirmActivate();" href="{{ route('computations_sheet.activate',$computation_sheet->id) }}">Activate</a>
+                                    <a class="btn btn-success confirm-activate"  onclick="return ConfirmStatus(event);" href="{{ route('computations_sheet.activate',$computation_sheet->id) }}">Activate</a>
                                  @endif
                               </td>
 
@@ -171,23 +171,7 @@
 <script src="{{ asset('js/polyfiller.js') }}"></script>
 
 <script type="text/javascript">
-    function ConfirmDeActivate()
-    {
-        var x = confirm("Are you sure you want to deactivate this record?");
-        if (x)
-              return true;
-        else
-            return false;
-    }
-
-    function ConfirmActivate()
-    {
-        var x = confirm("Are you sure you want to activate this record?");
-        if (x)
-              return true;
-        else
-            return false;
-    }
+ 
 
     $(document).ready(function(){
         $(window).keydown(function(event){

@@ -84,9 +84,9 @@ class AdvertiseDashboardController extends Controller
             'county' => $request->county
         ]);
         if ($update) {
-            return redirect()->route('advertise.edit', ['id' => $request->id])->with('success', 'Your Advertise are updated Successfully.');
+            return redirect()->route('advertise.edit', ['id' => $request->id])->with('success', 'Account info  updated successfully.');
         } else {
-            return redirect()->route('advertise.edit', ['id' => $request->id])->with('error', 'Something was wrong, please try aagain.');
+            return redirect()->route('advertise.edit', ['id' => $request->id])->with('error', 'Something was wrong, please try again.');
         }
     }
     /**
