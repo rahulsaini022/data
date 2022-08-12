@@ -148,17 +148,19 @@ $image=[];
             'AD_price'=>'required|numeric||min:0|not_in:0',
             'description'=>'required'
         ]);
-        // dd($request->all());
         if ($request->hasfile('images')) {
-          
-           
+
+            $folderPath = public_path('uploads/AD_images');
             $images = $request->file('images');
-
+            if (!File::exists($folderPath)) {
+                File::makeDirectory($folderPath, 0755);
+            }
             foreach ($images as $image) {
-              
-                $name = uniqid() . '.' . $image->extension();
-                $path = $image->move(public_path('uploads/AD_images'), $name);
 
+                $name = uniqid() . '.' . $image->extension();
+                // $path = $image->move($folderPath, $name);
+                $path = $folderPath . '/' . $name;
+                $this->compressImage($image->getPathName(), $path, 20);
                 ADlistingImage::updateOrCreate([
                     'image' => $name,
                     'advertiser_listing_id' => $request->id
@@ -327,12 +329,17 @@ $image=[];
            
             if ($get_advertise_listings) {
                 if ($request->hasfile('images')) {
+                    $folderPath = public_path('uploads/AD_images');
                     $images = $request->file('images');
+                    if (!File::exists($folderPath)) {
+                        File::makeDirectory($folderPath, 0755);
+                    }
+                    foreach ($images as $image) {
 
-                    foreach($images as $image) {
-                        $name = uniqid().'.'.$image->extension();
-                        $path = $image->move(public_path('uploads/AD_images'),$name);
-
+                        $name = uniqid() . '.' . $image->extension();
+                        // $path = $image->move($folderPath, $name);
+                        $path = $folderPath . '/' . $name;
+                        $this->compressImage($image->getPathName(), $path, 20);
                         ADlistingImage::create([
                             'image' => $name,
                             'advertiser_listing_id' => $get_advertise_listings
