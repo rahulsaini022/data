@@ -320,12 +320,15 @@
                                     </div>
                                 </div>
                                <div class="col-md-6 single-line-radio-div" id="jury_demand_div">
-                                    <div class="col-md-10 form-check">
+                                    <div class="col-md-10 ">
                                          <label class="col-form-label text-md-left">Jury Demand*  &nbsp;</label>
+                                      <div class="form-check-inline mt-2">  
                                         <input type="radio" id="jury_demand_y" class="jury_demand_inputs" name="jury_demand" value="Y" required="" <?php if(isset($case_data->jury_demand) && $case_data->jury_demand=='Y'){ echo 'checked'; } ?>>
-                                        <label for="jury_demand_y">YES</label>
+                                        <label class="mb-0" for="jury_demand_y">YES</label></div>
+                                         <div class="form-check-inline mt-2">  
                                         <input type="radio" id="jury_demand_n" class="jury_demand_inputs" name="jury_demand" value="N" <?php if(isset($case_data->jury_demand) && $case_data->jury_demand=='N'){ echo 'checked'; } ?>>
-                                        <label for="jury_demand_n">NO</label>
+                                        <label class="mb-0" for="jury_demand_n">NO</label>
+                                      </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6 case_sets_div" style="display: none;">

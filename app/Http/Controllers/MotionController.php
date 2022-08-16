@@ -260,8 +260,10 @@ class MotionController extends Controller
     {
         $result = $request->except('submit');
         $case_id=$request->case_id;
-        $movants=$request->movants;
-        $respondents=$request->respondents;
+        $movants=$request->has('movants')? $request->movants : [] ;
+        $respondents=$request->has('respondents')? $request->respondents : [] ;
+        // $movants=$request->movants;
+        // $respondents=$request->respondents;
 
         if($request->response_deadline){
             $response_deadline=date("Y-m-d",strtotime($request->response_deadline));
@@ -347,6 +349,11 @@ class MotionController extends Controller
             }
         }
         // for observers
+        // echo "<pre>";
+        // print_r($request->all());
+        // print_r($movants);
+      
+        // die();
         $motion_checked_parties=array_unique(array_merge($movants,$respondents));
         $motion_all_parties=Caseuser::where([['case_id', $case_id],['attorney_id', Auth::user()->id]])->get()->pluck('user_id')->all();
         $observers=array_diff($motion_all_parties,$motion_checked_parties);
@@ -583,8 +590,10 @@ class MotionController extends Controller
     {
         $result = $request->except('submit');
         $case_id=$request->case_id;
-        $movants=$request->movants;
-        $respondents=$request->respondents;
+        // $movants=$request->movants;
+        // $respondents=$request->respondents;
+        $movants = $request->has('movants') ? $request->movants : [];
+        $respondents = $request->has('respondents') ? $request->respondents : [];
         if($request->response_deadline){
             $response_deadline=date("Y-m-d",strtotime($request->response_deadline));
         } else {
@@ -923,8 +932,10 @@ class MotionController extends Controller
     {
         $result = $request->except('submit');
         $case_id=$request->case_id;
-        $movants=$request->movants;
-        $respondents=$request->respondents;
+        $movants = $request->has('movants') ? $request->movants : [];
+        $respondents = $request->has('respondents') ? $request->respondents : [];
+        // $movants=$request->movants;
+        // $respondents=$request->respondents;
         if($request->response_deadline){
             $response_deadline=date("Y-m-d",strtotime($request->response_deadline));
         } else {
@@ -1261,8 +1272,10 @@ class MotionController extends Controller
     {
         $result = $request->except('submit');
         $case_id=$request->case_id;
-        $movants=$request->movants;
-        $respondents=$request->respondents;
+        // $movants=$request->movants;
+        // $respondents=$request->respondents;
+        $movants = $request->has('movants') ? $request->movants : [];
+        $respondents = $request->has('respondents') ? $request->respondents : [];
         if($request->response_deadline){
             $response_deadline=date("Y-m-d",strtotime($request->response_deadline));
         } else {
