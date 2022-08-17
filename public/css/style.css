@@ -1622,11 +1622,10 @@ table.dataTable thead tr th:first-child {
 }
 
 .swal2-styled {
-
-    padding: 4px 7px !important;
+   
+    padding: 4px 7px!important;
     font-size: 14px;
 }
-
 .swal2-icon.swal2-warning.swal2-icon-show {
     width: 3em;
     height: 3em;
