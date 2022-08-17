@@ -14,14 +14,14 @@ class MyBB {
 	 *
 	 * @var string
 	 */
-	public $version = "1.8.30";
+	public $version = "1.8.21";
 
 	/**
 	 * The version code of MyBB we're running.
 	 *
 	 * @var integer
 	 */
-	public $version_code = 1830;
+	public $version_code = 1821;
 
 	/**
 	 * The current working directory.
@@ -349,7 +349,7 @@ class MyBB {
 
 				// Fixes conflicts with one board having a prefix and another that doesn't on the same domain
 				// Gives priority to our cookies over others (overwrites them)
-				if(isset($this->cookies[$key]))
+				if($this->cookies[$key])
 				{
 					unset($this->cookies[$key]);
 				}
@@ -561,10 +561,6 @@ class MyBB {
 				$message = "APC needs to be configured with PHP to use the APC cache support.";
 				$error_code = MYBB_CACHEHANDLER_LOAD_ERROR;
 				break;
-			case "apcu_load_error":
-				$message = "APCu needs to be configured with PHP to use the APCu cache support.";
-				$error_code = MYBB_CACHEHANDLER_LOAD_ERROR;
-				break;
 			case "eaccelerator_load_error":
 				$message = "eAccelerator needs to be configured with PHP to use the eAccelerator cache support.";
 				$error_code = MYBB_CACHEHANDLER_LOAD_ERROR;
@@ -579,10 +575,6 @@ class MyBB {
 				break;
 			case "xcache_load_error":
 				$message = "Xcache needs to be configured with PHP to use the Xcache cache support.";
-				$error_code = MYBB_CACHEHANDLER_LOAD_ERROR;
-				break;
-			case "redis_load_error":
-				$message = "Your server does not have redis support enabled.";
 				$error_code = MYBB_CACHEHANDLER_LOAD_ERROR;
 				break;
 			default:
@@ -607,41 +599,7 @@ class MyBB {
  */
 
 $grouppermignore = array("gid", "type", "title", "description", "namestyle", "usertitle", "stars", "starimage", "image");
-$groupzerogreater = array(
-	'maxposts',
-	'attachquota',
-	'edittimelimit',
-	'maxreputationsperthread',
-	'maxreputationsperuser',
-	'maxreputationsday',
-	'maxwarningsday',
-	'pmquota',
-	'maxpmrecipients',
-	'maxemails',
-);
-$groupzerolesser = array(
-	'canusesigxposts',
-	'emailfloodtime',
-);
-$groupxgreater = array(
-	'reputationpower' => 0,
-);
-$grouppermbyswitch = array(
-	'maxposts' => array('canpostthreads', 'canpostreplys'),
-	'attachquota' => 'canpostattachments',
-	'edittimelimit' => 'caneditposts',
-	'canusesigxposts' => 'canusesig',
-	'reputationpower' => 'cangivereputations',
-	'maxreputationsperthread' => 'cangivereputations',
-	'maxreputationsperuser' => 'cangivereputations',
-	'maxreputationsday' => 'cangivereputations',
-	'maxwarningsday' => 'canwarnusers',
-	'pmquota' => 'canusepms',
-	'maxpmrecipients' => 'canusepms',
-	'maxemails' => 'cansendemail',
-	'emailfloodtime' => 'cansendemail',
-);
-
+$groupzerogreater = array("pmquota", "maxpmrecipients", "maxreputationsday", "attachquota", "maxemails", "maxposts", "edittimelimit", "maxreputationsperuser", "maxreputationsperthread", "emailfloodtime");
 $displaygroupfields = array("title", "description", "namestyle", "usertitle", "stars", "starimage", "image");
 
 // These are fields in the usergroups table that are also forum permission specific.

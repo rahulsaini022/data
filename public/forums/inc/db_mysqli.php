@@ -190,7 +190,7 @@ class DB_MySQLi implements DB_Base
 			if(array_key_exists('hostname', $connections[$type]))
 			{
 				$details = $connections[$type];
-				unset($connections[$type]);
+				unset($connections);
 				$connections[$type][] = $details;
 			}
 
@@ -485,11 +485,7 @@ class DB_MySQLi implements DB_Base
 			$this->data_seek($query, $row);
 		}
 		$array = $this->fetch_array($query);
-		if($array !== null)
-		{
-			return $array[$field];
-		}
-		return null;
+		return $array[$field];
 	}
 
 	/**
@@ -1039,7 +1035,7 @@ class DB_MySQLi implements DB_Base
 	 */
 	function escape_string_like($string)
 	{
-		return $this->escape_string(str_replace(array('\\', '%', '_') , array('\\\\', '\\%' , '\\_') , $string));
+		return $this->escape_string(str_replace(array('%', '_') , array('\\%' , '\\_') , $string));
 	}
 
 	/**
@@ -1388,7 +1384,7 @@ class DB_MySQLi implements DB_Base
 			$not_null = '';
 		}
 
-		if($new_default_value !== false)
+		if($new_default_value !== null)
 		{
 			$default = "DEFAULT ".$new_default_value;
 		}
@@ -1397,7 +1393,7 @@ class DB_MySQLi implements DB_Base
 			$default = '';
 		}
 
-		return (bool)$this->write_query("ALTER TABLE {$this->table_prefix}{$table} MODIFY `{$column}` {$new_definition} {$not_null} {$default}");
+		return (bool)$this->write_query("ALTER TABLE {$this->table_prefix}{$table} MODIFY `{$column}` {$new_definition} {$not_null}");
 	}
 
 	/**

@@ -111,22 +111,14 @@ var MyBB = {
 	prompt: function(message, options)
 	{
 		var defaults = { fadeDuration: 250, zIndex: (typeof modal_zindex !== 'undefined' ? modal_zindex : 9999) };
-		var buttonsText = '', title = '';
+		var buttonsText = '';
 
 		for (var i in options.buttons)
 		{
 			buttonsText += templates.modal_button.replace('__title__', options.buttons[i].title);
 		}
 
-		// Support passing custom title
-		if ($.isArray(message)) {
-			title = message[0];
-			message = message[1];
-		} else {
-			title = lang.confirm_title;
-		}
-
-		var html = templates.modal.replace('__buttons__', buttonsText).replace('__message__', message).replace('__title__', title);
+		var html = templates.modal.replace('__buttons__', buttonsText).replace('__message__', message);
 		var modal = $(html);
 		modal.modal($.extend(defaults, options));
 		var buttons = modal.find('.modal_buttons > .button');
@@ -648,6 +640,7 @@ var Cookie = {
 };
 
 var expandables = {
+
 	init: function()
 	{
 		var expanders = $(".expcolimage .expander");
@@ -656,41 +649,81 @@ var expandables = {
 			expanders.each(function()
 			{
         		var expander = $(this);
-				if(!expander || expander.attr("id") == false)
+				if(expander.attr("id") == false)
 				{
 					return;
 				}
 
 				expander.on('click', function()
 				{
-					expandables.expandCollapse($(this));
+					controls = expander.attr("id").replace("_img", "");
+					expandables.expandCollapse(this, controls);
 				});
 
-				expander.css("cursor", MyBB.browser == "ie" ? "hand" : "pointer");
+				if(MyBB.browser == "ie")
+				{
+					expander.css("cursor", "hand");
+				}
+				else
+				{
+					expander.css("cursor", "pointer");
+				}
 			});
 		}
 	},
 
-	expandCollapse: function(element)
+	expandCollapse: function(e, controls)
 	{
-		var controls = element.attr("id").replace("_img", ""),
-			expandedItem = $("#"+controls+"_e");
+		element = $(e);
 
-		if(expandedItem.length)
+		if(!element || controls == false)
 		{
-			var expState = + !expandedItem.is(":hidden"),
-				expcolImg = element.attr("src"),			
-				expText = [lang.expcol_collapse, lang.expcol_expand];
+			return false;
+		}
+		var expandedItem = $("#"+controls+"_e");
+		var collapsedItem = $("#"+controls+"_c");
 
-			expandedItem.toggle("fast", this.expCallback(controls, expState));
-			
-			element.attr({
-				"alt": expText[expState],
-				"title": expText[expState],
-				"src": expState ? expcolImg.replace('collapse.', 'collapse_collapsed.') : expcolImg.replace('collapse_collapsed.', 'collapse.')
-			})
-			.parents(':eq(1)').toggleClass(element.parents(':eq(1)').hasClass('thead') ? 'thead_collapsed' : 'tcat_collapse_collapsed');
-			this.saveCollapsed(controls, expState);
+		if(expandedItem.length && collapsedItem.length)
+		{
+			// Expanding
+			if(expandedItem.is(":hidden"))
+			{
+				expandedItem.toggle("fast");
+				collapsedItem.toggle("fast");
+				this.saveCollapsed(controls);
+			}
+			// Collapsing
+			else
+			{
+				expandedItem.toggle("fast");
+				collapsedItem.toggle("fast");
+				this.saveCollapsed(controls, 1);
+			}
+		}
+		else if(expandedItem.length && !collapsedItem.length)
+		{
+			// Expanding
+			if(expandedItem.is(":hidden"))
+			{
+				expandedItem.toggle("fast");
+				element.attr("src", element.attr("src").replace(/collapse_collapsed\.(gif|jpg|jpeg|bmp|png)$/i, "collapse.$1"))
+									.attr("alt", "[-]")
+									.attr("title", "[-]");
+				element.parent().parent('td').removeClass('tcat_collapse_collapsed');
+				element.parent().parent('.thead').removeClass('thead_collapsed');
+				this.saveCollapsed(controls);
+			}
+			// Collapsing
+			else
+			{
+				expandedItem.toggle("fast");
+				element.attr("src", element.attr("src").replace(/collapse\.(gif|jpg|jpeg|bmp|png)$/i, "collapse_collapsed.$1"))
+									.attr("alt", "[+]")
+									.attr("title", "[+]");
+				element.parent().parent('td').addClass('tcat_collapse_collapsed');
+				element.parent().parent('.thead').addClass('thead_collapsed');
+				this.saveCollapsed(controls, 1);
+			}
 		}
 		return true;
 	},
@@ -719,12 +752,6 @@ var expandables = {
 			newCollapsed[newCollapsed.length] = id;
 		}
 		Cookie.set('collapsed', newCollapsed.join("|"));
-	},
-
-	// Dummy callback function to override by theme developers
-	expCallback: function(id, state)
-	{
-		//console.log("id:"+id+" state:"+state);
 	}
 };
 

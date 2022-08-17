@@ -133,9 +133,9 @@ var Thread = {
 			}
 		}
 
-		if(typeof MyBBEditor !== 'undefined' && MyBBEditor !== null)
+		if(typeof $('textarea').sceditor != 'undefined')
 		{
-			MyBBEditor.insert(json.message);
+			$('textarea').sceditor('instance').insert(json.message);
 		}
 		else
 		{
@@ -191,7 +191,6 @@ var Thread = {
 				rows: 12,
 				submit: lang.save_changes,
 				cancel: lang.cancel_edit,
-				placeholder: "",
 				event: "edit" + pid, // Triggered by the event "edit_[pid]",
 				onblur: "ignore",
 				dataType: "json",
