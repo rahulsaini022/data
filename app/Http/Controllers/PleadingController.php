@@ -544,6 +544,7 @@ class PleadingController extends Controller
     /* Store Case Pleading Info */
     public function storeCasePleadings(Request $request)
     {
+        // dd($request->all());
         $result = $request->except('submit');
         $case_id=$request->case_id;
 
@@ -603,6 +604,7 @@ class PleadingController extends Controller
         $test='';
         foreach($user_ids_bottom_string as $user_id){
             $user_data=User::where('id', $user_id)->get()->first();
+             dd($user_data);
             $caseuser=Caseuser::where([
                 ['case_id', $case_id],
                 ['attorney_id', Auth::user()->id],
@@ -3137,9 +3139,9 @@ class PleadingController extends Controller
                 }
 
                 // user ids of top and bottom parties
-            
+            // dd($user_ids_bottom);
                 $user_ids_top_string=$user_ids_top[0];
-                $user_ids_bottom_string=$user_ids_bottom[0];
+                $user_ids_bottom_string= !empty($user_ids_bottom) ? $user_ids_bottom[0] : '';
 
                 return view('pleadings.subordinate_edit',['case_id' => $case_id, 'top_party_data' => $top_party_data, 'bottom_party_data' => $bottom_party_data, 'top_third_party_data' => $top_third_party_data, 'bottom_third_party_data' => $bottom_third_party_data, 'case_data' => $case_data, 'pleading_types' => $pleading_types, 'pleading' => $pleading, 'filingparties' => $filingparties, 'responsibleparties' => $responsibleparties, 'responsiblepartiesdeadlines' => $responsiblepartiesdeadlines, 'user_ids_top_string' => $user_ids_top_string, 'user_ids_bottom_string' => $user_ids_bottom_string]); 
             } else{

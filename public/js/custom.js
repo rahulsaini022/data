@@ -27,9 +27,8 @@ function ConfirmDelete(e) {
     
     event.preventDefault();
     Swal.fire({
-        title: "Are you sure?",
-        text: "Do you want to " + text + "!",
-        // icon: 'warning',
+        text: "Are you sure you want to " + text + " ?",
+        icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonText: "No",
@@ -50,9 +49,8 @@ function ConfirmHide(e) {
     
     event.preventDefault();
     Swal.fire({
-        title: "Are you sure?",
         text: text,
-        // icon: 'warning',
+        icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonText: "No",
@@ -73,9 +71,8 @@ function ConfirmStatus(e) {
     var url = $(form).attr("href");
     event.preventDefault();
     Swal.fire({
-        title: "Are you sure?",
-        text: "Do you want to " + text + "!",
-        // icon: 'warning',
+        text: "Are you sure you want to " + text + " ?",
+        icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         width: "24em",

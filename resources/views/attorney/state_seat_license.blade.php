@@ -101,7 +101,7 @@
                                             <form id="cancel-main-form" action="{{ route('attorney.cancel_state_seat_license_subscription') }}" method="POST" >
                                                 @csrf
                                                 <input type="hidden" name="license_type" value="main">
-                                                 <input type="submit"  value="Cancle" onclick="return ConfirmDelete(event)" class="btn btn-primary">
+                                                 <input type="submit"  value="Cancel" onclick="return ConfirmDelete(event)" class="btn btn-primary">
                                             </form>
                                         </td>
                                     @endif
@@ -197,7 +197,7 @@
                                             <form id="cancel-second-form" action="{{ route('attorney.cancel_state_seat_license_subscription') }}" method="POST" >
                                                 @csrf
                                                 <input type="hidden" name="license_type" value="second_state_seat_license_plan">
-                                             <input type="submit"  value="Cancle" onclick="return ConfirmDelete(event)" class="btn btn-primary">
+                                             <input type="submit"  value="Cancel" onclick="return ConfirmDelete(event)" class="btn btn-primary">
                                             </form>
                                         </td>
                                     @endif
@@ -299,7 +299,7 @@
                                                 <form id="cancel-third-form" action="{{ route('attorney.cancel_state_seat_license_subscription') }}" method="POST" >
                                                     @csrf
                                                     <input type="hidden" name="license_type" value="third_state_seat_license_plan">
-                                                    <input type="submit"  value="Cancle" onclick="return ConfirmDelete(event)" class="btn btn-primary">
+                                                    <input type="submit"  value="Cancel" onclick="return ConfirmDelete(event)" class="btn btn-primary">
                                                 
                                                 </form>
                                             </td>
