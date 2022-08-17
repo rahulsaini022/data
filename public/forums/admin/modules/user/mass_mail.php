@@ -59,22 +59,6 @@ if($mybb->input['action'] == "edit")
 	{
 		$email['conditions'] = my_unserialize($email['conditions']);
 	}
-	else
-	{
-		// Fill the conditions with default values
-		$email['conditions'] = array(
-			"username" => "",
-			"email" => "",
-			"postnum_dir" => "greater_than",
-			"postnum" => "",
-			"regdate_dir" => "more_than",
-			"regdate" => "",
-			"regdate_date" => "hours",
-			"lastactive_dir" => "more_than",
-			"lastactive" => "",
-			"lastactive_date" => "hours"
-		);
-	}
 
 	$sub_tabs['edit_mass_mail'] = array(
 		'title' => $lang->edit_mass_mail,
@@ -99,7 +83,7 @@ if($mybb->input['action'] == "edit")
 	$text_personalisation = substr($text_personalisation, 0, -2)."');\n// --></script>\n";
 
 	$localized_time_offset = (float)$mybb->user['timezone']*3600 + $mybb->user['dst']*3600;
-
+	
 	// All done here
 	if($mybb->request_method == "post")
 	{
@@ -153,7 +137,7 @@ if($mybb->input['action'] == "edit")
 		}
 		else
 		{
-			if($mybb->input['format'] == 2 && $mybb->get_input('automatic_text') == 0 && !$mybb->input['message'])
+			if($mybb->input['format'] == 2 && $mybb->input['automatic_text'] == 0 && !$mybb->input['message'])
 			{
 				$errors[] = $lang->error_missing_plain_text;
 			}
@@ -180,7 +164,7 @@ if($mybb->input['action'] == "edit")
 			else
 			{
 				// Do we need to generate a text based version?
-				if($mybb->input['format'] == 2 && $mybb->get_input('automatic_text'))
+				if($mybb->input['format'] == 2 && $mybb->input['automatic_text'])
 				{
 					$mybb->input['message'] = create_text_message($mybb->input['htmlmessage']);
 				}
@@ -221,11 +205,6 @@ if($mybb->input['action'] == "edit")
 
 	$page->output_nav_tabs($sub_tabs, 'edit_mass_mail');
 
-	$delivery_type_checked = array(
-		"now" => "",
-		"future" => "",
-	);
-
 	// If we have any error messages, show them
 	if($errors)
 	{
@@ -246,7 +225,7 @@ if($mybb->input['action'] == "edit")
 			else
 			{
 				// correct date by timezone and dst
-				$offset =
+				$offset = 
 				$input['delivery_type'] = "future";
 				$time = gmdate("d-n-Y", $email['senddate'] + $localized_time_offset);
 				$time = explode('-', $time);
@@ -263,13 +242,13 @@ if($mybb->input['action'] == "edit")
 			$delivery_type_checked['now'] = " checked=\"checked\"";
 		}
 	}
-
-	if(empty($input['endtime_time']))
+	
+	if(!$input['endtime_time'])
 	{
 		$input['endtime_time'] = gmdate($mybb->settings['timeformat'], TIME_NOW + $localized_time_offset);
 	}
 
-	if(empty($input['deliveryyear']))
+	if(!$input['deliveryyear'])
 	{
 		$enddateyear = gmdate('Y', TIME_NOW + $localized_time_offset);
 	}
@@ -278,7 +257,7 @@ if($mybb->input['action'] == "edit")
 		$enddateyear = (int)$input['deliveryyear'];
 	}
 
-	if(empty($input['deliverymonth']))
+	if(!$input['deliverymonth'])
 	{
 		$input['enddatemonth'] = gmdate('n', TIME_NOW + $localized_time_offset);
 	}
@@ -287,7 +266,7 @@ if($mybb->input['action'] == "edit")
 		$input['enddatemonth'] = (int)$input['deliverymonth'];
 	}
 
-	if(empty($input['deliveryday']))
+	if(!$input['deliveryday'])
 	{
 		$input['enddateday'] = gmdate('j', TIME_NOW + $localized_time_offset);
 	}
@@ -404,7 +383,7 @@ if($mybb->input['action'] == "edit")
 			<dd style=\"margin-top: 4px;\" id=\"delivery_type_future\" class=\"delivery_types\">
 				<table cellpadding=\"4\">
 					<tr>
-						<td><select name=\"endtime_day\">\n{$enddateday}</select>\n &nbsp; \n<select name=\"endtime_month\">\n{$enddatemonth}</select>\n &nbsp; \n<input type=\"text\" name=\"endtime_year\" value=\"{$enddateyear}\" class=\"text_input\" size=\"4\" maxlength=\"4\" />\n - ".$form->generate_text_box('endtime_time', $input['endtime_time'], array('id' => 'endtime_time', 'style' => 'width: 60px;'))."</td>
+						<td><select name=\"endtime_day\">\n{$enddateday}</select>\n &nbsp; \n<select name=\"endtime_month\">\n{$enddatemonth}</select>\n &nbsp; \n<input type=\"text\" name=\"endtime_year\" value=\"{$enddateyear}\" class=\"text_input\" size=\"4\" maxlength=\"4\" />\n - {$lang->time} ".$form->generate_text_box('endtime_time', $input['endtime_time'], array('id' => 'endtime_time', 'style' => 'width: 60px;'))."</td>
 					</tr>
 				</table>
 			</dd>
@@ -426,14 +405,9 @@ if($mybb->input['action'] == "edit")
 
 	$form_container->end();
 
-	$automatic_text_check = '';
-	$text_display = '';
-	$automatic_display = '';
-	$html_display = '';
-
 	if($input['format'] == 2)
 	{
-		if(!empty($input['automatic_text']) && empty($email['mid']))
+		if($input['automatic_text'] && !$email['mid'])
 		{
 			$automatic_text_check = true;
 			$text_display = 'display: none';
@@ -561,22 +535,6 @@ if($mybb->input['action'] == "edit")
 
 	</script>";
 
-	$options = array(
-		'username', 'email', 'postnum_dir', 'postnum', 'regdate', 'regdate_date', 'regdate_dir', 'lastactive', 'lastactive_date', 'lastactive_dir'
-	);
-
-	foreach($options as $option)
-	{
-		if(!isset($input['conditions'][$option]))
-		{
-			$input['conditions'][$option] = '';
-		}
-	}
-	if(!isset($input['conditions']['usergroup']) || !is_array($input['conditions']['usergroup']))
-	{
-		$input['conditions']['usergroup'] = array();
-	}
-
 	$form_container = new FormContainer("{$lang->edit_mass_mail}: {$lang->define_the_recipients}");
 
 	$form_container->output_row($lang->username_contains, "", $form->generate_text_box('conditions[username]', htmlspecialchars_uni($input['conditions']['username']), array('id' => 'username')), 'username');
@@ -628,11 +586,11 @@ if($mybb->input['action'] == "send")
 {
 	$page->add_breadcrumb_item($lang->send_mass_mail);
 
-	if(($mybb->get_input('step')))
+	if($mybb->input['step'])
 	{
 		$query = $db->simple_select("massemails", "*", "status=0 and mid='".$mybb->get_input('mid', MyBB::INPUT_INT)."'");
 		$email = $db->fetch_array($query);
-		if(empty($email['mid']) && $mybb->input['step'] != 1)
+		if(!$email['mid'] && $mybb->input['step'] != 1)
 		{
 			flash_message($lang->error_invalid_mid, 'error');
 			admin_redirect("index.php?module=user-mass_mail");
@@ -656,10 +614,10 @@ if($mybb->input['action'] == "send")
 	$text_personalisation = substr($text_personalisation, 0, -2)."');\n// --></script>\n";
 
 	$plugins->run_hooks("admin_user_mass_email_send_start");
-
+	
 	$localized_time_offset = (float)$mybb->user['timezone']*3600 + $mybb->user['dst']*3600;
 
-	if($mybb->get_input('step') == 4)
+	if($mybb->input['step'] == 4)
 	{
 		// All done here
 		if($mybb->request_method == "post")
@@ -712,24 +670,11 @@ if($mybb->input['action'] == "send")
 
 		$page->output_nav_tabs($sub_tabs, 'send_mass_mail');
 
-		$delivery_type_checked = array(
-			"now" => "",
-			"future" => "",
-		);
-
 		// If we have any error messages, show them
 		if($errors)
 		{
 			$page->output_inline_error($errors);
 			$input = $mybb->input;
-
-			// Delivery type radio selection is to carry over in step 4 only
-			$input['delivery_type'] = $mybb->get_input('delivery_type');
-			if(empty($input['delivery_type']))
-			{
-				$input['delivery_type'] = "now";
-			}
-			$delivery_type_checked[$input['delivery_type']] = " checked=\"checked\"";
 		}
 		else
 		{
@@ -801,12 +746,12 @@ if($mybb->input['action'] == "send")
 
 		$table->output("{$lang->send_mass_mail}: {$lang->step_four} - {$lang->review_message}");
 
-		if(empty($input['endtime_time']))
+		if(!$input['endtime_time'])
 		{
 			$input['endtime_time'] = gmdate($mybb->settings['timeformat'], TIME_NOW + $localized_time_offset);
 		}
 
-		if(empty($input['deliveryyear']))
+		if(!$input['deliveryyear'])
 		{
 			$enddateyear = gmdate('Y', TIME_NOW + $localized_time_offset);
 		}
@@ -815,7 +760,7 @@ if($mybb->input['action'] == "send")
 			$enddateyear = (int)$input['deliveryyear'];
 		}
 
-		if(empty($input['deliverymonth']))
+		if(!$input['deliverymonth'])
 		{
 			$input['enddatemonth'] = gmdate('n', TIME_NOW + $localized_time_offset);
 		}
@@ -824,7 +769,7 @@ if($mybb->input['action'] == "send")
 			$input['enddatemonth'] = (int)$input['deliverymonth'];
 		}
 
-		if(empty($input['deliveryday']))
+		if(!$input['deliveryday'])
 		{
 			$input['enddateday'] = gmdate('j', TIME_NOW + $localized_time_offset);
 		}
@@ -914,7 +859,7 @@ if($mybb->input['action'] == "send")
 				<dd style=\"margin-top: 4px;\" id=\"delivery_type_future\" class=\"delivery_types\">
 					<table cellpadding=\"4\">
 						<tr>
-							<td><select name=\"endtime_day\">\n{$enddateday}</select>\n &nbsp; \n<select name=\"endtime_month\">\n{$enddatemonth}</select>\n &nbsp; \n<input type=\"text\" name=\"endtime_year\" class=\"text_input\" value=\"{$enddateyear}\" size=\"4\" maxlength=\"4\" />\n - ".$form->generate_text_box('endtime_time', $input['endtime_time'], array('id' => 'endtime_time', 'style' => 'width: 60px;'))."</td>
+							<td><select name=\"endtime_day\">\n{$enddateday}</select>\n &nbsp; \n<select name=\"endtime_month\">\n{$enddatemonth}</select>\n &nbsp; \n<input type=\"text\" name=\"endtime_year\" class=\"text_input\" value=\"{$enddateyear}\" size=\"4\" maxlength=\"4\" />\n - {$lang->time} ".$form->generate_text_box('endtime_time', $input['endtime_time'], array('id' => 'endtime_time', 'style' => 'width: 60px;'))."</td>
 						</tr>
 					</table>
 				</dd>
@@ -932,7 +877,7 @@ if($mybb->input['action'] == "send")
 		$form->end();
 		$page->output_footer();
 	}
-	elseif($mybb->get_input('step') == 3)
+	elseif($mybb->input['step'] == 3)
 	{
 		// Define the recipients/conditions
 		if($mybb->request_method == "post")
@@ -1050,7 +995,7 @@ if($mybb->input['action'] == "send")
 		$page->output_footer();
 	}
 	// Reviewing the automatic text based version of the message.
-	elseif($mybb->get_input('step') == 2)
+	elseif($mybb->input['step'] == 2)
 	{
 		// Update text based version
 		if($mybb->request_method == "post")
@@ -1095,7 +1040,7 @@ if($mybb->input['action'] == "send")
 		$form->end();
 		$page->output_footer();
 	}
-	elseif(!$mybb->get_input('step') || $mybb->get_input('step') == 1)
+	elseif(!$mybb->input['step'] || $mybb->input['step'] == 1)
 	{
 		if($mybb->request_method == "post")
 		{
@@ -1104,7 +1049,7 @@ if($mybb->input['action'] == "send")
 				$errors[] = $lang->error_missing_subject;
 			}
 
-			if($mybb->get_input('type') == 1)
+			if($mybb->input['type'] == 1)
 			{
 				if(!$mybb->input['message'])
 				{
@@ -1113,7 +1058,7 @@ if($mybb->input['action'] == "send")
 			}
 			else
 			{
-				if($mybb->input['format'] == 2 && $mybb->get_input('automatic_text') == 0 && !$mybb->input['message'])
+				if($mybb->input['format'] == 2 && $mybb->input['automatic_text'] == 0 && !$mybb->input['message'])
 				{
 					$errors[] = $lang->error_missing_plain_text;
 				}
@@ -1210,7 +1155,7 @@ if($mybb->input['action'] == "send")
 		$page->output_header("{$lang->send_mass_mail}: {$lang->step_one}");
 
 		$mid_add = '';
-		if(!empty($email['mid']))
+		if($email['mid'])
 		{
 			$mid_add = "&amp;mid={$email['mid']}";
 		}
@@ -1224,7 +1169,7 @@ if($mybb->input['action'] == "send")
 			$page->output_inline_error($errors);
 			$input = $mybb->input;
 		}
-		else if(empty($email))
+		else if(!$email)
 		{
 			$input = array(
 				"type" => 0,
@@ -1240,22 +1185,17 @@ if($mybb->input['action'] == "send")
 
 		$form_container = new FormContainer("{$lang->send_mass_mail}: {$lang->step_one} - {$lang->message_settings}");
 
-		$form_container->output_row("{$lang->subject}: <em>*</em>", $lang->subject_desc, $form->generate_text_box('subject', !empty($input['subject']) ? $input['subject'] : null, array('id' => 'subject')), 'subject');
+		$form_container->output_row("{$lang->subject}: <em>*</em>", $lang->subject_desc, $form->generate_text_box('subject', $input['subject'], array('id' => 'subject')), 'subject');
 
-		if($mybb->get_input('type') == 0)
+		if($mybb->input['type'] == 0)
 		{
 			$type_email_checked = true;
 			$type_pm_checked = false;
 		}
-		else if($mybb->get_input('type') == 1)
+		else if($mybb->input['type'] == 1)
 		{
 			$type_email_checked = false;
 			$type_pm_checked = true;
-		}
-		else
-		{
-			$type_email_checked = false;
-			$type_pm_checked = false;
 		}
 
 		$type_options = array(
@@ -1276,38 +1216,33 @@ if($mybb->input['action'] == "send")
 
 		$form_container->end();
 
-		$automatic_text_check = false;
-		$text_display = null;
-		$automatic_display = null;
-		$html_display = null;
-
-		if($mybb->get_input('format') == 2)
+		if($mybb->input['format'] == 2)
 		{
-			if($mybb->get_input('automatic_text') && !$email['mid'])
+			if($mybb->input['automatic_text'] && !$email['mid'])
 			{
 				$automatic_text_check = true;
 				$text_display = 'display: none';
 				$automatic_display = 'display: none;';
 			}
 		}
-		else if($mybb->get_input('format') == 1 && $mybb->get_input('type') != 1)
+		else if($mybb->input['format'] == 1 && $mybb->input['type'] != 1)
 		{
 			$text_display = 'display: none;';
 		}
-		else if($mybb->get_input('format') == 0 || $mybb->get_input('type') == 1)
+		else if($mybb->input['format'] == 0 || $mybb->input['type'] == 1)
 		{
 			$html_display = 'display: none';
 		}
 
 		echo "<div id=\"message_html\" style=\"{$html_display}\">";
 		$form_container = new FormContainer("{$lang->send_mass_mail}: {$lang->step_one} - {$lang->define_html_message}");
-		$form_container->output_row("{$lang->define_html_message_desc}:", $html_personalisation, $form->generate_text_area('htmlmessage', !empty($input['htmlmessage']) ? $input['htmlmessage'] : null, array('id' => 'htmlmessage', 'rows' => 15, 'cols '=> 70, 'style' => 'width: 95%'))."<div id=\"automatic_display\" style=\"{$automatic_display}\">".$form->generate_check_box('automatic_text', 1, $lang->auto_gen_plain_text, array('checked' => $automatic_text_check, "id" => "automatic_text"))."</div>");
+		$form_container->output_row("{$lang->define_html_message_desc}:", $html_personalisation, $form->generate_text_area('htmlmessage', $input['htmlmessage'], array('id' => 'htmlmessage', 'rows' => 15, 'cols '=> 70, 'style' => 'width: 95%'))."<div id=\"automatic_display\" style=\"{$automatic_display}\">".$form->generate_check_box('automatic_text', 1, $lang->auto_gen_plain_text, array('checked' => $automatic_text_check, "id" => "automatic_text"))."</div>");
 		$form_container->end();
 		echo "</div>";
 
 		echo "<div id=\"message_text\" style=\"{$text_display}\">";
 		$form_container = new FormContainer("{$lang->send_mass_mail}: {$lang->step_one} - {$lang->define_text_version}");
-		$form_container->output_row("{$lang->define_text_version_desc}:", $text_personalisation, $form->generate_text_area('message', !empty($input['message']) ? $input['message'] : null, array('id' => 'message', 'rows' => 15, 'cols '=> 70, 'style' => 'width: 95%')));
+		$form_container->output_row("{$lang->define_text_version_desc}:", $text_personalisation, $form->generate_text_area('message', $input['message'], array('id' => 'message', 'rows' => 15, 'cols '=> 70, 'style' => 'width: 95%')));
 		$form_container->end();
 		echo "</div>";
 
@@ -1433,7 +1368,7 @@ if($mybb->input['action'] == "delete")
 	}
 
 	// User clicked no
-	if($mybb->get_input('no'))
+	if($mybb->input['no'])
 	{
 		admin_redirect("index.php?module=user-mass_mail");
 	}
@@ -1449,7 +1384,7 @@ if($mybb->input['action'] == "delete")
 		// Log admin action
 		log_admin_action($mass_email['mid'], $mass_email['subject']);
 
-		if($mybb->get_input('archive') == 1)
+		if($mybb->input['archive'] == 1)
 		{
 			flash_message($lang->success_mass_mail_deleted, 'success');
 			admin_redirect("index.php?module=user-mass_mail&action=archive");
@@ -1488,9 +1423,9 @@ if($mybb->input['action'] == "preview")
 
 	echo '<div class="modal">
 	<div style="overflow-y: auto; max-height: 400px;">';
-
+	
 	$table = new Table();
-
+	
 	if($mybb->input['format'] == 'text' || !$mass_email['htmlmessage'])
 	{
 		// Show preview of the text version
@@ -1561,7 +1496,7 @@ if($mybb->input['action'] == "resend")
 
 if($mybb->input['action'] == "cancel")
 {
-	if(!verify_post_check($mybb->get_input('my_post_key')))
+	if(!verify_post_check($mybb->input['my_post_key']))
 	{
 		flash_message($lang->invalid_post_verify_key2, 'error');
 		admin_redirect("index.php?module=user-users");
@@ -1639,6 +1574,7 @@ if($mybb->input['action'] == "archive")
 	{
 		$table->construct_cell($lang->no_archived_messages, array('colspan' => 6));
 		$table->construct_row();
+		$no_results = true;
 	}
 
 	$plugins->run_hooks("admin_user_mass_email_archive_end");
@@ -1721,6 +1657,7 @@ if(!$mybb->input['action'])
 	{
 		$table->construct_cell($lang->no_unsent_messages, array('colspan' => 6));
 		$table->construct_row();
+		$no_results = true;
 	}
 
 	$plugins->run_hooks("admin_user_mass_email_end");

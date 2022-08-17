@@ -74,13 +74,11 @@ if($report_type == 'post')
 		else
 		{
 			$verified = true;
-			$button = '#post_'.$id.' .postbit_report';
 		}
 
-		$id3 = $forum['fid'];
-
 		// Password protected forums ......... yhummmmy!
-		check_forum_password($forum['fid']);
+		$id3 = $forum['fid'];
+		check_forum_password($forum['parentlist']);
 	}
 }
 else if($report_type == 'profile')
@@ -97,7 +95,6 @@ else if($report_type == 'profile')
 		$report_type_db = "type = 'profile'";
 		$id2 = $id3 = 0; // We don't use these on the profile
 		$id = $checkid = $user['uid']; // id is the profile user
-		$button = '.report_user_button';
 	}
 }
 else if($report_type == 'reputation')
@@ -117,17 +114,16 @@ else if($report_type == 'reputation')
 		$id2 = $checkid = $reputation['adduid']; // id2 is the user who gave the comment
 		$id3 = $reputation['uid']; // id3 is the user who received the comment
 		$report_type_db = "type = 'reputation'";
-		$button = '#rid'.$id.' .postbit_report';
 	}
 }
-
-$plugins->run_hooks("report_type");
 
 $permissions = user_permissions($checkid);
 if(empty($permissions['canbereported']))
 {
 	$error = $lang->sprintf($lang->error_invalid_report, $report_type);
 }
+
+$plugins->run_hooks("report_type");
 
 // Check for an existing report
 if(!empty($report_type_db))
@@ -166,7 +162,6 @@ if(empty($error) && $verified == true && $mybb->input['action'] == "do_report" &
 
 		eval("\$report_thanks = \"".$templates->get("report_thanks")."\";");
 		echo $report_thanks;
-		echo sprintf("<script type='text/javascript'>$('%s').remove();</script>", $button);
 		exit;
 	}
 	else
@@ -193,7 +188,6 @@ if(empty($error) && $verified == true && $mybb->input['action'] == "do_report" &
 			$reason = $db->fetch_array($query);
 
 			$new_report['reasonid'] = $reason['rid'];
-			$new_report['reason'] = '';
 
 			if($reason['extra'])
 			{
@@ -226,7 +220,6 @@ if(empty($error) && $verified == true && $mybb->input['action'] == "do_report" &
 
 			eval("\$report_thanks = \"".$templates->get("report_thanks")."\";");
 			echo $report_thanks;
-			echo sprintf("<script type='text/javascript'>$('%s').remove();</script>", $button);
 			exit;
 		}
 	}
@@ -275,7 +268,7 @@ if(!$mybb->input['action'])
 		}
 	}
 
-	if($mybb->get_input('no_modal'))
+	if($mybb->input['no_modal'])
 	{
 		echo $report_reasons;
 		exit;

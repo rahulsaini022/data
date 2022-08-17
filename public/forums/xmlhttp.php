@@ -222,7 +222,7 @@ if($mybb->settings['boardclosed'] == 1 && $mybb->usergroup['canviewboardclosed']
 if($mybb->input['action'] == "get_users")
 {
 	$mybb->input['query'] = ltrim($mybb->get_input('query'));
-	$search_type = $mybb->get_input('search_type', MyBB::INPUT_INT); // 0: starts with, 1: ends with, 2: contains
+	$search_type = $mybb->get_input('search_type', MyBB::INPUT_INT); // 0: contains, 1: starts with, 2: ends with
 
 	// If the string is less than 2 characters, quit.
 	if(my_strlen($mybb->input['query']) < 2)
@@ -255,15 +255,15 @@ if($mybb->input['action'] == "get_users")
 	$likestring = $db->escape_string_like($mybb->input['query']);
 	if($search_type == 1)
 	{
-		$likestring = '%'.$likestring;
+		$likestring .= '%';
 	}
 	elseif($search_type == 2)
 	{
-		$likestring = '%'.$likestring.'%';
+		$likestring = '%'.$likestring;
 	}
 	else
 	{
-		$likestring .= '%';
+		$likestring = '%'.$likestring.'%';
 	}
 
 	$query = $db->simple_select("users", "uid, username", "username LIKE '{$likestring}'", $query_options);
@@ -307,7 +307,8 @@ else if($mybb->input['action'] == "edit_subject" && $mybb->request_method == "po
 
 		// Fetch some of the information from the first post of this thread.
 		$query_options = array(
-			"order_by" => "dateline, pid",
+			"order_by" => "dateline",
+			"order_dir" => "asc",
 		);
 		$query = $db->simple_select("posts", "pid,uid,dateline", "tid='".$thread['tid']."'", $query_options);
 		$post = $db->fetch_array($query);
@@ -385,7 +386,6 @@ else if($mybb->input['action'] == "edit_subject" && $mybb->request_method == "po
 		$updatepost = array(
 			"pid" => $post['pid'],
 			"tid" => $thread['tid'],
-			"fid" => $forum['fid'],
 			"prefix" => $thread['prefix'],
 			"subject" => $subject,
 			"edit_uid" => $mybb->user['uid']
@@ -598,12 +598,12 @@ else if($mybb->input['action'] == "edit_post")
 			$parser_options['allow_smilies'] = 0;
 		}
 
-		if($mybb->user['uid'] != 0 && $mybb->user['showimages'] != 1 || $mybb->settings['guestimages'] != 1 && $mybb->user['uid'] == 0)
+		if($mybb->user['showimages'] != 1 && $mybb->user['uid'] != 0 || $mybb->settings['guestimages'] != 1 && $mybb->user['uid'] == 0)
 		{
 			$parser_options['allow_imgcode'] = 0;
 		}
 
-		if($mybb->user['uid'] != 0 && $mybb->user['showvideos'] != 1 || $mybb->settings['guestvideos'] != 1 && $mybb->user['uid'] == 0)
+		if($mybb->user['showvideos'] != 1 && $mybb->user['uid'] != 0 || $mybb->settings['guestvideos'] != 1 && $mybb->user['uid'] == 0)
 		{
 			$parser_options['allow_videocode'] = 0;
 		}
@@ -735,7 +735,7 @@ else if($mybb->input['action'] == "get_multiquoted")
 		LEFT JOIN ".TABLE_PREFIX."threads t ON (t.tid=p.tid)
 		LEFT JOIN ".TABLE_PREFIX."users u ON (u.uid=p.uid)
 		WHERE {$from_tid}p.pid IN ({$quoted_posts}) {$unviewable_forums} {$inactiveforums}
-		ORDER BY p.dateline, p.pid
+		ORDER BY p.dateline
 	");
 	while($quoted_post = $db->fetch_array($query))
 	{
@@ -992,7 +992,7 @@ else if($mybb->input['action'] == "username_availability")
 
 	$plugins->run_hooks("xmlhttp_username_availability");
 
-	if(!empty($user['uid']))
+	if($user['uid'])
 	{
 		$lang->username_taken = $lang->sprintf($lang->username_taken, htmlspecialchars_uni($username));
 		echo json_encode($lang->username_taken);

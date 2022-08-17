@@ -190,7 +190,7 @@ if(!empty($firstposts))
 		}
 	}
 
-	$query = $db->simple_select("posts", "message, edittime, tid, uid, username, fid, pid", $firstpostlist, array('order_by' => 'dateline DESC, pid DESC'));
+	$query = $db->simple_select("posts", "message, edittime, tid, uid, username, fid, pid", $firstpostlist, array('order_by' => 'dateline', 'order_dir' => 'desc'));
 	while($post = $db->fetch_array($query))
 	{
 		$parser_options = array(

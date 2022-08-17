@@ -94,7 +94,7 @@ if($mybb->input['action'] == "edit_properties")
 			log_admin_action($editlang);
 
 			flash_message($lang->success_langprops_updated, 'success');
-			admin_redirect("index.php?module=config-languages&action=edit&lang=".htmlspecialchars_uni($editlang)."&editwith=".htmlspecialchars_uni($editlang));
+			admin_redirect("index.php?module=config-languages&action=edit&lang=".htmlspecialchars_uni($editlang)."&editwith=".htmlspecialchars_uni($editwith));
 		}
 		else
 		{
@@ -189,14 +189,8 @@ if($mybb->input['action'] == "quick_phrases")
 	if(file_exists(MYBB_ROOT."inc/languages/".$editlang.".php"))
 	{
 		// Then validate language pack folders (and try to fix them if missing)
-		if(!is_dir($folder))
-		{
-			@mkdir($folder);
-		}
-		if(!is_dir($folder."admin"))
-		{
-			@mkdir($folder."admin");
-		}
+		@mkdir($folder);
+		@mkdir($folder."admin");
 	}
 
 	if(!file_exists($folder) || !file_exists($folder."admin"))
@@ -380,7 +374,7 @@ if($mybb->input['action'] == "edit")
 
 	$page->add_breadcrumb_item(preg_replace("<\?|\?>", "<span>?</span>", htmlspecialchars_uni($languages[$editlang])), "index.php?module=config-languages&amp;action=edit&amp;lang=".htmlspecialchars_uni($editlang));
 
-	$editwith = basename($mybb->get_input('editwith'));
+	$editwith = basename($mybb->input['editwith']);
 	$editwithfolder = '';
 
 	if($editwith)
@@ -392,14 +386,8 @@ if($mybb->input['action'] == "edit")
 	if(file_exists(MYBB_ROOT."inc/languages/".$editlang.".php"))
 	{
 		// Then validate edited language pack folders (and try to fix them if missing)
-		if(!is_dir($folder))
-		{
-			@mkdir($folder);
-		}
-		if(!is_dir($folder."admin"))
-		{
-			@mkdir($folder."admin");
-		}
+		@mkdir($folder);
+		@mkdir($folder."admin");
 	}
 
 	if(!file_exists($folder) || !file_exists($folder."admin"))
@@ -421,7 +409,7 @@ if($mybb->input['action'] == "edit")
 	{
 		// Validate input
 		$file = basename($mybb->input['file']);
-		if($mybb->get_input('inadmin') == 1)
+		if($mybb->input['inadmin'] == 1)
 		{
 			$file = 'admin/'.$file;
 		}
@@ -444,18 +432,9 @@ if($mybb->input['action'] == "edit")
 			@include $editfile;
 			$valid_keys = (array)$l;
 			unset($l);
-
-			if(!empty($editwithfile))
-			{
-				@include $editwithfile;
-			}
-			if(!empty($l))
-			{
-				$valid_keys = array_merge($valid_keys, (array)$l);
-			}
+			@include $editwithfile;
+			$valid_keys = array_merge($valid_keys, (array)$l);
 			unset($l);
-
-			$contents_wfile = null;
 
 			// Then fetch from input only valid keys
 			foreach($valid_keys as $key => $value)
@@ -507,15 +486,12 @@ if($mybb->input['action'] == "edit")
 			}
 		}
 
-		if(!empty($editwith))
+		unset($langinfo);
+		@include MYBB_ROOT."inc/languages/".$editwith.".php";
+		$editwith_dir_class = " langeditor_ltr";
+		if((int)$langinfo['rtl'] > 0)
 		{
-			unset($langinfo);
-			@include MYBB_ROOT."inc/languages/".$editwith.".php";
-			$editwith_dir_class = " langeditor_ltr";
-			if((int)$langinfo['rtl'] > 0)
-			{
-				$editwith_dir_class = " langeditor_rtl";
-			}
+			$editwith_dir_class = " langeditor_rtl";
 		}
 		unset($langinfo);
 		@include MYBB_ROOT."inc/languages/".$editlang.".php";
@@ -528,14 +504,9 @@ if($mybb->input['action'] == "edit")
 		// Build and output form with edited phrases
 
 		// Get file being edited in an array
-		$editvars = array();
-		unset($l);
 		@include $editfile;
-		if(isset($l))
-		{
-			$editvars = (array)$l;
-			unset($l);
-		}
+		$editvars = (array)$l;
+		unset($l);
 
 		$withvars = array();
 		// Get edit with file in an array if exists
@@ -754,18 +725,12 @@ if($mybb->input['action'] == "edit")
 
 			foreach($files_left as $key => $file)
 			{
-				$editvars_left = array();
-
-				unset($l);
 				@include $editwithfolder.$file;
-				if(isset($l))
-				{
-					$editvars_left = (array)$l;
-					unset($l);
-				}
+				$editvars_left = (array)$l;
+				unset($l);
 
 				$icon_issues = "<span class='langeditor_ok' title='".$lang->issues_ok."'></span>";
-				if(count($editvars_left) > 0)
+				if(count($editvars_left) >0)
 				{
 					$icon_issues = "<span class='langeditor_warning' title='".$lang->issues_warning."'></span>";
 				}
@@ -779,18 +744,12 @@ if($mybb->input['action'] == "edit")
 			}
 			foreach($files_right as $key => $file)
 			{
-				$editvars_right = array();
-
-				unset($l);
 				@include $folder.$file;
-				if(isset($l))
-				{
-					$editvars_right = (array)$l;
-					unset($l);
-				}
+				$editvars_right = (array)$l;
+				unset($l);
 
 				$icon_issues = "<span class='langeditor_ok' title='".$lang->issues_ok."'></span>";
-				if(count($editvars_right) > 0)
+				if(count($editvars_right) >0)
 				{
 					$icon_issues = "<span class='langeditor_nothingtocompare' title='".$lang->issues_nothingtocompare."'></span>";
 				}
@@ -804,21 +763,12 @@ if($mybb->input['action'] == "edit")
 			}
 			foreach($files_both as $key => $file)
 			{
-				$editvars_right = $editvars_left = array();
-
-				unset($l);
 				@include $editwithfolder.$file;
-				if(isset($l))
-				{
-					$editvars_left = (array)$l;
-					unset($l);
-				}
+				$editvars_left = (array)$l;
+				unset($l);
 				@include $folder.$file;
-				if(isset($l))
-				{
-					$editvars_right = (array)$l;
-					unset($l);
-				}
+				$editvars_right = (array)$l;
+				unset($l);
 
 				$table->construct_cell(htmlspecialchars_uni($file), array("class" => "langeditor_editwithfile"));
 				$table->construct_cell(count($editvars_left), array("class" => "langeditor_phrases"));
@@ -850,13 +800,8 @@ if($mybb->input['action'] == "edit")
 		{
 			foreach($filenames as $key => $file)
 			{
-				unset($l);
 				@include $folder.$file;
-				$editvars_count = array();
-				if(isset($l))
-				{
-					$editvars_count = (array)$l;
-				}
+				$editvars_count = (array)$l;
 				unset($l);
 
 				$table->construct_cell(htmlspecialchars_uni($file), array("class" => "langeditor_editfile"));
@@ -1016,7 +961,7 @@ if($mybb->input['action'] == "edit")
 
 					$table->construct_cell(htmlspecialchars_uni($file), array("class" => "langeditor_editfile"));
 					$table->construct_cell(count($editvars_count), array("class" => "langeditor_phrases"));
-					$table->construct_cell("<a href=\"index.php?module=config-languages&amp;action=edit&amp;lang=".htmlspecialchars_uni($editlang)."&amp;editwith=".htmlspecialchars_uni($editwith)."&amp;file=/".htmlspecialchars_uni($file)."&amp;inadmin=1\">{$lang->edit}</a>", array("class" => "langeditor_edit"));
+					$table->construct_cell("<a href=\"index.php?module=config-languages&amp;action=edit&amp;lang=".htmlspecialchars_uni($editlang)."&amp;editwith=".htmlspecialchars_uni($editwith)."&amp;file={$config['admindir']}/".htmlspecialchars_uni($file)."&amp;inadmin=1\">{$lang->edit}</a>", array("class" => "langeditor_edit"));
 					$table->construct_row();
 				}
 			}

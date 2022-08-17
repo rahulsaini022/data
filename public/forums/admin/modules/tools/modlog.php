@@ -65,21 +65,13 @@ if($mybb->input['action'] == 'prune')
 
 		$plugins->run_hooks("admin_tools_modlog_prune_commit");
 
-		if(!isset($forum_cache) || !is_array($forum_cache))
+		if(!is_array($forum_cache))
 		{
 			$forum_cache = cache_forums();
 		}
 
 		// Log admin action
-		if(!empty($forum_cache[$mybb->get_input('fid')]['name']))
-		{
-			$name = $forum_cache[$mybb->get_input('fid')]['name'];
-		} else
-		{
-			$name = null;
-		}
-
-		log_admin_action($mybb->get_input('older_than'), $mybb->get_input('uid'), $mybb->get_input('fid'), $num_deleted, $name);
+		log_admin_action($mybb->input['older_than'], $mybb->input['uid'], $mybb->input['fid'], $num_deleted, $forum_cache[$mybb->input['fid']]['name']);
 
 		$success = $lang->success_pruned_mod_logs;
 		if($is_today == true && $num_deleted > 0)
@@ -99,8 +91,8 @@ if($mybb->input['action'] == 'prune')
 	$page->output_nav_tabs($sub_tabs, 'prune_mod_logs');
 
 	// Fetch filter options
-	$sortbysel[$mybb->get_input('sortby')] = 'selected="selected"';
-	$ordersel[$mybb->get_input('order')] = 'selected="selected"';
+	$sortbysel[$mybb->input['sortby']] = 'selected="selected"';
+	$ordersel[$mybb->input['order']] = 'selected="selected"';
 
 	$user_options[''] = $lang->all_moderators;
 	$user_options['0'] = '----------';
@@ -124,13 +116,13 @@ if($mybb->input['action'] == 'prune')
 
 	$form = new Form("index.php?module=tools-modlog&amp;action=prune", "post");
 	$form_container = new FormContainer($lang->prune_moderator_logs);
-	$form_container->output_row($lang->forum, "", $form->generate_forum_select('fid', $mybb->get_input('fid'), array('id' => 'fid', 'main_option' => $lang->all_forums)), 'fid');
-	$form_container->output_row($lang->forum_moderator, "", $form->generate_select_box('uid', $user_options, $mybb->get_input('uid'), array('id' => 'uid')), 'uid');
-	if(!$mybb->get_input('older_than'))
+	$form_container->output_row($lang->forum, "", $form->generate_forum_select('fid', $mybb->input['fid'], array('id' => 'fid', 'main_option' => $lang->all_forums)), 'fid');
+	$form_container->output_row($lang->forum_moderator, "", $form->generate_select_box('uid', $user_options, $mybb->input['uid'], array('id' => 'uid')), 'uid');
+	if(!$mybb->input['older_than'])
 	{
 		$mybb->input['older_than'] = '30';
 	}
-	$form_container->output_row($lang->date_range, "", $lang->older_than.$form->generate_numeric_field('older_than', $mybb->get_input('older_than'), array('id' => 'older_than', 'style' => 'width: 50px', 'min' => 0)).' '.$lang->days, 'older_than');
+	$form_container->output_row($lang->date_range, "", $lang->older_than.$form->generate_numeric_field('older_than', $mybb->input['older_than'], array('id' => 'older_than', 'style' => 'width: 50px', 'min' => 0)).' '.$lang->days, 'older_than');
 	$form_container->end();
 	$buttons[] = $form->generate_submit_button($lang->prune_moderator_logs);
 	$form->output_submit_wrapper($buttons);
@@ -161,19 +153,19 @@ if(!$mybb->input['action'])
 	$where = 'WHERE 1=1';
 
 	// Searching for entries by a particular user
-	if(!empty($mybb->input['uid']))
+	if($mybb->input['uid'])
 	{
 		$where .= " AND l.uid='".$mybb->get_input('uid', MyBB::INPUT_INT)."'";
 	}
 
 	// Searching for entries in a specific forum
-	if($mybb->get_input('fid') > 0)
+	if($mybb->input['fid'] > 0)
 	{
 		$where .= " AND l.fid='".$mybb->get_input('fid', MyBB::INPUT_INT)."'";
 	}
 
 	// Order?
-	switch($mybb->get_input('sortby'))
+	switch($mybb->input['sortby'])
 	{
 		case "username":
 			$sortby = "u.username";
@@ -187,7 +179,7 @@ if(!$mybb->input['action'])
 		default:
 			$sortby = "l.dateline";
 	}
-	$order = $mybb->get_input('order');
+	$order = $mybb->input['order'];
 	if($order != "asc")
 	{
 		$order = "desc";
@@ -201,7 +193,7 @@ if(!$mybb->input['action'])
 	$rescount = $db->fetch_field($query, "count");
 
 	// Figure out if we need to display multiple pages.
-	if($mybb->get_input('page') != "last")
+	if($mybb->input['page'] != "last")
 	{
 		$pagecnt = $mybb->get_input('page', MyBB::INPUT_INT);
 	}
@@ -210,7 +202,7 @@ if(!$mybb->input['action'])
 	$pages = $postcount / $perpage;
 	$pages = ceil($pages);
 
-	if($mybb->get_input('page') == "last")
+	if($mybb->input['page'] == "last")
 	{
 		$pagecnt = $pages;
 	}
@@ -279,11 +271,11 @@ if(!$mybb->input['action'])
 		if(!$logitem['tsubject'] || !$logitem['fname'] || !$logitem['psubject'])
 		{
 			$data = my_unserialize($logitem['data']);
-			if(!empty($data['uid']))
+			if($data['uid'])
 			{
 				$information = "<strong>{$lang->user_info}</strong> <a href=\"../".get_profile_link($data['uid'])."\" target=\"_blank\">".htmlspecialchars_uni($data['username'])."</a>";
 			}
-			if(!empty($data['aid']))
+			if($data['aid'])
 			{
 				$information = "<strong>{$lang->announcement}</strong> <a href=\"../".get_announcement_link($data['aid'])."\" target=\"_blank\">".htmlspecialchars_uni($data['subject'])."</a>";
 			}
@@ -314,8 +306,8 @@ if(!$mybb->input['action'])
 	}
 
 	// Fetch filter options
-	$sortbysel[$mybb->get_input('sortby')] = "selected=\"selected\"";
-	$ordersel[$mybb->get_input('order')] = "selected=\"selected\"";
+	$sortbysel[$mybb->input['sortby']] = "selected=\"selected\"";
+	$ordersel[$mybb->input['order']] = "selected=\"selected\"";
 
 	$user_options[''] = $lang->all_moderators;
 	$user_options['0'] = '----------';
@@ -335,7 +327,7 @@ if(!$mybb->input['action'])
 		}
 
 		$selected = '';
-		if($mybb->get_input('uid') == $user['uid'])
+		if($mybb->input['uid'] == $user['uid'])
 		{
 			$selected = "selected=\"selected\"";
 		}
@@ -356,9 +348,9 @@ if(!$mybb->input['action'])
 
 	$form = new Form("index.php?module=tools-modlog", "post");
 	$form_container = new FormContainer($lang->filter_moderator_logs);
-	$form_container->output_row($lang->forum, "", $form->generate_forum_select('fid', $mybb->get_input('fid'), array('id' => 'fid', 'main_option' => $lang->all_forums)), 'fid');
-	$form_container->output_row($lang->forum_moderator, "", $form->generate_select_box('uid', $user_options, $mybb->get_input('uid'), array('id' => 'uid')), 'uid');
-	$form_container->output_row($lang->sort_by, "", $form->generate_select_box('sortby', $sort_by, $mybb->get_input('sortby'), array('id' => 'sortby'))." {$lang->in} ".$form->generate_select_box('order', $order_array, $order, array('id' => 'order'))." {$lang->order}", 'order');
+	$form_container->output_row($lang->forum, "", $form->generate_forum_select('fid', $mybb->input['fid'], array('id' => 'fid', 'main_option' => $lang->all_forums)), 'fid');
+	$form_container->output_row($lang->forum_moderator, "", $form->generate_select_box('uid', $user_options, $mybb->input['uid'], array('id' => 'uid')), 'uid');
+	$form_container->output_row($lang->sort_by, "", $form->generate_select_box('sortby', $sort_by, $mybb->input['sortby'], array('id' => 'sortby'))." {$lang->in} ".$form->generate_select_box('order', $order_array, $order, array('id' => 'order'))." {$lang->order}", 'order');
 	$form_container->output_row($lang->results_per_page, "", $form->generate_numeric_field('perpage', $perpage, array('id' => 'perpage', 'min' => 1)), 'perpage');
 
 	$form_container->end();
