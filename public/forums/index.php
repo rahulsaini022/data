@@ -20,10 +20,10 @@ require_once MYBB_ROOT.'inc/functions_forumlist.php';
 require_once MYBB_ROOT.'inc/class_parser.php';
 $parser = new postParser;
 
-$plugins->run_hooks('index_start');
-
 // Load global language phrases
 $lang->load('index');
+
+$plugins->run_hooks('index_start');
 
 $logoutlink = '';
 if($mybb->user['uid'] != 0)
@@ -34,6 +34,7 @@ if($mybb->user['uid'] != 0)
 $statspage = '';
 if($mybb->settings['statsenabled'] != 0)
 {
+	$stats_page_separator = '';
 	if(!empty($logoutlink))
 	{
 		$stats_page_separator = $lang->board_stats_link_separator;
@@ -41,6 +42,7 @@ if($mybb->settings['statsenabled'] != 0)
 	eval('$statspage = "'.$templates->get('index_statspage').'";');
 }
 
+$onlinecount = null;
 $whosonline = '';
 if($mybb->settings['showwol'] != 0 && $mybb->usergroup['canviewonline'] != 0)
 {
@@ -57,21 +59,51 @@ if($mybb->settings['showwol'] != 0 && $mybb->usergroup['canviewonline'] != 0)
 	}
 
 	$timesearch = TIME_NOW - (int)$mybb->settings['wolcutoff'];
+
+	$membercount = $guestcount = $anoncount = $botcount = 0;
+	$forum_viewers = $doneusers = $onlinemembers = $onlinebots = array();
+
+	if($mybb->settings['showforumviewing'] != 0)
+	{
+		$query = $db->query("
+			SELECT
+				location1, COUNT(DISTINCT ip) AS guestcount
+			FROM
+				".TABLE_PREFIX."sessions
+			WHERE uid = 0 AND location1 != 0 AND SUBSTR(sid,4,1) != '=' AND time > $timesearch
+			GROUP BY location1
+		");
+
+		while($location = $db->fetch_array($query))
+		{
+			if(isset($forum_viewers[$location['location1']]))
+			{
+				$forum_viewers[$location['location1']] += $location['guestcount'];
+			}
+			else
+			{
+				$forum_viewers[$location['location1']] = $location['guestcount'];
+			}
+		}
+	}
+
+	$query = $db->simple_select("sessions", "COUNT(DISTINCT ip) AS guestcount", "uid = 0 AND SUBSTR(sid,4,1) != '=' AND time > $timesearch");
+	$guestcount = $db->fetch_field($query, "guestcount");
+
 	$query = $db->query("
-		SELECT s.sid, s.ip, s.uid, s.time, s.location, s.location1, u.username, u.invisible, u.usergroup, u.displaygroup
-		FROM ".TABLE_PREFIX."sessions s
-		LEFT JOIN ".TABLE_PREFIX."users u ON (s.uid=u.uid)
-		WHERE s.time > '".$timesearch."'
+		SELECT
+			s.sid, s.ip, s.uid, s.time, s.location, s.location1, u.username, u.invisible, u.usergroup, u.displaygroup
+		FROM
+			".TABLE_PREFIX."sessions s
+			LEFT JOIN ".TABLE_PREFIX."users u ON (s.uid=u.uid)
+		WHERE (s.uid != 0 OR SUBSTR(s.sid,4,1) = '=') AND s.time > $timesearch
 		ORDER BY {$order_by}, {$order_by2}
 	");
-
-	$forum_viewers = $doneusers = $onlinemembers = $onlinebots = array();
-	$membercount = $guestcount = $anoncount = $botcount = 0;
 
 	// Fetch spiders
 	$spiders = $cache->read('spiders');
 
-	// Loop through all users.
+	// Loop through all users and spiders.
 	while($user = $db->fetch_array($query))
 	{
 		// Create a key to test if this user is a search bot.
@@ -84,7 +116,7 @@ if($mybb->settings['showwol'] != 0 && $mybb->usergroup['canviewonline'] != 0)
 			if(empty($doneusers[$user['uid']]) || $doneusers[$user['uid']] < $user['time'])
 			{
 				// If the user is logged in anonymously, update the count for that.
-				if($user['invisible'] == 1)
+				if($user['invisible'] == 1 && $mybb->usergroup['canbeinvisible'] == 1)
 				{
 					++$anoncount;
 				}
@@ -92,7 +124,7 @@ if($mybb->settings['showwol'] != 0 && $mybb->usergroup['canviewonline'] != 0)
 				if($user['invisible'] != 1 || $mybb->usergroup['canviewwolinvis'] == 1 || $user['uid'] == $mybb->user['uid'])
 				{
 					// If this usergroup can see anonymously logged-in users, mark them.
-					if($user['invisible'] == 1)
+					if($user['invisible'] == 1 && $mybb->usergroup['canbeinvisible'] == 1)
 					{
 						$invisiblemark = '*';
 					}
@@ -110,7 +142,7 @@ if($mybb->settings['showwol'] != 0 && $mybb->usergroup['canviewonline'] != 0)
 				$doneusers[$user['uid']] = $user['time'];
 			}
 		}
-		elseif(my_strpos($user['sid'], 'bot=') !== false && $spiders[$botkey])
+		elseif(my_strpos($user['sid'], 'bot=') !== false && $spiders[$botkey] && $mybb->settings['woldisplayspiders'] == 1)
 		{
 			if($mybb->settings['wolorder'] == 'username')
 			{
@@ -125,15 +157,17 @@ if($mybb->settings['showwol'] != 0 && $mybb->usergroup['canviewonline'] != 0)
 			$onlinebots[$key] = format_name($spiders[$botkey]['name'], $spiders[$botkey]['usergroup']);
 			++$botcount;
 		}
-		else
-		{
-			// The user is a guest.
-			++$guestcount;
-		}
 
 		if($user['location1'])
 		{
-			++$forum_viewers[$user['location1']];
+			if(isset($forum_viewers[$user['location1']]))
+			{
+				++$forum_viewers[$user['location1']];
+			}
+			else
+			{
+				$forum_viewers[$user['location1']] = 1;
+			}
 		}
 	}
 
@@ -214,11 +248,18 @@ if($mybb->settings['showbirthdays'] != 0)
 		$bdaycache = $cache->read('birthdays');
 	}
 
-	$hiddencount = $today_bdays = 0;
+	$hiddencount = 0;
+	$today_bdays = array();
 	if(isset($bdaycache[$bdaydate]))
 	{
-		$hiddencount = $bdaycache[$bdaydate]['hiddencount'];
-		$today_bdays = $bdaycache[$bdaydate]['users'];
+		if(isset($bdaycache[$bdaydate]['hiddencount']))
+		{
+			$hiddencount = $bdaycache[$bdaydate]['hiddencount'];
+		}
+		if(isset($bdaycache[$bdaydate]['users']))
+		{
+			$today_bdays = $bdaycache[$bdaydate]['users'];
+		}
 	}
 
 	$comma = '';
@@ -259,7 +300,7 @@ if($mybb->settings['showbirthdays'] != 0)
 				}
 
 				// If this user's display group can't be seen in the birthday list, skip it
-				if($groupscache[$bdayuser['displaygroup']] && $groupscache[$bdayuser['displaygroup']]['showinbirthdaylist'] != 1)
+				if(isset($groupscache[$bdayuser['displaygroup']]) && $groupscache[$bdayuser['displaygroup']]['showinbirthdaylist'] != 1)
 				{
 					continue;
 				}
@@ -321,7 +362,7 @@ if($mybb->settings['showindexstats'] != 0)
 
 	// Find out what the highest users online count is.
 	$mostonline = $cache->read('mostonline');
-	if($onlinecount > $mostonline['numusers'])
+	if($onlinecount !== null && $onlinecount > $mostonline['numusers'])
 	{
 		$time = TIME_NOW;
 		$mostonline['numusers'] = $onlinecount;
@@ -347,8 +388,21 @@ if(($mybb->settings['showwol'] != 0 && $mybb->usergroup['canviewonline'] != 0) |
 		// Load the stats cache.
 		$stats = $cache->read('stats');
 	}
-	
-	$expaltext = (in_array("boardstats", $collapse)) ? "[+]" : "[-]";
+
+	if(!isset($collapsedthead['boardstats']))
+	{
+		$collapsedthead['boardstats'] = '';
+	}
+	if(!isset($collapsedimg['boardstats']))
+	{
+		$collapsedimg['boardstats'] = '';
+	}
+	if(!isset($collapsed['boardstats_e']))
+	{
+		$collapsed['boardstats_e'] = '';
+	}
+
+	$expaltext = (in_array("boardstats", $collapse)) ? $lang->expcol_expand : $lang->expcol_collapse;
 	eval('$boardstats = "'.$templates->get('index_boardstats').'";');
 }
 
@@ -396,7 +450,7 @@ if($mybb->settings['modlist'] != 0 && $mybb->settings['modlist'] != 'off')
 }
 
 $excols = 'index';
-$permissioncache['-1'] = '1';
+$permissioncache = null;
 $bgcolor = 'trow1';
 
 // Decide if we're showing first-level subforums on the index page.

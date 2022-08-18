@@ -62,11 +62,11 @@ class PhpMail extends MailHandler
 		// If safe mode is on, don't send the additional parameters as we're not allowed to
 		if($mybb->safemode)
 		{
-			$sent = @mail($this->to, $this->subject, $this->message);
+			$sent = @mail($this->to, $this->subject, $this->message, trim($this->headers));
 		}
 		else
 		{
-			$sent = @mail($this->to, $this->subject, $this->message);
+			$sent = @mail($this->to, $this->subject, $this->message, trim($this->headers), $this->additional_parameters);
 		}
 		$function_used = 'mail()';
 

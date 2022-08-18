@@ -24,12 +24,8 @@ Route::get('/cache-clear', function () {
 	die('cache cleared successfully');
 });
 Route::get('/backup', function () {
-	if(Artisan::call('backup:run'))
-	{
- return redirect()->route('admin.get_project_backups');}
- else{
-	die('not create');
- }
+	Artisan::call('backup:run');
+	die('  successfully');
 });
 
 

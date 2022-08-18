@@ -2,12 +2,11 @@ a:link,
 a:visited,
 a:hover,
 a:active {
-	color: #22488A;
+	color: #2d9595;
 }
 
 #logo {
-	background-image: linear-gradient(#04519b, #033C73 60%, #02325f) !important;
-    background-repeat: no-repeat;
+	background: #1e6365 url(../../../images/colors/water_header.png) top left repeat-x;
 	border-bottom: 1px solid #133f41;
 }
 
@@ -16,13 +15,11 @@ a:active {
 }
 
 #panel input.button {
-	background-image: linear-gradient(#04519b, #033C73 60%, #02325f)  !important;;
-    background-repeat: no-repeat;
+	background: #1e6365 url(../../../images/colors/water_thead.png) top left repeat-x;
 }
 
 .thead {
-	background-image: linear-gradient(#04519b, #033C73 60%, #02325f)  !important;;
-    background-repeat: no-repeat;
+	background: #1e6365 url(../../../images/colors/water_thead.png) top left repeat-x;
 	border-bottom: 1px solid #133f41;
 }
 
@@ -32,25 +29,18 @@ a:active {
 }
 
 .popup_menu .popup_item:hover {
-	background: #22488A ;
+	background: #2d9595;
 	color: #fff;
 }
 
 .tt-suggestion.tt-is-under-cursor {
-    background-color: #22488A;
+    background-color: #2d9595;
 	color: #fff;
 }
 
 .pagination a:hover {
-	background-color: #22488A;
+	background-color: #2d9595;
 	color: #fff;
 	border-color: #133f41;
 }
-
-.tcat {
-    background: #227DC7 !important;
-}
-
-#panel .upper {
-    background: #227DC7 !important;
-}
+		

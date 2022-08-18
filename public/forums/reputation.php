@@ -173,7 +173,16 @@ if($mybb->input['action'] == "add" || $mybb->input['action'] == "do_add")
 	{
 		$query = $db->simple_select("reputation", "*", "adduid='".$mybb->user['uid']."' AND uid='{$uid}' AND pid = '".$mybb->get_input('pid', MyBB::INPUT_INT)."'");
 		$existing_reputation = $db->fetch_array($query);
-		$rid = $existing_reputation['rid'];
+
+		if($existing_reputation)
+		{
+			$rid = $existing_reputation['rid'];
+		}
+		else
+		{
+			$rid = 0;
+		}
+
 		$was_post = true;
 	}
 
@@ -209,7 +218,7 @@ if($mybb->input['action'] == "add" || $mybb->input['action'] == "do_add")
 		}
 
 		// We have the correct post, but has the user given too much reputation to another in the same thread?
-		if(!$message && $was_post && $mybb->usergroup['maxreputationsperthread'] != 0)
+		if(!$message && !empty($was_post) && $mybb->usergroup['maxreputationsperthread'] != 0)
 		{
 			$timesearch = TIME_NOW - (60 * 60 * 24);
 			$query = $db->query("
@@ -532,12 +541,16 @@ if($mybb->input['action'] == "delete")
 	// Verify incoming POST request
 	verify_post_check($mybb->get_input('my_post_key'));
 
+	$rid = $mybb->get_input('rid', MyBB::INPUT_INT);
+	
+	$plugins->run_hooks("reputation_delete_start");
+
 	// Fetch the existing reputation for this user given by our current user if there is one.
 	$query = $db->query("
 		SELECT r.*, u.username
 		FROM ".TABLE_PREFIX."reputation r
 		LEFT JOIN ".TABLE_PREFIX."users u ON (u.uid=r.adduid)
-		WHERE rid = '".$mybb->get_input('rid', MyBB::INPUT_INT)."'
+		WHERE r.rid = '{$rid}' AND r.uid = '{$uid}'
 	");
 	$existing_reputation = $db->fetch_array($query);
 
@@ -546,9 +559,11 @@ if($mybb->input['action'] == "delete")
 	{
 		error_no_permission();
 	}
+	
+	$plugins->run_hooks("reputation_delete_end");
 
 	// Delete the specified reputation
-	$db->delete_query("reputation", "uid='{$uid}' AND rid='".$mybb->get_input('rid', MyBB::INPUT_INT)."'");
+	$db->delete_query("reputation", "uid='{$uid}' AND rid='{$rid}'");
 
 	// Recount the reputation of this user - keep it in sync.
 	$query = $db->simple_select("reputation", "SUM(reputation) AS reputation_count", "uid='{$uid}'");
@@ -865,7 +880,7 @@ if(!$mybb->input['action'])
 	");
 
 	// Gather a list of items that have post reputation
-	$reputation_cache = $post_cache = $post_reputation = array();
+	$reputation_cache = $post_cache = $post_reputation = $not_reportable = array();
 
 	while($reputation_vote = $db->fetch_array($query))
 	{
@@ -943,6 +958,21 @@ if(!$mybb->input['action'])
 	}
 
 	$reputation_votes = '';
+	if(!empty($reputation_cache) && $mybb->user['uid'] != 0)
+	{
+		$reputation_ids = implode(',', array_column($reputation_cache, 'rid'));
+		$query = $db->query("
+			SELECT id, reporters FROM ".TABLE_PREFIX."reportedcontent WHERE reportstatus != '1' AND id IN (".$reputation_ids.") AND type = 'reputation'
+		");
+		while($report = $db->fetch_array($query))
+		{
+			$reporters = my_unserialize($report['reporters']);
+			if(is_array($reporters) && in_array($mybb->user['uid'], $reporters))
+			{
+				$not_reportable[] =  $report['id'];
+			}
+		}
+	}
 
 	foreach($reputation_cache as $reputation_vote)
 	{
@@ -1025,7 +1055,7 @@ if(!$mybb->input['action'])
 		}
 
 		$report_link = '';
-		if($mybb->user['uid'] != 0)
+		if($mybb->user['uid'] != 0 && !in_array($reputation_vote['rid'], $not_reportable))
 		{
 			eval("\$report_link = \"".$templates->get("reputation_vote_report")."\";");
 		}

@@ -39,12 +39,27 @@ class captcha
 	 * Type of CAPTCHA.
 	 *
 	 * 1 = Default CAPTCHA
-	 * 2 = reCAPTCHA
 	 * 4 = NoCATPCHA reCAPTCHA
+	 * 5 = reCAPTCHA invisible
+	 * 6 = hCaptcha
+	 * 7 = hCaptcha invisible
+	 * 8 = reCAPTCHA v3
 	 *
 	 * @var int
 	 */
 	public $type = 0;
+
+	/**
+	 * CAPTCHA constants declaration
+	 * 
+	 * @var int
+	 */
+	const DEFAULT_CAPTCHA = 1;
+	const NOCAPTCHA_RECAPTCHA = 4;
+	const RECAPTCHA_INVISIBLE = 5;
+	const HCAPTCHA = 6;
+	const HCAPTCHA_INVISIBLE = 7;
+	const RECAPTCHA_V3 = 8;
 
 	/**
 	 * The template to display the CAPTCHA in
@@ -104,18 +119,30 @@ class captcha
 		{
 			$this->captcha_template = $template;
 
-			if($this->type == 4)
+			if($this->type == captcha::NOCAPTCHA_RECAPTCHA)
 			{
 				$this->captcha_template .= "_nocaptcha";
 			}
-			elseif($this->type == 5)
+			elseif($this->type == captcha::RECAPTCHA_INVISIBLE)
+			{
+				$this->captcha_template .= "_recaptcha_invisible";
+			}
+			elseif($this->type == captcha::HCAPTCHA)
+			{
+				$this->captcha_template .= "_hcaptcha";
+			}
+			elseif($this->type == captcha::HCAPTCHA_INVISIBLE)
+			{
+				$this->captcha_template .= "_hcaptcha_invisible";
+			}
+			elseif($this->type == captcha::RECAPTCHA_V3)
 			{
 				$this->captcha_template .= "_recaptcha_invisible";
 			}
 		}
 
 		// Work on which CAPTCHA we've got installed
-		if(in_array($this->type, array(4, 5)) && $mybb->settings['captchapublickey'] && $mybb->settings['captchaprivatekey'])
+		if(in_array($this->type, array(captcha::NOCAPTCHA_RECAPTCHA, captcha::RECAPTCHA_INVISIBLE, captcha::RECAPTCHA_V3)) && $mybb->settings['recaptchapublickey'] && $mybb->settings['recaptchaprivatekey'])
 		{
 			// We want to use noCAPTCHA or reCAPTCHA invisible, set the server options
 			$this->server = "//www.google.com/recaptcha/api.js";
@@ -126,7 +153,18 @@ class captcha
 				$this->build_recaptcha();
 			}
 		}
-		elseif($this->type == 1)
+		elseif(in_array($this->type, array(captcha::HCAPTCHA, captcha::HCAPTCHA_INVISIBLE)) && $mybb->settings['hcaptchapublickey'] && $mybb->settings['hcaptchaprivatekey'])
+		{
+			// We want to use hCaptcha or hCaptcha invisible, set the server options
+			$this->server = "//www.hcaptcha.com/1/api.js";
+			$this->verify_server = "https://hcaptcha.com/siteverify";
+
+			if($build == true)
+			{
+				$this->build_hcaptcha();
+			}
+		}
+		elseif($this->type == captcha::DEFAULT_CAPTCHA)
 		{
 			if(!function_exists("imagecreatefrompng"))
 			{
@@ -170,10 +208,23 @@ class captcha
 
 		// This will build a reCAPTCHA
 		$server = $this->server;
-		$public_key = $mybb->settings['captchapublickey'];
+		$public_key = $mybb->settings['recaptchapublickey'];
 
 		eval("\$this->html = \"".$templates->get($this->captcha_template, 1, 0)."\";");
 		//eval("\$this->html = \"".$templates->get("member_register_regimage_recaptcha")."\";");
+	}
+
+	function build_hcaptcha()
+	{
+		global $lang, $mybb, $templates;
+
+		// This will build a hCaptcha
+		$server = $this->server;
+		$public_key = $mybb->settings['hcaptchapublickey'];
+		$captcha_theme = $mybb->settings['hcaptchatheme'];
+		$captcha_size = $mybb->settings['hcaptchasize'];
+		
+		eval("\$this->html = \"".$templates->get($this->captcha_template, 1, 0)."\";");
 	}
 
 	/**
@@ -185,15 +236,15 @@ class captcha
 
 		$field = array();
 
-		if($this->type == 1)
+		if($this->type == captcha::DEFAULT_CAPTCHA)
 		{
 			// Names
 			$hash = "imagehash";
 			$string = "imagestring";
 
 			// Values
-			$field['hash'] = $db->escape_string($mybb->input['imagehash']);
-			$field['string'] = $db->escape_string($mybb->input['imagestring']);
+			$field['hash'] = $db->escape_string($mybb->get_input('imagehash'));
+			$field['string'] = $db->escape_string($mybb->get_input('imagestring'));
 		}
 		elseif($this->type == 3)
 		{
@@ -214,11 +265,11 @@ class captcha
 
 		$plugins->run_hooks('captcha_validate_start', $this);
 
-		if($this->type == 1)
+		if($this->type == captcha::DEFAULT_CAPTCHA)
 		{
 			// We have a normal CAPTCHA to handle
-			$imagehash = $db->escape_string($mybb->input['imagehash']);
-			$imagestring = $db->escape_string(my_strtolower($mybb->input['imagestring']));
+			$imagehash = $db->escape_string($mybb->get_input('imagehash'));
+			$imagestring = $db->escape_string(my_strtolower($mybb->get_input('imagestring')));
 
 			switch($db->type)
 			{
@@ -240,9 +291,9 @@ class captcha
 				$db->delete_query("captcha", "imagehash = '{$imagehash}'");
 			}
 		}
-		elseif(in_array($this->type, array(4, 5)))
+		elseif(in_array($this->type, array(captcha::NOCAPTCHA_RECAPTCHA, captcha::RECAPTCHA_INVISIBLE)))
 		{
-			$response = $mybb->input['g-recaptcha-response'];
+			$response = $mybb->get_input('g-recaptcha-response');
 			if(!$response || strlen($response) == 0)
 			{
 				$this->set_error($lang->invalid_nocaptcha);
@@ -252,7 +303,7 @@ class captcha
 				// We have a noCAPTCHA or reCAPTCHA invisible to handle
 				// Contact Google and see if our reCAPTCHA was successful
 				$response = fetch_remote_file($this->verify_server, array(
-					'secret' => $mybb->settings['captchaprivatekey'],
+					'secret' => $mybb->settings['recaptchaprivatekey'],
 					'remoteip' => $session->ipaddress,
 					'response' => $response
 				));
@@ -273,7 +324,72 @@ class captcha
 				}
 			}
 		}
+		elseif($this->type == captcha::RECAPTCHA_V3)
+		{
+			$response = $mybb->get_input('g-recaptcha-response');
+			if(!$response || strlen($response) == 0)
+			{
+				$this->set_error($lang->invalid_nocaptcha);
+			}
+			else
+			{
+				// We have a reCAPTCHA invisible to handle
+				// Contact Google and see if our reCAPTCHA was successful
+				$response = fetch_remote_file($this->verify_server, array(
+					'secret' => $mybb->settings['recaptchaprivatekey'],
+					'score' => $mybb->settings['recaptchascore'],
+					'remoteip' => $session->ipaddress,
+					'response' => $response
+				));
 
+				if($response === false)
+				{
+					$this->set_error($lang->invalid_nocaptcha_transmit);
+				}
+				else
+				{
+					$answer = json_decode($response, true);
+
+					if($answer['success'] != 'true' || $answer['score'] < $mybb->settings['recaptchascore'])
+					{
+						// We got it wrong! Oh no...
+						$this->set_error($lang->invalid_nocaptcha);
+					}
+				}
+			}
+		}
+		elseif(in_array($this->type, array(captcha::HCAPTCHA, captcha::HCAPTCHA_INVISIBLE)))
+		{
+			$response = $mybb->get_input('h-captcha-response');
+			if(!$response || strlen($response) == 0)
+			{
+				$this->set_error($lang->invalid_hcaptcha);
+			}
+			else
+			{
+				// We have an hCaptcha or hCaptcha invisible to handle
+				// Contact hCaptcha and see if our hCaptcha was successful
+				$response = fetch_remote_file($this->verify_server, array(
+					'secret' => $mybb->settings['hcaptchaprivatekey'],
+					'remoteip' => $session->ipaddress,
+					'response' => $response
+				));
+
+				if($response == false)
+				{
+					$this->set_error($lang->invalid_hcaptcha_transmit);
+				}
+				else
+				{
+					$answer = json_decode($response, true);
+					if($answer['success'] != 'true')
+					{
+						// We got it wrong! Oh no...
+						$this->set_error($lang->invalid_hcaptcha);
+					}
+				}
+			}
+		}
 		$plugins->run_hooks('captcha_validate_end', $this);
 
 		if(count($this->errors) > 0)
@@ -290,10 +406,10 @@ class captcha
 	{
 		global $db, $mybb, $plugins;
 
-		if($this->type == 1)
+		if($this->type == captcha::DEFAULT_CAPTCHA)
 		{
 			// We have a normal CAPTCHA to handle
-			$imagehash = $db->escape_string($mybb->input['imagehash']);
+			$imagehash = $db->escape_string($mybb->get_input('imagehash'));
 			if($imagehash)
 			{
 				$db->delete_query("captcha", "imagehash = '{$imagehash}'");

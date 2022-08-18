@@ -217,6 +217,7 @@ if($mybb->settings['portal_showsearch'] != 0)
 	eval("\$search = \"".$templates->get("portal_search")."\";");
 }
 
+$onlinecount = null;
 $whosonline = '';
 // Get the online users
 if($mybb->settings['portal_showwol'] != 0 && $mybb->usergroup['canviewonline'] != 0)
@@ -235,11 +236,17 @@ if($mybb->settings['portal_showwol'] != 0 && $mybb->usergroup['canviewonline'] !
 	$timesearch = TIME_NOW - $mybb->settings['wolcutoff'];
 	$guestcount = $membercount = $botcount = $anoncount = 0;
 	$doneusers = $onlinemembers = $onlinebots = array();
+
+	$query = $db->simple_select("sessions", "COUNT(DISTINCT ip) AS guestcount", "uid = 0 AND time > $timesearch");
+	$guestcount = $db->fetch_field($query, "guestcount");
+
 	$query = $db->query("
-		SELECT s.sid, s.ip, s.uid, s.time, s.location, u.username, u.invisible, u.usergroup, u.displaygroup
-		FROM ".TABLE_PREFIX."sessions s
-		LEFT JOIN ".TABLE_PREFIX."users u ON (s.uid=u.uid)
-		WHERE s.time>'$timesearch'
+		SELECT
+			s.sid, s.ip, s.uid, s.time, s.location, u.username, u.invisible, u.usergroup, u.displaygroup
+		FROM
+			".TABLE_PREFIX."sessions s
+			LEFT JOIN ".TABLE_PREFIX."users u ON (s.uid=u.uid)
+		WHERE (s.uid != 0 OR SUBSTR(s.sid,4,1) = '=') AND s.time > $timesearch
 		ORDER BY {$order_by}, {$order_by2}
 	");
 
@@ -283,7 +290,7 @@ if($mybb->settings['portal_showwol'] != 0 && $mybb->usergroup['canviewonline'] !
 				}
 			}
 		}
-		elseif(my_strpos($user['sid'], 'bot=') !== false && $spiders[$botkey])
+		elseif(my_strpos($user['sid'], 'bot=') !== false && $spiders[$botkey] && $mybb->settings['woldisplayspiders'] == 1)
 		{
 			// The user is a search bot.
 			if($mybb->settings['wolorder'] == 'username')
@@ -297,10 +304,6 @@ if($mybb->settings['portal_showwol'] != 0 && $mybb->usergroup['canviewonline'] !
 
 			$onlinebots[$key] = format_name($spiders[$botkey]['name'], $spiders[$botkey]['usergroup']);
 			++$botcount;
-		}
-		else
-		{
-			++$guestcount;
 		}
 	}
 
@@ -341,7 +344,7 @@ if($mybb->settings['portal_showwol'] != 0 && $mybb->usergroup['canviewonline'] !
 
 	// Most users online
 	$mostonline = $cache->read("mostonline");
-	if($onlinecount > $mostonline['numusers'])
+	if($onlinecount !== null && $onlinecount > $mostonline['numusers'])
 	{
 		$time = TIME_NOW;
 		$mostonline['numusers'] = $onlinecount;
@@ -648,12 +651,12 @@ if(!empty($mybb->settings['portal_announcementsfid']))
 				$parser_options['allow_smilies'] = 0;
 			}
 
-			if($mybb->user['showimages'] != 1 && $mybb->user['uid'] != 0 || $mybb->settings['guestimages'] != 1 && $mybb->user['uid'] == 0)
+			if($mybb->user['uid'] != 0 && $mybb->user['showimages'] != 1 || $mybb->settings['guestimages'] != 1 && $mybb->user['uid'] == 0)
 			{
 				$parser_options['allow_imgcode'] = 0;
 			}
 
-			if($mybb->user['showvideos'] != 1 && $mybb->user['uid'] != 0 || $mybb->settings['guestvideos'] != 1 && $mybb->user['uid'] == 0)
+			if($mybb->user['uid'] != 0 && $mybb->user['showvideos'] != 1 || $mybb->settings['guestvideos'] != 1 && $mybb->user['uid'] == 0)
 			{
 				$parser_options['allow_videocode'] = 0;
 			}
@@ -682,6 +685,11 @@ if(!empty($mybb->settings['portal_announcementsfid']))
 							$isimage = false;
 						}
 						$attachment['icon'] = get_attachment_icon($ext);
+						if(!$attachment['dateuploaded'])
+						{
+							$attachment['dateuploaded'] = $announcement['dateline'];
+						}
+						$attachdate = my_date('normal', $attachment['dateuploaded']);
 						// Support for [attachment=id] code
 						if(stripos($message, "[attachment=".$attachment['aid']."]") !== false)
 						{

@@ -29,6 +29,7 @@ if($mybb->user['uid'] != 0)
 }
 else
 {
+	$username = '';
 	eval("\$loginbox = \"".$templates->get("loginbox")."\";");
 }
 
@@ -690,7 +691,7 @@ if($mybb->input['action'] == "do_editpoll" && $mybb->request_method == "post")
 			{
 				$votes[$i] = "0";
 			}
-			$voteslist .= $votes[$i];
+			$voteslist .= (int)$votes[$i];
 			$numvotes = (int)$numvotes + (int)$votes[$i];
 		}
 	}
@@ -779,7 +780,7 @@ if($mybb->input['action'] == "showresults")
 	add_breadcrumb(htmlspecialchars_uni($thread['subject']), get_thread_link($thread['tid']));
 	add_breadcrumb($lang->nav_pollresults);
 
-	$voters = $votedfor = array();
+	$voters = $votedfor = $guest_voters = array();
 
 	// Calculate votes
 	$query = $db->query("
@@ -801,7 +802,14 @@ if($mybb->input['action'] == "showresults")
 		if($voter['uid'] == 0 || $voter['username'] == '')
 		{
 			// Add one to the number of voters for guests
-			++$guest_voters[$voter['voteoption']];
+			if(isset($guest_voters[$voter['voteoption']]))
+			{
+				++$guest_voters[$voter['voteoption']];
+			}
+			else
+			{
+				$guest_voters[$voter['voteoption']] = 1;
+			}
 		}
 		else
 		{
@@ -917,8 +925,7 @@ if($mybb->input['action'] == "vote" && $mybb->request_method == "post")
 
 	$poll['timeout'] = $poll['timeout']*60*60*24;
 
-	$query = $db->simple_select("threads", "*", "poll='".(int)$poll['pid']."'");
-	$thread = $db->fetch_array($query);
+	$thread = get_thread($poll['tid']);
 
 	if(!$thread || ($thread['visible'] != 1 && ($thread['visible'] == 0 && !is_moderator($thread['fid'], "canviewunapprove")) || ($thread['visible'] == -1 && !is_moderator($thread['fid'], "canviewdeleted"))))
 	{
@@ -1151,7 +1158,7 @@ if($mybb->input['action'] == "do_undovote")
 	$votesarray = explode("||~|~||", $poll['votes']);
 	if(count($votesarray) > $poll['numoptions'])
 	{
-		$votesarray = array_slice(0, $poll['numoptions']);
+		$votesarray = array_slice($votesarray, 0, $poll['numoptions']);
 	}
 
 	if($poll['multiple'] == 1)
