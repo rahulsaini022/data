@@ -7,9 +7,8 @@ $(document).ready(function () {
         $('#admin_main #sidebar a[href="' + window.location.protocol +"//" + window.location.host + "/" +window.location.pathname.split("/")[1] +'"]').addClass("active");
         var test = $('#admin_main #sidebar a[href="' + window.location.protocol + "//" + window.location.host + "/" + window.location.pathname.split("/")[1] + '"]').closest(".submenu_outerbox").addClass("show");
         $('#admin_main #sidebar a[href="' +window.location.protocol +"//" + window.location.host +"/" +  window.location.pathname.split("/")[1] +'"]').closest(" ul .nav li a.nav-link") .removeClass("collapsed").attr("aria-expended", "true");
-        //  console.log(window.location.protocol + "//" + window.location.host + "/" + window.location.pathname.split('/')[1] );
-        // var id=$('#admin_main #sidebar a[href="' + href + '"]').closest('.submenu_outerbox').attr('id');
-        // $('#admin_main #sidebar a[href="#' + id + '"]').addClass('active');
+      $('#admin_main #sidebar a[href="' + window.location.href + '"]').addClass(
+          "active");
     }
 });
 function onlyNumber(e) {
