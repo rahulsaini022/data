@@ -41,10 +41,10 @@
 
                                 <div class="col-md-4">
                                     <label for="attorney_reg_1_state_id"
-                                        class=" col-form-label text-md-left">{{ __('Attorney Reg #1 State*') }}</label>
+                                        class=" col-form-label text-md-left">{{ __('Attorney Registration #1 State*') }}</label>
                                     <select id="attorney_reg_1_state_id" name="attorney_reg_1_state_id"
                                         class="form-control states_select_input" required="" style="display:none;">
-                                        <option value="">Choose Attorney Reg #1 State*</option>
+                                        <option value="">Choose Attorney Registration #1 State*</option>
                                     </select>
                                     <label class="col-form-label"><b>Ohio</b></label>
                                     {{-- <input type="text" class="form-control" value="Ohio" disabled /> --}}
@@ -96,7 +96,7 @@
 
                                 <div class="col-md-4 attorney_reg_1_num_label">
                                     <label for="attorney_reg_1_num"
-                                        class=" col-form-label text-md-left attorney_reg_1_num_label">{{ __('Attorney Reg #1*') }}
+                                        class=" col-form-label text-md-left attorney_reg_1_num_label">{{ __('Attorney Registration #1*') }}
                                         <i class="fa fa-search lookupicone col-md-1 text-md-left" aria-hidden="true"
                                             data-toggle="modal" data-target="#myNewDynamicModal"></i></label>
                                     <input id="attorney_reg_1_num" type="text"
@@ -111,7 +111,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-4" id="noattorney" style="display: none;"><span class="text-danger">No
-                                        attorney data found for this reg number.Please <a href="{{ url('email-us') }}"
+                                        attorney data found for this Registration number.Please <a href="{{ url('email-us') }}"
                                             target="_blank">contact us</a>, if you are not able to register with your
                                         Registration Number.</span></div>
                             </div>
@@ -682,12 +682,12 @@
 
                             <!-- <div class="form-group row">
 
-                                        <label for="attorney_reg_2_state_id" class="col-md-2 col-form-label text-md-left">{{ __('Attorney Reg #2 State') }}</label>
+                                        <label for="attorney_reg_2_state_id" class="col-md-2 col-form-label text-md-left">{{ __('Attorney Registration #2 State') }}</label>
 
                                         <div class="col-md-4">
                                             
                                             <select id="attorney_reg_2_state_id" name="attorney_reg_2_state_id" class="form-control states_select_input">
-                                                <option value="">Choose Attorney Reg #2 State</option>
+                                                <option value="">Choose Attorney Registration #2 State</option>
                                             </select>
 
                                             @error('attorney_reg_2_state_id')
@@ -697,7 +697,7 @@
     @enderror
                                         </div>
 
-                                        <label for="attorney_reg_2_num" class="col-md-2 col-form-label text-md-left">{{ __('Attorney Reg #2') }}</label>
+                                        <label for="attorney_reg_2_num" class="col-md-2 col-form-label text-md-left">{{ __('Attorney Registration #2') }}</label>
 
                                         <div class="col-md-4">
                                             <input id="attorney_reg_2_num" type="text" class="form-control @error('attorney_reg_2_num') is-invalid @enderror" name="attorney_reg_2_num" value="{{ old('attorney_reg_2_num') }}" autocomplete="attorney_reg_2_num" autofocus>
@@ -713,12 +713,12 @@
 
                                     <div class="form-group row">
 
-                                        <label for="attorney_reg_3_state_id" class="col-md-2 col-form-label text-md-left">{{ __('Attorney Reg #3 State') }}</label>
+                                        <label for="attorney_reg_3_state_id" class="col-md-2 col-form-label text-md-left">{{ __('Attorney Registration #3 State') }}</label>
 
                                         <div class="col-md-4">
                                             
                                             <select id="attorney_reg_3_state_id" name="attorney_reg_3_state_id" class="form-control states_select_input">
-                                                <option value="">Choose Attorney Reg #3 State</option>
+                                                <option value="">Choose Attorney Registration #3 State</option>
                                             </select>
 
                                             @error('attorney_reg_3_state_id')
@@ -728,7 +728,7 @@
     @enderror
                                         </div>
 
-                                        <label for="attorney_reg_3_num" class="col-md-2 col-form-label text-md-left">{{ __('Attorney Reg #3') }}</label>
+                                        <label for="attorney_reg_3_num" class="col-md-2 col-form-label text-md-left">{{ __('Attorney Registration #3') }}</label>
 
                                         <div class="col-md-4">
                                             <input id="attorney_reg_3_num" type="text" class="form-control @error('attorney_reg_3_num') is-invalid @enderror" name="attorney_reg_3_num" value="{{ old('attorney_reg_3_num') }}" autocomplete="attorney_reg_3_num" autofocus>

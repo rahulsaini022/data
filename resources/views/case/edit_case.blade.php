@@ -4,7 +4,7 @@
     <div class="row justify-content-center case-registration-steps">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header"><strong>{{ __('Edit Case Info') }}</strong>
+                <div class="card-header"><strong>{{ __('Edit Case Infomations') }}</strong>
                     <div class="pull-right">
                         <a class="btn btn-primary" href="{{ route('cases.show_party_reg_form',['case_id' => $case_data->id]) }}"> Edit Parties</a>
                         <a class="btn btn-primary" href="{{ route('cases.index') }}">Back</a>

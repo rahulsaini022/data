@@ -31,6 +31,12 @@ Route::get('/backup', function () {
 	die('not create');
  }
 });
+Route::get('/plan', function () {
+	$stripe = new \Stripe\StripeClient(
+		'sk_test_51Hu30EBtWlZKaqgXooijepMd3AsP30SWtDuuXHlwCUt4gPRtAhAu1fume290n1lTnlXWyrPc1aahJURcPix443LT00LeEL7UIE'
+	);
+	dd($stripe->plans->all(['limit' => 15]));
+});
 
 
 Auth::routes();

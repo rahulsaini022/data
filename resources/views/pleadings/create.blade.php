@@ -76,7 +76,7 @@
                                 <label class="col-form-label text-md-left"><strong>This Pleading Brings In New Third-Parties?</strong></label>
                                 <input type="radio" id="pleading_has_new_third_parties_y" class="pleading_has_new_third_parties_inputs" name="pleading_has_new_third_parties" value="Yes" required="" onclick="pleadingHasNewThirdparties(this);">
                                 <label for="pleading_has_new_third_parties_y">YES</label>
-                                <input type="radio" id="pleading_has_new_third_parties_n" class="pleading_has_new_third_parties_inputs" name="pleading_has_new_third_parties" value="No" onclick="pleadingHasNewThirdparties(this);" checked="">
+                                <input type="radio" id="pleading_has_new_third_parties_n" checked class="pleading_has_new_third_parties_inputs" name="pleading_has_new_third_parties" value="No" onclick="pleadingHasNewThirdparties(this);" checked="">
                                 <label for="pleading_has_new_third_parties_n">NO</label>
                             </div>
                             <div class="form-group col-sm-6"></div>
@@ -87,8 +87,8 @@
                             </div>
                             <div class="check_all_filing_top_div">
                                 <div class="mt-3">
-                                    <div class="d-inline text-primary mr-3"><label class="" style="margin-bottom: 0px;"><input type="checkbox" class="check_all_filing_top" id="check_all_filing_top" name="check_all_filing_top" value="" onchange="checkUncheckAllFiling(this, 'check','top');"> All Top Party Roles</label></div>
-                                    <div class="d-inline text-primary"><label class="" style="margin-bottom: 0px;"><input type="checkbox" class="uncheck_all_filing_top" id="uncheck_all_filing_top" name="uncheck_all_filing_top" value=""  onchange="checkUncheckAllFiling(this, 'uncheck','top');"> Clear all Top Party Roles</label></div>
+                                    <div class="d-inline text-primary mr-3"><label class="" style="margin-bottom: 0px;"><input type="checkbox"  class="d-none check_all_filing_top" id="check_all_filing_top" name="check_all_filing_top" value="" onchange="checkUncheckAllFiling(this, 'check','top');">Select All Top Party Roles</label></div>
+                                    <div class="d-inline text-primary"><label class="" style="margin-bottom: 0px;"><input type="checkbox" class="d-none uncheck_all_filing_top" id="uncheck_all_filing_top" name="uncheck_all_filing_top" value=""  onchange="checkUncheckAllFiling(this, 'uncheck','top');"> Clear all Top Party Roles</label></div>
                                 </div>
                                 <div class="checkbox-options-outer four-option">
                                     @foreach ($top_party_data as $key => $party)
@@ -104,8 +104,8 @@
                             </div>
                             <div class="check_all_filing_bottom_div">
                                 <div class="mt-3">
-                                    <div class="d-inline text-primary mr-3"><label class="" style="margin-bottom: 0px;"><input type="checkbox" class="check_all_filing_bottom" id="check_all_filing_bottom" name="check_all_filing_bottom" value=""  onchange="checkUncheckAllFiling(this, 'check','bottom');"> All Bottom Party Roles</label></div>
-                                    <div class="d-inline text-primary"><label class="" style="margin-bottom: 0px;"><input type="checkbox" class="uncheck_all_filing_bottom" id="uncheck_all_filing_bottom" name="uncheck_all_filing_bottom" value=""  onchange="checkUncheckAllFiling(this, 'uncheck','bottom');"> Clear all Bottom Party Roles</label></div>
+                                    <div class="d-inline text-primary mr-3"><label class="" style="margin-bottom: 0px;"><input type="checkbox"  class="d-none check_all_filing_bottom" id="check_all_filing_bottom" name="check_all_filing_bottom" value=""  onchange="checkUncheckAllFiling(this, 'check','bottom');">Select All Bottom Party Roles</label></div>
+                                    <div class="d-inline text-primary"><label class="" style="margin-bottom: 0px;"><input type="checkbox" class="d-none uncheck_all_filing_bottom" id="uncheck_all_filing_bottom" name="uncheck_all_filing_bottom" value=""  onchange="checkUncheckAllFiling(this, 'uncheck','bottom');"> Clear all Bottom Party Roles</label></div>
                                 </div>
                                 <div class="checkbox-options-outer four-option">
                                     @foreach ($bottom_party_data as $key => $party)
@@ -122,8 +122,8 @@
                             @if(isset($top_third_party_data) && count($top_third_party_data) > 0 || isset($bottom_third_party_data) && count($bottom_third_party_data) > 0)
                             <div class="check_all_filing_third_div">
                                 <div class="mt-3">
-                                    <div class="d-inline text-primary mr-3"><label class="" style="margin-bottom: 0px;"><input type="checkbox" class="check_all_filing_third" id="check_all_filing_third" name="check_all_filing_third" value="" onchange="checkUncheckAllFiling(this, 'check','third');"> All Third-Parties</label></div>
-                                    <div class="d-inline text-primary"><label class="" style="margin-bottom: 0px;"><input type="checkbox" class="uncheck_all_filing_third" id="uncheck_all_filing_third" name="uncheck_all_filing_third" value="" onchange="checkUncheckAllFiling(this, 'uncheck','third');"> Clear all Third-Parties</label></div>
+                                    <div class="d-inline text-primary mr-3"><label class="" style="margin-bottom: 0px;"><input type="checkbox"  class="d-none check_all_filing_third" id="check_all_filing_third" name="check_all_filing_third" value="" onchange="checkUncheckAllFiling(this, 'check','third');"> All Third-Parties</label></div>
+                                    <div class="d-inline text-primary"><label class="" style="margin-bottom: 0px;"><input type="checkbox" class="d-none uncheck_all_filing_third" id="uncheck_all_filing_third" name="uncheck_all_filing_third" value="" onchange="checkUncheckAllFiling(this, 'uncheck','third');"> Clear all Third-Parties</label></div>
                                 </div>
                                 <div class="checkbox-options-outer four-option">
                                     <!-- for top third party filing -->
@@ -154,7 +154,7 @@
                             <label class="col-form-label text-md-left"><strong>Pleading Includes Claims?</strong></label>
                             <input type="radio" id="pleading_includes_claims_y" class="pleading_includes_claims_inputs" name="pleading_includes_claims" value="Yes" required="" onchange="pleadingIncludeClaims(this)">
                             <label for="pleading_includes_claims_y">YES</label>
-                            <input type="radio" id="pleading_includes_claims_n" class="pleading_includes_claims_inputs" name="pleading_includes_claims" value="No" onchange="pleadingIncludeClaims(this)">
+                            <input type="radio" id="pleading_includes_claims_n" checked class="pleading_includes_claims_inputs" name="pleading_includes_claims" value="No" onchange="pleadingIncludeClaims(this)">
                             <label for="pleading_includes_claims_n">NO</label>
                         </div>
                         <div class="form-group col-sm-6"></div>
@@ -169,8 +169,8 @@
                             </div>
                             <div class="check_all_responsible_top_div">
                                 <div class="mt-3">
-                                    <div class="d-inline text-primary mr-3"><label class="" style="margin-bottom: 0px;"><input type="checkbox" class="check_all_responsible_top" id="check_all_responsible_top" name="check_all_responsible_top" value="" onchange="checkUncheckAllResponsible(this, 'check','top');">  All Top Party Roles</label></div>
-                                    <div class="d-inline text-primary"><label class="" style="margin-bottom: 0px;"><input type="checkbox" class="uncheck_all_responsible_top" id="uncheck_all_responsible_top" name="uncheck_all_responsible_top" value="" onchange="checkUncheckAllResponsible(this, 'uncheck','top');"> Clear all Top Party Roles</label></div>
+                                    <div class="d-inline text-primary mr-3"><label class="" style="margin-bottom: 0px;"><input type="checkbox"  class="d-none check_all_responsible_top" id="check_all_responsible_top" name="check_all_responsible_top" value="" onchange="checkUncheckAllResponsible(this, 'check','top');"> Select All Top Party Roles</label></div>
+                                    <div class="d-inline text-primary"><label class="" style="margin-bottom: 0px;"><input type="checkbox" class="d-none uncheck_all_responsible_top" id="uncheck_all_responsible_top" name="uncheck_all_responsible_top" value="" onclick="checkUncheckAllResponsible(this, 'uncheck','top');"> Clear all Top Party Roles</label></div>
                                 </div>
                                 <div class="checkbox-options-outer four-option">
                                     @foreach ($top_party_data as $key => $party)
@@ -192,8 +192,8 @@
                             </div>
                             <div class="check_all_responsible_bottom_div">
                                 <div class="mt-3">
-                                    <div class="d-inline text-primary mr-3"><label class="" style="margin-bottom: 0px;"><input type="checkbox" class="check_all_responsible_bottom" id="check_all_responsible_bottom" name="check_all_responsible_bottom" value="" onchange="checkUncheckAllResponsible(this, 'check','bottom');"> All Bottom Party Roles</label></div>
-                                    <div class="d-inline text-primary"><label class="" style="margin-bottom: 0px;"><input type="checkbox" class="uncheck_all_responsible_bottom" id="uncheck_all_responsible_bottom" name="uncheck_all_responsible_bottom" value="" onchange="checkUncheckAllResponsible(this, 'uncheck','bottom');"> Clear all Bottom Party Roles</label></div>
+                                    <div class="d-inline text-primary mr-3"><label class="" style="margin-bottom: 0px;"><input type="checkbox"  class="d-none check_all_responsible_bottom" id="check_all_responsible_bottom" name="check_all_responsible_bottom" value="" onchange="checkUncheckAllResponsible(this, 'check','bottom');">Select All Bottom Party Roles</label></div>
+                                    <div class="d-inline text-primary"><label class="" style="margin-bottom: 0px;"><input type="checkbox" class="d-none uncheck_all_responsible_bottom" id="uncheck_all_responsible_bottom" name="uncheck_all_responsible_bottom" value="" onchange="checkUncheckAllResponsible(this, 'uncheck','bottom');"> Clear all Bottom Party Roles</label></div>
                                 </div>
                                 <div class="checkbox-options-outer four-option">
                                     @foreach ($bottom_party_data as $key => $party)
@@ -216,8 +216,8 @@
                             @if(isset($top_third_party_data) && count($top_third_party_data) > 0 || isset($bottom_third_party_data) && count($bottom_third_party_data) > 0)
                             <div class="check_all_responsible_third_div">
                                 <div class="mt-3">
-                                    <div class="d-inline text-primary mr-3"><label class="" style="margin-bottom: 0px;"><input type="checkbox" class="check_all_responsible_third" id="check_all_responsible_third" name="check_all_responsible_third" value="" onchange="checkUncheckAllResponsible(this, 'check','third');"> All Third-Parties</label></div>
-                                    <div class="d-inline text-primary"><label class="" style="margin-bottom: 0px;"><input type="checkbox" class="uncheck_all_responsible_third" id="uncheck_all_responsible_third" name="uncheck_all_responsible_third" value="" onchange="checkUncheckAllResponsible(this, 'uncheck','third');"> Clear all Third-Parties</label></div>
+                                    <div class="d-inline text-primary mr-3"><label class="" style="margin-bottom: 0px;"><input type="checkbox"  class="d-none check_all_responsible_third" id="check_all_responsible_third" name="check_all_responsible_third" value="" onchange="checkUncheckAllResponsible(this, 'check','third');"> All Third-Parties</label></div>
+                                    <div class="d-inline text-primary"><label class="" style="margin-bottom: 0px;"><input type="checkbox" class="d-none uncheck_all_responsible_third" id="uncheck_all_responsible_third" name="uncheck_all_responsible_third" value="" onchange="checkUncheckAllResponsible(this, 'uncheck','third');"> Clear all Third-Parties</label></div>
                                 </div>
                                 <div class="checkbox-options-outer four-option">
                                     <!-- for top third party responsible -->

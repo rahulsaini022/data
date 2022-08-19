@@ -374,7 +374,8 @@
                             </div>
                             @endif
                         </div>
-                        <div class="form-group col-sm-6">
+                        <div class="form-group col-sm-12 m-0 p-0">
+                        <div class="form-group col-sm-6 ">
                             <label for="motion_type_id" class="col-form-label text-md-left"><strong>Motion Type</strong></label>
                             <select id="motion_type_id" name="motion_type_id" class="form-control" required="" onchange="getMotionName(this)">
                                 <option value="">Select</option>
@@ -384,17 +385,20 @@
                             </select> 
                         </div>
 
-                        <div class="form-group col-sm-6">
+                        <div class="form-group col-sm-6 ">
                             <label for="motion_name" class="col-form-label text-md-left"><strong>Motion Name</strong></label>
                             <input id="motion_name" type="text" class="form-control" name="motion_name" value="">
                         </div>
-                        <div class="form-group col-sm-6">
+                        </div>
+                        <div class="form-group col-sm-12 m-0 p-0">
+                         <div class="form-group col-sm-6 ">
                             <label for="file_date" class="col-form-label text-md-left"><strong>File Date</strong></label>
                             <input id="file_date" type="text" class="form-control hasDatepicker" name="file_date" value="" autocomplete="nope" onchange="getResponsedate(this.value)">
                         </div>
-                        <div class="form-group col-sm-6">
+                         <div class="form-group col-sm-6 ">
                             <label for="response_deadline" class="col-form-label text-md-left"><strong>Response Deadline</strong></label>
                             <input id="response_deadline" type="text" class="form-control hasDatepicker" name="response_deadline" value="" autocomplete="nope">
+                        </div>
                         </div>
                         <div class="form-group col-sm-12 text-center">
                             <button type="submit" name="save" class="btn btn-primary">Save</button>

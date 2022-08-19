@@ -1,4 +1,12 @@
+
+
+
 $(document).ready(function () {
+  $('button[type="submit"]').click(function () {
+     $($('input[type="radio"].error').parent()).append(
+         $('input[type="radio"].error').parent().children("label.error")
+     );
+  });
     $(":checkbox").removeClass("form-control");
     $(".pagination").addClass("flex-wrap");
     var is_admin = $("#admin_main");
@@ -87,3 +95,4 @@ function ConfirmStatus(e) {
         }
     });
 }
+

@@ -4,7 +4,7 @@
     <div class="row justify-content-center attorney-edit-profile">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header"><strong>{{ __('Edit Account Info') }}</strong>
+                <div class="card-header"><strong>{{ __('Edit Account Infomations') }}</strong>
                     <div class="pull-right">
                         @hasrole('super admin')
                         <a class="btn btn-primary" href="{{ route('attorneys.index') }}">Back</a>
@@ -31,7 +31,7 @@
                             </div>
                             {{-- <label class="col-md-2 col-form-label text-md-left"></label> --}}
                             <div class="col-md-4" id="noattorney" style="display: none;"><span class="text-info">No
-                                    attorney data found for this reg number.</span></div>
+                                    attorney data found for this registration number.</span></div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-4">
@@ -491,12 +491,12 @@
                         <div class="form-group row">
 
                             <div class="col-md-4">
-                                <label for="attorney_reg_1_state_id" class=" col-form-label text-md-left">{{ __('Attorney Reg #1 State*') }}</label>
+                                <label for="attorney_reg_1_state_id" class=" col-form-label text-md-left">{{ __('Attorney Registration #1 State*') }}</label>
                                 <input type="hidden" name="attorney_reg_1_state_id_input" id="attorney_reg_1_state_id_input" value="<?php if (isset($attorney_data)) {
                                                                                                                                         echo $attorney_data->attorney_reg_1_state_id;
                                                                                                                                     } ?>">
                                 <select id="attorney_reg_1_state_id" name="attorney_reg_1_state_id" class="form-control states_select_input" required="" readonly="" onmousedown="(function(e){ e.preventDefault(); })(event, this)">
-                                    <option value="">Choose Attorney Reg #1 State</option>
+                                    <option value="">Choose Attorney Registration #1 State</option>
                                 </select>
                                 @error('attorney_reg_1_state_id')
                                 <span class="invalid-feedback" role="alert">
@@ -506,7 +506,7 @@
                             </div>
 
                             <div class="col-md-4">
-                                <label for="attorney_reg_1_num" class=" col-form-label text-md-left">{{ __('Attorney Reg #1*') }}</label>
+                                <label for="attorney_reg_1_num" class=" col-form-label text-md-left">{{ __('Attorney Registration #1*') }}</label>
                                 <input id="attorney_reg_1_num" type="text" class="form-control @error('attorney_reg_1_num') is-invalid @enderror" name="attorney_reg_1_num" value="<?php if (isset($attorney_data)) {
                                                                                                                                                                                         echo $attorney_data->attorney_reg_1_num;
                                                                                                                                                                                     } ?>" autocomplete="attorney_reg_1_num" autofocus required="" readonly="">
@@ -576,11 +576,11 @@
                         </div>
                 </div>
                 {{-- <!-- <div class="form-group row">
-                            <label for="attorney_reg_2_state_id" class=" col-form-label text-md-left">{{ __('Attorney Reg #2 State') }}</label>
+                            <label for="attorney_reg_2_state_id" class=" col-form-label text-md-left">{{ __('Attorney Registration #2 State') }}</label>
                 <div class="col-md-4">
                     <input type="hidden" name="attorney_reg_2_state_id_input" id="attorney_reg_2_state_id_input" value="{{ $attorney_data->attorney_reg_2_state_id }}">
                     <select id="attorney_reg_2_state_id" name="attorney_reg_2_state_id" class="form-control states_select_input">
-                        <option value="">Choose Attorney Reg #2 State</option>
+                        <option value="">Choose Attorney Registration #2 State</option>
                     </select>
                     @error('attorney_reg_2_state_id')
                     <span class="invalid-feedback" role="alert">
@@ -588,7 +588,7 @@
                     </span>
                     @enderror
                 </div>
-                <label for="attorney_reg_2_num" class="col-md-2 col-form-label text-md-left">{{ __('Attorney Reg #2') }}</label>
+                <label for="attorney_reg_2_num" class="col-md-2 col-form-label text-md-left">{{ __('Attorney Registration #2') }}</label>
                 <div class="col-md-4">
                     <input id="attorney_reg_2_num" type="text" class="form-control @error('attorney_reg_2_num') is-invalid @enderror" name="attorney_reg_2_num" value="{{ $attorney_data->attorney_reg_2_num }}" autocomplete="attorney_reg_2_num" autofocus>
                     @error('attorney_reg_2_num')
@@ -599,11 +599,11 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label for="attorney_reg_3_state_id" class="col-md-2 col-form-label text-md-left">{{ __('Attorney Reg #3 State') }}</label>
+                <label for="attorney_reg_3_state_id" class="col-md-2 col-form-label text-md-left">{{ __('Attorney Registration #3 State') }}</label>
                 <div class="col-md-4">
                     <input type="hidden" name="attorney_reg_3_state_id_input" id="attorney_reg_3_state_id_input" value="{{ $attorney_data->attorney_reg_3_state_id }}">
                     <select id="attorney_reg_3_state_id" name="attorney_reg_3_state_id" class="form-control states_select_input">
-                        <option value="">Choose Attorney Reg #3 State</option>
+                        <option value="">Choose Attorney Registration #3 State</option>
                     </select>
                     @error('attorney_reg_3_state_id')
                     <span class="invalid-feedback" role="alert">
@@ -611,7 +611,7 @@
                     </span>
                     @enderror
                 </div>
-                <label for="attorney_reg_3_num" class="col-md-2 col-form-label text-md-left">{{ __('Attorney Reg #3') }}</label>
+                <label for="attorney_reg_3_num" class="col-md-2 col-form-label text-md-left">{{ __('Attorney Registration #3') }}</label>
                 <div class="col-md-4">
                     <input id="attorney_reg_3_num" type="text" class="form-control @error('attorney_reg_3_num') is-invalid @enderror" name="attorney_reg_3_num" value="{{ $attorney_data->attorney_reg_3_num }}" autocomplete="attorney_reg_3_num" autofocus>
                     @error('attorney_reg_3_num')
