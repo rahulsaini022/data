@@ -138,7 +138,10 @@ class DrChildrenController extends Controller
     // save tab info in database table.
     public function store(Request $request)
     {
-
+        $result['Num_MinorDepChildren_ONLY_This_Marriage'] = 0;
+        $result['Num_Client_Children_NOT_this_Marriage'] = 0;
+        $result['Num_Op_Children_NOT_this_Marriage'] = 0;
+        $result['Num_Children_Born_ONLY_These_Parties_Before_Marriage'] = 0;
         $result = $request->except('submit');
         // parse string to date for client info section
         $length=array('First','Second','Third','Fourth','Fifth','Sixth','Seventh','Eighth');
@@ -242,7 +245,8 @@ class DrChildrenController extends Controller
                 $result['Op_Child_NOM_Total_Monthly_Child_Support_PAID']=$result['Op_Child_NOM_Total_Monthly_Child_Support_PAID']+$result['Op_'.$length[$i].'_Child_NOM_Monthly_Child_Support_PAID'];
             }
         }
-
+     
+        
         // to make unwanted fields null for during marriage child info
         $Num_Children_ONLY_This_Marriage=$result['Num_Children_ONLY_This_Marriage'];
         if($Num_Children_ONLY_This_Marriage=='0'){
@@ -328,12 +332,13 @@ class DrChildrenController extends Controller
 
         // update case overview info.
         $drcaseoverview=DrCaseOverview::where('case_id',$result['case_id'])->get()->first();
+       
         if(isset($drcaseoverview)){
             $drcaseoverview->Num_Children_ONLY_This_Marriage=$result['Num_Children_ONLY_This_Marriage'];
-            //$drcaseoverview->Num_MinorDepChildren_ONLY_This_Marriage=$result['Num_MinorDepChildren_ONLY_This_Marriage'];
+            $drcaseoverview->Num_MinorDepChildren_ONLY_This_Marriage=$result['Num_MinorDepChildren_ONLY_This_Marriage'];
             $drcaseoverview->Num_Client_Children_NOT_this_Marriage=$result['Num_Client_Children_NOT_this_Marriage'];
             $drcaseoverview->Num_Op_Children_NOT_this_Marriage=$result['Num_Op_Children_NOT_this_Marriage'];
-             //$drcaseoverview->Num_Children_Born_ONLY_These_Parties_Before_Marriage = $result['Num_Children_Born_ONLY_These_Parties_Before_Marriage'];
+             $drcaseoverview->Num_Children_Born_ONLY_These_Parties_Before_Marriage = $result['Num_Children_Born_ONLY_These_Parties_Before_Marriage'];
             $drcaseoverview->save();
         } else {
             return redirect()->route('cases.family_law_interview_tabs',$case_id)->with('error', 'Complete Case Overview Info Section First.');
@@ -427,7 +432,7 @@ class DrChildrenController extends Controller
 
                 } else {
                     $drchildren->Num_Children_ONLY_This_Marriage=$drcaseoverview->Num_Children_ONLY_This_Marriage;
-                    //$drchildren->Num_MinorDepChildren_ONLY_This_Marriage=$drcaseoverview->Num_MinorDepChildren_ONLY_This_Marriage;
+                    $drchildren->Num_MinorDepChildren_ONLY_This_Marriage=$drcaseoverview->Num_MinorDepChildren_ONLY_This_Marriage;
                     $drchildren->Num_Client_Children_NOT_this_Marriage=$drcaseoverview->Num_Client_Children_NOT_this_Marriage;
                     $drchildren->Num_Op_Children_NOT_this_Marriage=$drcaseoverview->Num_Op_Children_NOT_this_Marriage;
                 }
@@ -609,6 +614,7 @@ class DrChildrenController extends Controller
             $result['Op_'.$length[$i].'_Child_NOM_AbsentParent_City_State_ZIP']=NULL;
             $result['Op_'.$length[$i].'_Child_NOM_AbsentParent_Phone']=NULL;
         }
+        $result['Num_Children_This_Marriage'] = $result['Num_Op_Children_NOT_this_Marriage']+ $result['Num_Client_Children_NOT_this_Marriage']+ $Num_Children_ONLY_This_Marriage;
         // echo "<pre>";print_r($result);die;
         $DrChildren  = DrChildren::findOrFail($id);
         if($DrChildren){

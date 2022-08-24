@@ -151,7 +151,7 @@
                                 @endif @if ($case_data->total_bottom_parties < $number_bottom_party_type &&
                                     (isset($top_party_data) || isset($bottom_party_data)))
                                     <button type="button" id="bottom_party_check"style="margin-bottom: 15px;"
-                                        class="show-party-form btn btn-primary  float-right"
+                                        class="show-party-form btn btn-primary  float-right" 
                                         data-is-client="{{ $is_client_top_bottom }}">Add {{ $bottom_party_type }}
                                         @if ($bottom_party_type != 'Petitioner 2')
                                             (#{{ $t2 }})
@@ -410,6 +410,7 @@
                                                 (#{{ $t4 }})
                                             @endif
                                         </h4>
+                                     
                                         <div class="col-md-8" style="display: none;">
                                             <label class="col-md-3 col-form-label text-md-left">Register Parties
                                                 For*</label>
@@ -473,14 +474,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 org_comp_name_main_div" style="display: none;">
-                                            <div class="col">
-                                                <label for="org_comp_name"
-                                                    class=" col-form-label text-md-left">Organization/Company Name*</label>
-                                                <input type="text" id="org_comp_name" class="form-control"
-                                                    name="org_comp_name">
-                                            </div>
-                                        </div>
+                                        
                                     </div>
                                     <div class="col-md-12 party-type-div">
                                         <div class="col-md-6">
@@ -498,6 +492,30 @@
                                                 <label for="party_type-ally">Ally</label>
                                             </div>
                                         </div>
+                                           <div class="col-md-6">
+                                              <div class="col-md-12 m-0">
+                                                <div class="form-check form-check-inline prospect-check" >
+                                                    <label class="form-check-label">
+                                                        <input class="form-check-input mt-1"  onchange="prospectData()"  type="checkbox" name="" id="prospect_data" value="checkedValue"> Prefill with prospect data
+                                                    </label>
+                                               <span id="no_prospect" class="text-danger  ml-2"></span>
+                                            </div>
+                                              </div>
+                                            
+                                                
+                                            
+                                        </div>
+                                       
+                                    </div>
+                                     <div class="col-md-12 m-0">
+                                        <div class="col-md-6 org_comp_name_main_div" style="display: none;">
+                                            <div class="col">
+                                                <label for="org_comp_name"
+                                                    class=" col-form-label text-md-left">Organization/Company Name*</label>
+                                                <input type="text" id="org_comp_name" class="form-control"
+                                                    name="org_comp_name">
+                                            </div>
+                                        </div>
                                         <div class="col-md-6 care_of_div" style="display: none;">
                                             <label class="col-md-4 col-form-label text-md-left">C/O*</label>
                                             <div class="col-md-8">
@@ -507,7 +525,7 @@
                                                 <label for="care_of-other">Other</label>
                                             </div>
                                         </div>
-                                    </div>
+                                        </div>
                                     <div class="col-md-12 pauperis_div">
                                         <div class="col-md-6">
                                             <label class="col-md-4 col-form-label text-md-left">In <i>Forma
@@ -625,9 +643,7 @@
                                                 <label for="clfname" class="col-form-label text-md-left">First
                                                     Name*</label>
                                                 <input id="clfname" type="text" class="form-control" name="clfname"
-                                                    value="<?php if (isset($prospect_client->prosp_fname) && $prospect_client->prosp_fname != '') {
-                                                        echo $prospect_client->prosp_fname;
-                                                    } ?>" required="" autofocus="">
+                                                     required="" autofocus="">
                                             </div>
                                         </div>
                                     </div>
@@ -637,9 +653,7 @@
                                                 <label for="clmname" class=" col-form-label text-md-left">Middle
                                                     Name</label>
                                                 <input id="clmname" type="text" class="form-control "
-                                                    name="clmname" value="<?php if (isset($prospect_client->prosp_mname) && $prospect_client->prosp_mname != '') {
-                                                        echo $prospect_client->prosp_mname;
-                                                    } ?>" autofocus="">
+                                                    name="clmname"  autofocus="">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -647,9 +661,7 @@
                                                 <label for="cllname" class=" col-form-label text-md-left">Last
                                                     Name*</label>
                                                 <input id="cllname" type="text" class="form-control" name="cllname"
-                                                    value="<?php if (isset($prospect_client->prosp_lname) && $prospect_client->prosp_lname != '') {
-                                                        echo $prospect_client->prosp_lname;
-                                                    } ?>" required="" autofocus="">
+                                                    required="" autofocus="">
                                             </div>
                                         </div>
                                     </div>
@@ -659,9 +671,7 @@
                                                 <label for="clemail" class=" col-form-label text-md-left">Email<span
                                                         id="email_asterisk">*</span></label>
                                                 <input id="clemail" type="email" class="form-control" name="clemail"
-                                                    value="<?php if (isset($prospect_client->prosp_email) && $prospect_client->prosp_email != '') {
-                                                        echo $prospect_client->prosp_email;
-                                                    } ?>" autofocus="" required>
+                                                    autofocus="" required>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -671,9 +681,7 @@
                                                 <input id="clphone" maxlength="14"
                                                     onkeypress="return onlyNumber(event)" type="text"
                                                     class="form-control has-pattern-one" name="clphone"
-                                                    value="<?php if (isset($prospect_client->prosp_phone) && $prospect_client->prosp_phone != '') {
-                                                        echo $prospect_client->prosp_phone;
-                                                    } ?>" autofocus=""
+                                                   autofocus=""
                                                     placeholder="(XXX) XXX-XXXX">
                                             </div>
                                         </div>
@@ -685,24 +693,12 @@
                                                 <select id="clsuffix" name="clsuffix" class="form-control"
                                                     autofocus="">
                                                     <option value="">Choose Suffix Type</option>
-                                                    <option value="Sr." <?php if (isset($prospect_client->prosp_sufname) && $prospect_client->prosp_sufname == 'Sr.') {
-                                                        echo 'selected';
-                                                    } ?>>Sr.</option>
-                                                    <option value="Jr." <?php if (isset($prospect_client->prosp_sufname) && $prospect_client->prosp_sufname == 'Jr.') {
-                                                        echo 'selected';
-                                                    } ?>>Jr.</option>
-                                                    <option value="I" <?php if (isset($prospect_client->prosp_sufname) && $prospect_client->prosp_sufname == 'I') {
-                                                        echo 'selected';
-                                                    } ?>>I</option>
-                                                    <option value="II" <?php if (isset($prospect_client->prosp_sufname) && $prospect_client->prosp_sufname == 'II') {
-                                                        echo 'selected';
-                                                    } ?>>II</option>
-                                                    <option value="III" <?php if (isset($prospect_client->prosp_sufname) && $prospect_client->prosp_sufname == 'III') {
-                                                        echo 'selected';
-                                                    } ?>>III</option>
-                                                    <option value="IV" <?php if (isset($prospect_client->prosp_sufname) && $prospect_client->prosp_sufname == 'IV') {
-                                                        echo 'selected';
-                                                    } ?>>IV</option>
+                                                    <option value="Sr." >Sr.</option>
+                                                    <option value="Jr." >Jr.</option>
+                                                    <option value="I" >I</option>
+                                                    <option value="II" >II</option>
+                                                    <option value="III" >III</option>
+                                                    <option value="IV"  >IV</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -840,9 +836,7 @@
                                             <div class="col-md-10">
                                                 <label for="clzip" class=" col-form-label text-md-left">ZIP*</label>
                                                 <input type="text" class="form-control" id="clzip" name="clzip"
-                                                    value="<?php if (isset($prospect_client->prosp_zip) && $prospect_client->prosp_zip != '') {
-                                                        echo $prospect_client->prosp_zip;
-                                                    } ?>" autofocus="" required="">
+                                                   autofocus="" required="">
                                                 <span class="text-danger no-state-county-cl" style="display: none;">No
                                                     City, State, County found for this zipcode.</span>
                                             </div>
@@ -887,9 +881,7 @@
                                                 <label for="clstreetad" class=" col-form-label text-md-left">Street
                                                     Address*</label>
                                                 <input type="text" class="form-control" id="clstreetad"
-                                                    name="clstreetad" value="<?php if (isset($prospect_client->prosp_street_ad) && $prospect_client->prosp_street_ad != '') {
-                                                        echo $prospect_client->prosp_street_ad;
-                                                    } ?>" autofocus=""
+                                                    name="clstreetad"  autofocus=""
                                                     required="">
                                             </div>
                                         </div>
@@ -897,18 +889,14 @@
                                             <div class="col-md-10">
                                                 <label for="unit" class=" col-form-label text-md-left">Unit</label>
                                                 <input id="unit" type="text" class="form-control "
-                                                    name="unit" value="<?php if (isset($prospect_client->prosp_unit) && $prospect_client->prosp_unit != '') {
-                                                        echo $prospect_client->prosp_unit;
-                                                    } ?>">
+                                                    name="unit" >
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="col-md-10">
                                                 <label for="pobox" class=" col-form-label text-md-left">PO Box</label>
                                                 <input id="pobox" type="text" class="form-control" name="pobox"
-                                                    value="<?php if (isset($prospect_client->prosp_pobox) && $prospect_client->prosp_pobox != '') {
-                                                        echo $prospect_client->prosp_pobox;
-                                                    } ?>">
+                                                    >
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -982,7 +970,21 @@
         </div>
     </div>
     <script type="text/javascript">
+    function checkClient(){
+if( $('#party_type-client')[0].checked){
+    $('.prospect-check').css('display','block');
+ }else{$('.prospect-check').css('display','none');}
+}
+$('.party_type').on('change',function(){
+//  $('#party_type-client')[0].checked;
+ checkClient();
+})
+$(document).on('load',function(){
+ checkClient();
+})
+  
         $(document).ready(function() {
+        
             $("#clphone").inputmask("(999) 999-9999");
             $("#clssno").inputmask("999-99-9999");
             $("#clfax").inputmask("(999) 999-9999");
@@ -1068,75 +1070,8 @@
                     '<option value="">Choose County</option>');
                 var zip = this.value;
                 if (zip != '' && zip != null && zip.length >= '3') {
-                    var token = $('input[name=_token]').val();
-                    $.ajax({
-                        url: "{{ route('ajax_get_city_state_county_by_zip') }}",
-                        method: "POST",
-                        dataType: 'json',
-                        data: {
-                            zip: zip,
-                            _token: token,
-                        },
-                        success: function(data) {
-                            // console.log(data);
-                            if (data == 'null' || data == '') {
-                                $('.no-state-county-' + type + '').show();
-                                // $('.cl_no_zip').show();
-                            } else {
-                                $.each(data, function(key, val) {
-                                    $('.' + type + '-city').append('<option value="' +
-                                        data[key].city + '">' + data[key].city +
-                                        '</option>');
-                                    $('.' + type + '-state').append('<option value="' +
-                                        data[key].state_id + '">' + data[key]
-                                        .state + '</option>');
-                                    $('.' + type + '-county').append('<option value="' +
-                                        data[key].id + '">' + data[key]
-                                        .county_name + '</option>');
-                                });
-                                var a = new Array();
-                                $('.' + type + '-city').children("option").each(function(x) {
-                                    test = false;
-                                    b = a[x] = $(this).val();
-                                    for (i = 0; i < a.length - 1; i++) {
-                                        if (b == a[i]) test = true;
-                                    }
-                                    if (test) $(this).remove();
-                                })
-                                var a = new Array();
-                                $('.' + type + '-state').children("option").each(function(x) {
-                                    test = false;
-                                    b = a[x] = $(this).val();
-                                    for (i = 0; i < a.length - 1; i++) {
-                                        if (b == a[i]) test = true;
-                                    }
-                                    if (test) $(this).remove();
-                                })
-                                var a = new Array();
-                                $('.' + type + '-county').children("option").each(function(x) {
-                                    test = false;
-                                    b = a[x] = $(this).val();
-                                    for (i = 0; i < a.length - 1; i++) {
-                                        if (b == a[i]) test = true;
-                                    }
-                                    if (test) $(this).remove();
-                                })
-                                if ($('.' + type + '-city').children('option').length == '2') {
-                                    $('.' + type + '-city').children('option').first().remove();
-                                }
-                                if ($('.' + type + '-state').children('option').length == '2') {
-                                    $('.' + type + '-state').children('option').first()
-                                .remove();
-                                }
-                                if ($('.' + type + '-county').children('option').length ==
-                                    '2') {
-                                    $('.' + type + '-county').children('option').first()
-                                    .remove();
-                                }
-                                $('.no-state-county-cl').hide();
-                            }
-                        }
-                    });
+                   
+                     ajaxZip(zip,type);
                 }
             });
             // fetch languages
@@ -1205,7 +1140,7 @@
                 var is_client_top_bottom = $(this).data('is-client');
                 if (is_client_top_bottom) {
                     if (is_client_top_bottom == 'top' && this.id == 'bottom_party_check') {
-                        $('.party_type-client, #email_asterisk').hide();
+                        $('.party_type-client, #email_asterisk, .prospect-check').hide();
                         $('input[name="party_group"]').prop('checked', false);
                         $('#party_type-opponent').prop('checked', true);
                         $('#clemail').prop('required', false);
@@ -1493,5 +1428,132 @@
         //   clssno.value += '-';
         //   }
         // });
+       let prospect_city='';
+        prospectData();
+       function ajaxZip(zip,type)
+       {
+         var token = $('input[name=_token]').val();
+         $.ajax({
+                        url: "{{ route('ajax_get_city_state_county_by_zip') }}",
+                        method: "POST",
+                        dataType: 'json',
+                        data: {
+                            zip: zip,
+                            _token: token,
+                        },
+                        success: function(data) {
+                            // console.log(data);
+                            if (data == 'null' || data == '') {
+                                $('.no-state-county-' + type + '').show();
+                                // $('.cl_no_zip').show();
+                            } else {
+                                $.each(data, function(key, val) {
+                                    var selected='';
+                                    if(prospect_city == data[key].city){  selected= 'selected';}
+                                    $('.' + type + '-city').append('<option '+selected+' value="' +
+                                        data[key].city + '">' + data[key].city +
+                                        '</option>');
+                                    $('.' + type + '-state').append('<option value="' +
+                                        data[key].state_id + '">' + data[key]
+                                        .state + '</option>');
+                                    $('.' + type + '-county').append('<option value="' +
+                                        data[key].id + '">' + data[key]
+                                        .county_name + '</option>');
+                                });
+                                var a = new Array();
+                                $('.' + type + '-city').children("option").each(function(x) {
+                                    test = false;
+                                    b = a[x] = $(this).val();
+                                    for (i = 0; i < a.length - 1; i++) {
+                                        if (b == a[i]) test = true;
+                                    }
+                                    if (test) $(this).remove();
+                                })
+                                var a = new Array();
+                                $('.' + type + '-state').children("option").each(function(x) {
+                                    test = false;
+                                    b = a[x] = $(this).val();
+                                    for (i = 0; i < a.length - 1; i++) {
+                                        if (b == a[i]) test = true;
+                                    }
+                                    if (test) $(this).remove();
+                                })
+                                var a = new Array();
+                                $('.' + type + '-county').children("option").each(function(x) {
+                                    test = false;
+                                    b = a[x] = $(this).val();
+                                    for (i = 0; i < a.length - 1; i++) {
+                                        if (b == a[i]) test = true;
+                                    }
+                                    if (test) $(this).remove();
+                                })
+                                if ($('.' + type + '-city').children('option').length == '2') {
+                                    $('.' + type + '-city').children('option').first().remove();
+                                }
+                                if ($('.' + type + '-state').children('option').length == '2') {
+                                    $('.' + type + '-state').children('option').first()
+                                .remove();
+                                }
+                                if ($('.' + type + '-county').children('option').length ==
+                                    '2') {
+                                    $('.' + type + '-county').children('option').first()
+                                    .remove();
+                                }
+                                $('.no-state-county-cl').hide();
+                            }
+                        }
+                    });
+       }
+     
+       function prospectData() {
+              var url="{{route('get_prospect',$case_id)}}";
+  $('#no_prospect').html('');
+       if($('#prospect_data')[0].checked)
+       {
+   
+      $.ajax({
+        url:url,
+        method:"get",
+        success:function(data){
+            if(data)
+            {
+                
+                 $('#clfname').val(data.prosp_fname)
+                 $('#clmname').val(data.prosp_mname)
+                 $('#cllname').val(data.prosp_lname)
+                 $('#clemail').val(data.prosp_email)
+                 $('#clphone').val(data.prosp_phone)
+                  $('#clzip').val(data.prosp_zip)
+                  prospect_city=data.prosp_city;
+                  console.log( $('select#clcity option[value=""]'));
+         $('select#clcity option[value="'+data.prosp_city+'"]').attr("selected", "true");
+    $('#clsuffix option[value="'+data.prosp_sufname+'"]').attr("selected", "true");
+   
+           
+                  ajaxZip(data.prosp_zip,type='cl')
+                 $('#clstreetad').val(data.prosp_street_ad)
+                 $('#unit').val(data.prosp_unit)
+                 $('#pobox').val(data.prosp_pobox)
+                
+            }
+            else{
+               $('#no_prospect').html('No prospect data found for this case') ;
+            }
+        },
+            error:function(data){$('#no_prospect').html('No prospect data found for this case') ;}
+      })
+    }
+    else{
+       
+          $('#clfname ,#clmname, #cllname,#clemail,#clphone,#clzip,#clstreetad,#unit,#pobox').val('');
+        $('#clsuffix option[selected="selected"]').removeAttr("selected");
+          $('#clstate').html('<option>Choose State</option>');
+          $('#clcounty').html('<option>Choose County</option>');
+          $('#clcity').html('<option>Choose City</option>');
+         
+
+    }
+}
+
     </script>
 @endsection

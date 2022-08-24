@@ -47,6 +47,7 @@ Route::get('/advertise/subs/{id}',  function () {
 })->name('create_subs');
 // following routes are for ajax requests
 Route::get('/ajax-states', 'AjaxController@get_states')->name('ajax_get_states');
+Route::get('/get-prospect/{case_id}', 'CaseController@getProspect')->name('get_prospect');
 Route::post('/ajax-state-counties', 'AjaxController@get_counties_by_state')->name('ajax_get_counties_by_state');
 Route::post('/ajax-cause-of-action', 'AjaxController@get_causes_of_action')->name('ajax_get_cause_of_action');
 Route::post('/ajax-attorney-reg-num', 'AjaxController@get_attorney_by_reg_num')->name('ajax_get_attorney_by_reg_num');

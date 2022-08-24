@@ -77,7 +77,7 @@ class CaseController extends Controller
         } else {
             $data = Courtcase::where('attorney_id', Auth::user()->id)->orderBy('id', 'DESC')->get();
         }
-        // dd($data);
+        //  dd($data);
         $client_data = array();
         $opponent_data = array();
         $state_data = array();
@@ -86,10 +86,11 @@ class CaseController extends Controller
         $division_data = array();
         $i = 0;
         foreach ($data as $value) {
-            // dd($value->case_type_ids);
+            //  dd($value->case_type_ids);
             // to check package upgrade is available or not
             $case_type_ids = explode(",", $value->case_type_ids);
-
+if($value->case_type_ids !== '')
+{
             $raw_query = '';
             foreach ($case_type_ids as $key => $case_type_id) {
                 if ($key == '0') {
@@ -113,6 +114,9 @@ class CaseController extends Controller
             }
             if ($value->payment_status == '1' && $lastKey && $value->case_payment_package_id == $package_data[$lastKey]->id) {
                 $data[$i]['is_package_upgrade_available'] = FALSE;
+            }
+        }
+        else{   $data[$i]['is_package_upgrade_available'] = TRUE;
             }
             // end to check package upgrade is available or not
 
@@ -2236,7 +2240,13 @@ class CaseController extends Controller
             return redirect()->route('home');
         }
     }
-
+    //get case prospect detail 
+    public function getProspect($case_id)
+    {
+        $case_prospect = ProspectCase::where('case_id', $case_id)->get()->first();
+        $prospect_client = ProspectiveClientTable::find($case_prospect->prospect_id);
+        return response($prospect_client);
+    }
     // to store case party info
     public function store_party(Request $request)
     {
@@ -2565,9 +2575,9 @@ class CaseController extends Controller
 
         // to register case frpm prospect
         $prospect_id = $request->prospect_id;
-        if (isset($prospect_id) && $prospect_id != '') {
-            ProspectiveClientTable::find($prospect_id)->delete();
-        }
+        // if (isset($prospect_id) && $prospect_id != '') {
+        //     ProspectiveClientTable::find($prospect_id)->delete();
+        // }
 
         // short caption
         $short_caption = '';
