@@ -189,7 +189,10 @@ if($value->case_type_ids !== '')
             $childreninfo = DrChildren::where('case_id', $value->id)->get()->first();
             if (isset($childreninfo)) {
                 // $data[$i]['family_law_interview_done']=true;
-                if (isset($drcaseoverview) && $drcaseoverview->Num_Children_ONLY_This_Marriage == $childreninfo->Num_Children_ONLY_This_Marriage && $drcaseoverview->Num_MinorDepChildren_ONLY_This_Marriage == $childreninfo->Num_MinorDepChildren_ONLY_This_Marriage && $drcaseoverview->Num_Client_Children_NOT_this_Marriage == $childreninfo->Num_Client_Children_NOT_this_Marriage && $drcaseoverview->Num_Op_Children_NOT_this_Marriage == $childreninfo->Num_Op_Children_NOT_this_Marriage) {
+                if (isset($drcaseoverview) && $drcaseoverview->Num_Children_ONLY_This_Marriage == $childreninfo->Num_Children_ONLY_This_Marriage 
+                && $drcaseoverview->Num_MinorDepChildren_ONLY_This_Marriage == $childreninfo->Num_MinorDepChildren_ONLY_This_Marriage 
+                && $drcaseoverview->Num_Client_Children_NOT_this_Marriage == $childreninfo->Num_Client_Children_NOT_this_Marriage 
+                && $drcaseoverview->Num_Op_Children_NOT_this_Marriage == $childreninfo->Num_Op_Children_NOT_this_Marriage) {
                 } else {
                     $data[$i]['family_law_interview_done'] = false;
                 }
@@ -417,9 +420,25 @@ if($value->case_type_ids !== '')
         }
         $childreninfo = DrChildren::where('case_id', $id)->get()->first();
         if (isset($childreninfo)) {
+            // echo $drcaseoverview->Num_Children_ONLY_This_Marriage . "--Num_Children_ONLY_This_Marriage---" . $childreninfo->Num_Children_ONLY_This_Marriage . "<br>";
+            // echo $drcaseoverview->Num_MinorDepChildren_ONLY_This_Marriage . "--Num_MinorDepChildren_ONLY_This_Marriage---" . $childreninfo->Num_MinorDepChildren_ONLY_This_Marriage . "<br>";
+            // echo $drcaseoverview->Num_Client_Children_NOT_this_Marriage . "---Num_Client_Children_NOT_this_Marriage--" . $childreninfo->Num_Client_Children_NOT_this_Marriage . "<br>";
+            // echo $drcaseoverview->Num_Op_Children_NOT_this_Marriage . "---Num_Op_Children_NOT_this_Marriage--" . $childreninfo->Num_Op_Children_NOT_this_Marriage . "<br>";
+            // // echo $drcaseoverview->Num_Children_Born_ONLY_These_Parties_Before_Marriage. " --Num_Children_Born_ONLY_These_Parties_Before_Marriage-" .$childreninfo->Num_Children_Born_ONLY_These_Parties_Before_Marriage."<br>";
+           
+            // echo $drcaseoverview->Num_Children_This_Marriage. " --Num_Children_This_Marriage-" .$childreninfo->Num_Children_This_Marriage."<br>";
+
+            
             if (
-                isset($drcaseoverview) && $drcaseoverview->Num_Children_ONLY_This_Marriage == $childreninfo->Num_Children_ONLY_This_Marriage && $drcaseoverview->Num_MinorDepChildren_ONLY_This_Marriage == $childreninfo->Num_MinorDepChildren_ONLY_This_Marriage && $drcaseoverview->Num_Client_Children_NOT_this_Marriage == $childreninfo->Num_Client_Children_NOT_this_Marriage && $drcaseoverview->Num_Op_Children_NOT_this_Marriage == $childreninfo->Num_Op_Children_NOT_this_Marriage &&
-                $drcaseoverview->Num_Children_Born_ONLY_These_Parties_Before_Marriage == $childreninfo->Num_Children_Born_ONLY_These_Parties_Before_Marriage && $drcaseoverview->Num_Children_Born_Emancipated_Not_Dep == $childreninfo->Num_Children_Born_Emancipated_Not_Dep && $drcaseoverview->Num_Children_Born_Disabled_Dependent == $childreninfo->Num_Children_Born_Disabled_Dependent && $drcaseoverview->Num_Children_Parenting_Support_Order == $childreninfo->Num_Children_Parenting_Support_Order && $drcaseoverview->Num_Children_This_Marriage == $childreninfo->Num_Children_This_Marriage
+                isset($drcaseoverview) && $drcaseoverview->Num_Children_ONLY_This_Marriage == $childreninfo->Num_Children_ONLY_This_Marriage 
+                // && $drcaseoverview->Num_MinorDepChildren_ONLY_This_Marriage == $childreninfo->Num_MinorDepChildren_ONLY_This_Marriage 
+                && $drcaseoverview->Num_Client_Children_NOT_this_Marriage == $childreninfo->Num_Client_Children_NOT_this_Marriage
+                 && $drcaseoverview->Num_Op_Children_NOT_this_Marriage == $childreninfo->Num_Op_Children_NOT_this_Marriage
+                // && $drcaseoverview->Num_Children_Born_ONLY_These_Parties_Before_Marriage == $childreninfo->Num_Children_Born_ONLY_These_Parties_Before_Marriage
+                //  && $drcaseoverview->Num_Children_Born_Emancipated_Not_Dep == $childreninfo->Num_Children_Born_Emancipated_Not_Dep && 
+                //  $drcaseoverview->Num_Children_Born_Disabled_Dependent == $childreninfo->Num_Children_Born_Disabled_Dependent &&
+                //   $drcaseoverview->Num_Children_Parenting_Support_Order == $childreninfo->Num_Children_Parenting_Support_Order && 
+                &&   $drcaseoverview->Num_Children_This_Marriage == $childreninfo->Num_Children_This_Marriage
             ) {
                 $data['addchildreninfo'] = 'true';
             } else {
@@ -2983,7 +3002,7 @@ if($value->case_type_ids !== '')
                 $client_case_array2['top_thirdparty' . $j . '_org_comp_name'] = NULL;
                 $client_case_array2['top_thirdparty' . $j . '_type'] = NULL;
                 $client_case_array2['top_thirdparty' . $j . '_care_of'] = NULL;
-                $client_case_array2['top_thirdparty' . $j . '_prefix'] = NULL;
+                // $client_case_array2['top_thirdparty' . $j . '_prefix'] = NULL;
                 $client_case_array2['top_thirdparty' . $j . '_fname'] = NULL;
                 $client_case_array2['top_thirdparty' . $j . '_mname'] = NULL;
                 $client_case_array2['top_thirdparty' . $j . '_lname'] = NULL;
