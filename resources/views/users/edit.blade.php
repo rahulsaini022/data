@@ -39,7 +39,7 @@ $last_word = $matches[0]; // test
                     @endif
 
                     @if ($message = Session::get('error'))
-                      <div class="alert alert-danger alert-block">
+                    <div class="alert-error alert-danger">
                           <button type="button" class="close" data-dismiss="alert">×</button> 
                               <strong>{{ $message }}</strong>
                       </div>

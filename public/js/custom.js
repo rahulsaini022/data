@@ -2,6 +2,7 @@
 
 
 $(document).ready(function () {
+    $("input[type='text']").attr("maxlength", "100");
   $('button[type="submit"]').click(function () {
      $($('input[type="radio"].error').parent()).append(
          $('input[type="radio"].error').parent().children("label.error")

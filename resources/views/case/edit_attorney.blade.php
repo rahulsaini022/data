@@ -20,7 +20,7 @@
     <div class="row justify-content-center attorney-registration">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Update Attorney Info
+                <div class="card-header">Update Attorney Information
                     <div class="pull-right">
 
                         <a class="btn btn-primary" href="{{ route('cases.show_attorney_reg_form',['party_id' => $party_id, 'case_id' => $case_id, 'number' => $party_number]) }}"> Back</a>

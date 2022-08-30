@@ -331,10 +331,10 @@ class AdminAdvertiserController extends Controller
             $advertise_category = DB::table('advertiser_services')->where('id', $val->advertise_category_id)->first();
             $val->category_name = $advertise_category->name;
             $val->amount = $advertise_category->service_list_fee;
-            $stripe_id = $val->stripe_id;
-            $subscription_data = \Stripe\Subscription::retrieve($stripe_id);
-            $val->start = date('m/d/Y h:i:s', $subscription_data->current_period_start);
-            $val->end = date('m/d/Y h:i:s', $subscription_data->current_period_end);
+            // $stripe_id = $val->stripe_id;
+            // $subscription_data = \Stripe\Subscription::retrieve($stripe_id);
+            // $val->start = date('m/d/Y h:i:s', $subscription_data->current_period_start);
+            // $val->end = date('m/d/Y h:i:s', $subscription_data->current_period_end);
         }
 
         return view('admin.advertiser.subscription_list', compact('subscriptions'));

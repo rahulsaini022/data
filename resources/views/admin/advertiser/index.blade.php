@@ -62,7 +62,7 @@
                           <td>{{ ++$i }}</td>
 
                           <td><a class="text-primary" href="{{ route('advertiser-services.show',$service->id) }}">{{ $service->name }}</a></td>
-                          <td>${{ $service->service_list_fee }}</a></td>
+                          <td>${{ $service->service_list_fee ?? 0 }}</a></td>
                           <td >{{ Str::limit($service->description,40) }}</a></td>
 
                           

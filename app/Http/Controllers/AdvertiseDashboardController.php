@@ -313,7 +313,7 @@ $image=[];
         
         $plan_id = StripePlan::where('plan_name', $plan_name)->pluck('plan_id')->first();
         
-        $user->newSubscription($plan_name, $plan_id)->create($paymentMethod, [
+        $payment=$user->newSubscription($plan_name, $plan_id)->create($paymentMethod, [
             'email' => $user->email,
         ], [
             'metadata' => ['description' => 'Advertiser ' . $user->name . '(' . $user->id . ') purchased this subscription.'],
@@ -346,7 +346,7 @@ $image=[];
                           ]);
                     }
                  }
-
+    
                 $get_subscription = DB::table('subscriptions')->where('user_id', $user->id)->orderBy('id', 'desc')->first();
                 $create = DB::table('advertiser_subscription')->insert(['advertiser_id' => $user->advertiser->id, 'advertise_category_id' => $request->category_id, 'stripe_id' => $get_subscription->stripe_id, 'stripe_status' => $get_subscription->stripe_status, 'quantity' => $get_subscription->quantity, 'advertise_listings_id' => $get_advertise_listings, 'stripe_plan' => $get_subscription->stripe_plan, 'payment_type' => 'SUBSCRIPTION']);
             }

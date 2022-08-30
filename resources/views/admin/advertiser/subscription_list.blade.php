@@ -30,7 +30,7 @@
                                     <th>Subscription id</th>
                                     <th>Category </th>
                                     <th>Amount </th>
-                                    <th>Start Date </th>
+                                    {{-- <th>Start Date </th> --}}
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -43,8 +43,8 @@
                                         <td>{{ $val->stripe_id }}</td>
                                         <td>{{ $val->category_name }}</td>
                                         <td>$ {{ $val->amount }}.00</td>
-                                        <td>{{ $val->start }}</td>
-                                        <td style="width: 20%">
+                                        {{-- <td>{{ $val->start }}</td> --}}
+                                        <td >
                                             <a class="btn btn-primary mb-1"
                                                 href="{{ route('advertiser.subscriptiondetail', $val->id) }}">Detail</a>
                                         </td>

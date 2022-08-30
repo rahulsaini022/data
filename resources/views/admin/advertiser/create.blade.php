@@ -10,7 +10,7 @@
                 <div class="card-header"><strong>{{ __('Create New Advertiser Services') }}</strong>
                     <div class="pull-right">
 
-                        <a class="btn btn-primary" href="{{ url()->previous() }}"> Back</a>
+                        <a class="btn btn-primary" href="{{route('advertiser-services.index') }}"> Back</a>
 
                     </div>
                 </div>
@@ -47,8 +47,12 @@
 
                                 <strong>Name:</strong>
 
-                                {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
-
+                                 {{-- {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control @error('name') is-invalid @enderror')) !!} --}}
+                       <input type="text" name="name" class= 'form-control @error('name') is-invalid @enderror' placeholder="Name" >
+                                 @error('name')
+ <span class="help-block text-danger">{{ $message }}</span>
+    
+@enderror
                             </div>
 
                         </div>
