@@ -16,6 +16,7 @@ use DB;
 use Session;
 
 use Auth;
+use Exception;
 
 class JudgeController extends Controller
 
@@ -195,7 +196,7 @@ class JudgeController extends Controller
         $input = $request->all();
         $input['last_update']=date('Y-m-d');
         $input['last_updatevalue']=date('Y-m-d');
-
+try{
         $judge = Judge::find($id);
 
         $judge->update($input);
@@ -208,7 +209,10 @@ class JudgeController extends Controller
         return redirect()->route('judges.index')
 
                         ->with('success','Judge updated successfully');
-
+}
+catch(Exception $e){
+            return back()->with('error', 'Internal server error');
+}
     }
 
     /**
