@@ -268,6 +268,7 @@ class CountyController extends Controller
         $input = $request->all();
         $state=State::find($request->state_id);
         $input['state_abbreviation']=$state->state_abbreviation;
+        $input['county_active']=$request->county_active;
         $county = County::find($id);
         $county->update($input);
 

@@ -47,7 +47,7 @@
 
                                 <strong>Number of Credits:</strong>
 
-                                {!! Form::number('number_of_credits', null, array('placeholder' => 'Number of Credits','class' => 'form-control')) !!}
+                                {!! Form::number('number_of_credits', null, array('placeholder' => 'Number of Credits','class' => 'form-control','onkeypress'=>"if(this.value.length==8) return false;")) !!}
 
                             </div>
 

@@ -72,7 +72,7 @@
 	            		<div class="card-body">
 										<a class="card-link text-dark" href="{{ route('cases.all') }}">
 		            		<div class="h1 text-muted text-right mb-4">
-					        	<i class="fa fa-contao" aria-hidden="true"></i>
+					        	<i class="fa fa-book"></i>
 					        </div>	
 					        <div class="h4 mb-0">
 					        	<span class="cases-count"></span>

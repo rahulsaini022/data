@@ -76,7 +76,7 @@ class MinWagetableController extends Controller
 
         return redirect()->route('minmumwage.index')
 
-                        ->with('success','Minimumwage updated successfully');
+                        ->with('success','Minimum wage updated successfully');
 
     }
     /**

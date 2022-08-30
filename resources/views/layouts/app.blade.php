@@ -103,7 +103,7 @@
                             @endhasrole
                             @hasrole('client')
                                 <li>
-                                    <a class="nav-link" href="{{ route('client.cases') }}"><i class="fa fa-contao"></i>
+                                    <a class="nav-link" href="{{ route('client.cases') }}"><i class="fa fa-book"></i>
                                         {{ __('Cases') }}</a>
                                 </li>
                             @endhasrole --}}
@@ -127,7 +127,7 @@
                             @endhasrole
                             @hasrole('client')
 
-                                    <a class="dropdown-item" href="{{ route('client.cases') }}"><i class="fa fa-contao"></i>
+                                    <a class="dropdown-item" href="{{ route('client.cases') }}"><i class="fa fa-book"></i>
                                         {{ __('Cases') }}</a>
                                         <hr class="m-0">
                             @endhasrole
@@ -138,7 +138,7 @@
                                             <i class="fa fa-dashboard"></i> {{ __('Dashboard') }}</a>
                                             <hr class="m-0">
                                         <a class="dropdown-item" href="{{ route('cases.index') }}">
-                                            <i class="fa fa-contao" aria-hidden="true"></i> {{ __('Cases') }}
+                                            <i class="fa fa-book" aria-hidden="true"></i> {{ __('Cases') }}
                                         </a>
                                         <hr class="m-0">
                                         <a class="dropdown-item" href="{{ route('fdd_tools') }}"><i
@@ -259,7 +259,7 @@
                                             </li> -->
                                                 <li class="nav-item">
                                                     <a class="nav-link" href="{{ route('testimonials.index') }}">
-                                                        <i class="fa fa-star"></i> Testimonial</a>
+                                                        <i class="fa fa-quote-left"></i> Testimonial</a>
                                                 </li>
                                                 <li class="nav-item">
                                                     <a class="nav-link  @if( in_array(Request::segment(1), ['pages','page']) ) {{'active'}} @endif" href="{{ route('pages.index') }}">
@@ -275,7 +275,7 @@
                                                 </li>
                                                 <li class="nav-item">
                                                     <a class="nav-link" href="{{ route('minmumwage.index') }}">
-                                                        <i class="fa fa-credit-card"></i> Minimum wage</a>
+                                                        <i class="fa fa-money"></i> Minimum wage</a>
                                                 </li>
                                                 <!-- <li class="nav-item">
                                                 <a class="nav-link" href="{{ route('documenttable.index') }}">
@@ -287,7 +287,7 @@
                                                 </li>
                                                 <li class="nav-item">
                                                     <a class="nav-link" href="{{ route('customeruploads.index') }}">
-                                                        <i class="fa fa-users"></i> Orchard Submissions</a>
+                                                        <i class="fa fa-file"></i> Orchard Submissions</a>
                                                 </li>
                                                 <li class="nav-item">
                                                     <a class="nav-link" href="{{ route('magistrates.index') }}">
@@ -334,7 +334,7 @@
                                                 </li>
                                                 <li class="nav-item">
                                                     <a class="nav-link" href="{{ route('cases.all') }}">
-                                                        <i class="fa fa-contao" aria-hidden="true"></i> Registered Cases</a>
+                                                        <i class="fa fa-book" aria-hidden="true"></i> Registered Cases</a>
                                                 </li>
                                                 <!-- <li class="nav-item">
                                                 <a class="nav-link" href="{{ route('permissions.index') }}">
@@ -416,7 +416,7 @@
                                                 </li>
                                                 <li class="nav-item">
                                                     <a class="nav-link" href="{{ route('get_case_reports') }}"><i
-                                                            class="fa fa-contao" aria-hidden="true"></i>Case Reports</a>
+                                                            class="fa fa-book" aria-hidden="true"></i>Case Reports</a>
                                                 </li>
                                                 <li class="nav-item">
                                                     <a class="nav-link"

@@ -83,8 +83,8 @@
 
                                 <strong>County Active:</strong>
 
-                                <label> <input type="radio" name="county_active" value="Y"> Yes</label>
-                                <label> <input type="radio" name="county_active" value="N" checked=""> No</label>
+                                <label> <input type="radio" name="county_active"  @if($county->county_active== 'Y') {{'checked'}} @endif  value="Y"> Yes</label>
+                                <label> <input type="radio" name="county_active" value="N" @if($county->county_active== 'N') {{'checked'}} @endif > No</label>
 
                             </div>
 
