@@ -38,7 +38,7 @@
 					        <div class="h4 mb-0">
 					        	<span class="users-count"></span>
 					        </div>
-					        <small class="text-muted  font-weight-bold">Users</small>
+					        <span class="text-muted  font-weight-bold">Users</span>
 											</a>
 	            		</div>
 	            	</div>	
@@ -51,7 +51,7 @@
 					        <div class="h4 mb-0">
 					        	<span class="attornies-count"></span>
 					        </div>
-					        <small class="text-muted  font-weight-bold">Attorneys</small>
+					        <span class="text-muted  font-weight-bold">Attorneys</span>
 										</a>
 	            		</div>
 	            	</div>	
@@ -64,7 +64,7 @@
 					        <div class="h4 mb-0">
 					        	<span class="clients-count"></span>
 					        </div>
-					        <small class="text-muted  font-weight-bold">Clients</small>
+					        <span class="text-muted  font-weight-bold">Clients</span>
 											</a>
 	            		</div>
 	            	</div>	
@@ -77,7 +77,7 @@
 					        <div class="h4 mb-0">
 					        	<span class="cases-count"></span>
 					        </div>
-					        <small class="text-muted  font-weight-bold">Cases</small>
+					        <span class="text-muted  font-weight-bold">Cases</span>
 										</a>
 	            		</div>
 	            	</div>
@@ -89,7 +89,7 @@
 					        <div class="h4 mb-0">
 					        	<span class="advertiser-count"></span>
 					        </div>
-					        <small class="text-muted  font-weight-bold">Advertisers</small>
+					        <span class="text-muted  font-weight-bold">Advertisers</span>
 	            		</div>
 	            	</div> --}}
 	            </div>
