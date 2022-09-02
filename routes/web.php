@@ -240,7 +240,7 @@ Route::get('/attorneys/{id}/subscription', 'AttorneyController@subscription')->n
 Route::post('/attorneys-subscribe', 'AttorneyController@subscribe')->name('attorneys.subscribe');
 Route::post('/advertise-subscribe', 'AdvertiseController@subscribe')->name('advertise.subscribe');
 Route::get('/attorneys/{id}/thanks', 'AttorneyController@thanks')->name('attorneys.thanks');
-
+Route::get('/advertise/{id}/thanks', 'AdvertiseController@thanks')->name('advertise.thanks');
 Route::get('/advertise/subscription/{id}/{category_id}', 'AdvertiseController@subscription')->name('advertise.subscription');
 Route::post('/cases/{id}/deactivate', 'CaseController@deactivateCase')->name('cases.deactivate');
 Route::post('/cases/{id}/activate', 'CaseController@activateCase')->name('cases.activate');
