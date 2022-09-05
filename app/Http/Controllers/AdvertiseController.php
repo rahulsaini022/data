@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 
 use Illuminate\Http\Request;
-use DB;
 use Illuminate\Support\Facades\Validator;
 use App\ADCourtReporters;
 use App\ADlistingImage;
@@ -17,6 +16,7 @@ use Stripe\Stripe;
 use Illuminate\Support\Facades\Mail;
 use App\StripePlan;
 use File;
+use Illuminate\Support\Facades\DB ;
 
 class AdvertiseController extends Controller{
 
@@ -133,12 +133,12 @@ class AdvertiseController extends Controller{
            // return view('attorney.subscription',['user'=>$user, 'intent' => $user->createSetupIntent()]);
 
         }else{
-            return redirect()->route('courtreporter')->with('error', 'Your Advertise are not created ,please try Again.');
+            return redirect()->back()->with('error', 'Your Advertise are not created ,please try Again.');
         }
 
 
         }catch(Exception $e){
-            return redirect()->route('courtreporter')->with('error', $e->getMessage());
+            return redirect()->back()->with('error', $e->getMessage());
         }
         
 

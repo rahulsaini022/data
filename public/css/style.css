@@ -1636,3 +1636,7 @@ table.dataTable thead tr th:first-child {
     height: 3em;
     margin: 8px auto 0px;
 }
+
+.form-control.error {
+    border-color: red;
+}

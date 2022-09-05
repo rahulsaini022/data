@@ -126,7 +126,8 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'username' => 'required|unique:users,username',
-            'password' => 'required|same:confirm-password',
+            'password' => 'required',
+            'confirm-password' => 'required|same:password',
             'roles' => 'required',
             'credits' => 'required'
         ]);
@@ -242,7 +243,7 @@ class UserController extends Controller
       
         $user = User::find($id);
         $roles = Role::pluck('name', 'name')->all();
-        $userRole = $user->roles->pluck('name', 'name')->all();
+        $userRole = $user->roles->pluck('name')->all();
         return view('users.edit', compact('user', 'roles', 'userRole'));
     }
     /**
@@ -257,7 +258,7 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $id,
-            'password' => 'same:confirm-password',
+            'confirm-password'=>'same:password',
             'roles' => 'required',
         ]);
         $user = User::find($id);
