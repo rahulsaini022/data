@@ -3,19 +3,74 @@
 
 $(document).ready(function () {
     $("input[type='text']").attr("maxlength", "100");
-   
+
     $('button[type="submit"]').css("float", "left");
     $(":checkbox").removeClass("form-control");
     $(".pagination").addClass("flex-wrap");
     var is_admin = $("#admin_main");
     if (is_admin.length) {
         // console.log(window.location.protocol + "//" + window.location.host + "/" + window.location.pathname.split('/')[1]);
-        $('#admin_main #sidebar a[href="' + window.location.protocol +"//" + window.location.host + "/" +window.location.pathname.split("/")[1] +'"]').addClass("active");
-        var test = $('#admin_main #sidebar a[href="' + window.location.protocol + "//" + window.location.host + "/" + window.location.pathname.split("/")[1] + '"]').closest(".submenu_outerbox").addClass("show");
-        $('#admin_main #sidebar a[href="' +window.location.protocol +"//" + window.location.host +"/" +  window.location.pathname.split("/")[1] +'"]').closest(" ul .nav li a.nav-link") .removeClass("collapsed").attr("aria-expended", "true");
-      $('#admin_main #sidebar a[href="' + window.location.href + '"]').addClass(
-          "active");
+        $(
+            '#admin_main #sidebar a[href="' +
+                window.location.protocol +
+                "//" +
+                window.location.host +
+                "/" +
+                window.location.pathname.split("/")[1] +
+                '"]'
+        ).addClass("active");
+        var test = $(
+            '#admin_main #sidebar a[href="' +
+                window.location.protocol +
+                "//" +
+                window.location.host +
+                "/" +
+                window.location.pathname.split("/")[1] +
+                '"]'
+        )
+            .closest(".submenu_outerbox")
+            .addClass("show");
+        $(
+            '#admin_main #sidebar a[href="' +
+                window.location.protocol +
+                "//" +
+                window.location.host +
+                "/" +
+                window.location.pathname.split("/")[1] +
+                '"]'
+        )
+            .closest(" ul .nav li a.nav-link")
+            .removeClass("collapsed")
+            .attr("aria-expended", "true");
+        $(
+            '#admin_main #sidebar a[href="' + window.location.href + '"]'
+        ).addClass("active");
     }
+    /* Role create and edit validation*/
+    $("#role_form").validate({
+        errorPlacement: function (error, element) {
+            if (element.attr("name") === "permission[]") {
+                error.appendTo(".permission_error");
+            } else {
+                error.insertAfter(element);
+            }
+        },
+    });
+    /* testimonial create and edit validation*/
+    $("#testimonial_form").validate();
+    /* page create and edit validation*/
+    $("#page_form").validate();
+    $("#pdfcredit_form").validate();
+    /* case package create and edit validation*/
+    $("#case_package_form").validate({
+        errorPlacement: function (error, element) {
+            if (element.attr("name") === "case_type_ids[]") {
+                error.appendTo(".case_type_error");
+            } else {
+                error.insertAfter(element);
+            }
+        },
+    });
 });
 function onlyNumber(e) {
     var x = e.which || e.keycode;

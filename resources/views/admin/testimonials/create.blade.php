@@ -15,28 +15,9 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    @if (count($errors) > 0)
-
-                        <div class="alert-error alert-danger">
-                        <strong>Whoops!</strong> There were some problems with your input.<br><br>
-
-                        <ul>
-
-                           @foreach ($errors->all() as $error)
-
-                             <li>{{ $error }}</li>
-
-                           @endforeach
-
-                        </ul>
-
-                      </div>
-
-                    @endif
 
 
-
-                    {!! Form::open(array('route' => 'testimonials.store','method'=>'POST')) !!}
+                    {!! Form::open(array('route' => 'testimonials.store','id'=>'testimonial_form','method'=>'POST')) !!}
 
                     <div class="row">
 
@@ -46,8 +27,10 @@
 
                                 <strong>Author Name:</strong>
 
-                                {!! Form::text('author_name', null, array('placeholder' => 'Author Name','class' => 'form-control')) !!}
-
+                                {!! Form::text('author_name', null, array('placeholder' => 'Author Name','class' => 'form-control','required'=>'true')) !!}
+ @error('author_name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                             </div>
 
                         </div>
@@ -58,8 +41,10 @@
 
                                 <strong>Author Position:</strong>
 
-                                {!! Form::text('author_position', null, array('placeholder' => 'Author Position','class' => 'form-control')) !!}
-
+                                {!! Form::text('author_position', null, array('placeholder' => 'Author Position','class' => 'form-control','required'=>'true')) !!}
+@error('author_position')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                             </div>
 
                         </div>
@@ -70,8 +55,10 @@
 
                                 <strong>Description:</strong>
 
-                                {!! Form::text('description', null, array('placeholder' => 'Description','class' => 'form-control')) !!}
-
+                                {!! Form::textarea('description', null, array('placeholder' => 'Description','class' => 'form-control','required'=>'true')) !!}
+                         @error('description')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                             </div>
 
                         </div>

@@ -16,26 +16,6 @@
                 </div>
                 <div class="card-body">
 
-                    @if (count($errors) > 0)
-
-                      <div class="alert-error alert-danger">
-
-                        <strong>Whoops!</strong> There were some problems with your input.<br><br>
-
-                        <ul>
-
-                           @foreach ($errors->all() as $error)
-
-                             <li>{{ $error }}</li>
-
-                           @endforeach
-
-                        </ul>
-
-                      </div>
-
-                    @endif
-
 
                     {!! Form::model($setting, ['method' => 'PATCH','route' => ['settings.update', $setting->id]]) !!}
 
@@ -48,7 +28,9 @@
                                 <strong>Name:</strong>
 
                                 {!! Form::text('setting_label', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
-
+                                    @error('setting_label')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                             </div>
 
                         </div>
@@ -61,7 +43,9 @@
                                 <strong>Key:</strong>
 
                                 {!! Form::text('setting_key', null, array('placeholder' => 'Key','class' => 'form-control', 'readonly' => 'readonly')) !!}
-
+                                    @error('setting_key')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                             </div>
 
                         </div>
@@ -74,7 +58,9 @@
                                 <strong>Value:</strong>
 
                                 {!! Form::text('setting_value', null, array('placeholder' => 'Value','class' => 'form-control')) !!}
-
+                                    @error('setting_value')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                             </div>
 
                         </div>

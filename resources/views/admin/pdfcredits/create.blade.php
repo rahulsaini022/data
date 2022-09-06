@@ -15,29 +15,8 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    @if (count($errors) > 0)
 
-                        <div class="alert-error alert-danger">
-
-                        <strong>Whoops!</strong> There were some problems with your input.<br><br>
-
-                        <ul>
-
-                           @foreach ($errors->all() as $error)
-
-                             <li>{{ $error }}</li>
-
-                           @endforeach
-
-                        </ul>
-
-                      </div>
-
-                    @endif
-
-
-
-                    {!! Form::open(array('route' => 'pdfcredits.store','method'=>'POST')) !!}
+      {!! Form::open(array('route' => 'pdfcredits.store','method'=>'POST','id'=>'pdfcredit_form')) !!}
 
                     <div class="row">
 
@@ -47,8 +26,10 @@
 
                                 <strong>Number of Credits:</strong>
 
-                                {!! Form::number('number_of_credits', null, array('placeholder' => 'Number of Credits','class' => 'form-control','onkeypress'=>"if(this.value.length==8) return false;")) !!}
-
+                                {!! Form::number('number_of_credits', null, array('placeholder' => 'Number of Credits','required','class' => 'form-control','onkeypress'=>"if(this.value.length==8) return false;")) !!}
+                                    @error('number_of_credits')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                             </div>
 
                         </div>
@@ -59,8 +40,10 @@
 
                                 <strong>Purchase Price($):</strong>
 
-                                {!! Form::number('purchase_price', '0.00', array('placeholder' => 'Purchase Price($)','class' => 'form-control','min' => '0.00','max' => '999999.99')) !!}
-
+                                {!! Form::number('purchase_price', '0.00', array('placeholder' => 'Purchase Price($)','required','class' => 'form-control','min' => '0.00','max' => '999999.99')) !!}
+                                    @error('purchase_price')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                             </div>
 
                         </div>
@@ -72,7 +55,9 @@
                                 <strong>Discount($):</strong>
 
                                 {!! Form::number('discount', '0.00', array('placeholder' => 'Discount($)','class' => 'form-control','min' => '0.00','max' => '999999.99')) !!}
-
+                                    @error('discount')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                             </div>
 
                         </div>
