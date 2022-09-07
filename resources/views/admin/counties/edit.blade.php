@@ -15,28 +15,6 @@
                     </div>
                 </div>
                 <div class="card-body">
-
-                    @if (count($errors) > 0)
-
-                          <div class="alert-error alert-danger">
-
-                        <strong>Whoops!</strong> There were some problems with your input.<br><br>
-
-                        <ul>
-
-                           @foreach ($errors->all() as $error)
-
-                             <li>{{ $error }}</li>
-
-                           @endforeach
-
-                        </ul>
-
-                      </div>
-
-                    @endif
-
-
                     {!! Form::model($county, ['method' => 'PATCH','route' => ['counties.update', $county->id], 'id'=>'edit_county_form']) !!}
 
                     <div class="row">
@@ -47,7 +25,7 @@
 
                                 <strong>State:</strong>
                                 <input type="hidden" id="selected_state" name="" value="{{$county->state_id}}" style="display: none;">
-                                {!! Form::select('state_id', [null=>'Select State'], null, ['class' => 'form-control county-state-select', 'id' => 'state_id', 'required' => 'required']) !!}
+                                {!! Form::select('state_id', [null=>'Select State'], null, ['class' => 'form-control county-state-select '.$errors->first('state_id','error'), 'id' => 'state_id', 'required' => 'required']) !!}
 
                             </div>
 
@@ -59,7 +37,7 @@
 
                                 <strong>County Name:</strong>
 
-                                {!! Form::text('county_name', null, array('placeholder' => 'County Name','class' => 'form-control')) !!}
+                                {!! Form::text('county_name', null, array('required','placeholder' => 'County Name','class' => 'form-control '.$errors->first('county_name','error'))) !!}
 
                             </div>
 
@@ -71,7 +49,7 @@
 
                                 <strong>County Designation:</strong>
 
-                                {!! Form::text('county_designation', null, array('placeholder' => 'County Designation','class' => 'form-control')) !!}
+                                {!! Form::text('county_designation', null, array('required','placeholder' => 'County Designation','class' => 'form-control '.$errors->first('county_designation','error'))) !!}
 
                             </div>
 
@@ -136,7 +114,7 @@ $(document).ready(function () {
         }
     });
 
-    $('.county-state-select').select2();
+    // $('.county-state-select').select2();
 
     $.ajax({
         url:"{{route('ajax_get_states')}}",

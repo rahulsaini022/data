@@ -93,6 +93,9 @@ Route::post(
 );
 // route for dynamic pages
 Route::get('/page/{page_slug}', 'HomeController@showPage')->name('dynamic_page');
+/**route for change password */
+Route::get('change-password', 'HomeController@change_password')->name('change.password')->middleware('auth');
+Route::post('update-password', 'HomeController@update_password')->name('update.password')->middleware('auth');;
 // following routes are for Advertiser
 Route::group(['middleware' => ['auth', 'role:Advertise']], function () {
 	
@@ -117,8 +120,7 @@ Route::group(['middleware' => ['auth', 'role:Advertise']], function () {
 	Route::get('advertise-subscriptions', 'AdvertiseDashboardController@subscription_listing')->name('advertise.subscriptions');
 	Route::post('advertise-cancelsubscriptions', 'AdvertiseDashboardController@cancel_subscription')->name('advertiser.cancel_subscription');
 	Route::post('advertise-resumesubscriptions', 'AdvertiseDashboardController@resume_subscription')->name('advertiser.resume_subscription');
-	Route::get('advertiser-changepassword', 'AdvertiseDashboardController@change_password')->name('advertiser.changepassword');
-	Route::post('advertiser-updatepassword', 'AdvertiseDashboardController@update_password')->name('advertiser.updatepassword');
+
 });
 // following routes are for super admin
 Route::group(['middleware' => ['auth', 'role:super admin']], function () {

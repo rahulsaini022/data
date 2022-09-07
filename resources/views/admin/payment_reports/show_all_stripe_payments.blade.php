@@ -45,16 +45,14 @@
                           <th>Sno.</th>
 
                           <th>Date</th>
-
-                          <th>Email</th>
-
-                          <th>Name</th>
-
-                          <th>Transaction ID</th>
+          <th>Transaction ID</th>
 
                           <th>Transaction Amount</th>
+                           <th>Payment Status</th>
+                 <th>Email</th>
 
-                          <th>Payment Status</th>
+                          <th>Name</th>
+                         
 
                           <th>Notes</th>
 
@@ -70,11 +68,11 @@
 
                           <td>{{ ++$i }}</td>
                           <td>{{ date('m-d-Y H:i:s',$payment->created) }}</td>
-                          <td>@if(isset($stripe_user)) {{ $stripe_user->email }} @endif</td>
-                          <td>@if(isset($stripe_user)) {{ $stripe_user->name }}  @endif</td>
-                          <td>{{ $payment->id }}</td>
+                         <td>{{ $payment->id }}</td>
                           <td>${{ $payment->amount/100 }}</td>
                           <td>{{ ucwords($payment->status) }}</td>
+                           <td>@if(isset($stripe_user)) {{ $stripe_user->email }} @endif</td>
+                          <td>@if(isset($stripe_user)) {{ $stripe_user->name }}  @endif</td>
                           <td>{{ $payment->description }}</td>
 
                         </tr>

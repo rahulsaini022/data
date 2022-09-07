@@ -321,9 +321,13 @@ class AttorneyController extends Controller
     } else {
       return redirect()->route('home');
     }
+    $attorney_user = User::find($id)->attorney;
+    $attorney_id= (!empty($attorney_user)) ?   $attorney_user->id : ''; 
+
     $validatedData = $request->validate([
       // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
       'email' => 'required | email | unique:users,email,' . $id,
+      // 'attorney_reg_1_num'=> 'required|unique:attorneys,attorney_reg_1_num,' . $attorney_id,
     ]);
 
     $fname = $request->fname;
@@ -370,50 +374,59 @@ class AttorneyController extends Controller
     $user->email = $email;
     $user->updated_at = now();
     $user->save();
-    $attorney_user = User::find($id)->attorney;
+ 
+   
+      $attorney_data['user_id'] = $id;
+      $attorney_data['mname'] = $mname;
+      $attorney_data['email'] = $email;
+      $attorney_data['document_sign_name'] = $document_sign_name;
+      $attorney_data['special_practice'] = $special_practice;
+      $attorney_data['special_practice_text'] = $special_practice_text;
+      $attorney_data['firm_name'] = $firm_name;
+      $attorney_data['firm_street_address'] = $firm_street_address;
+      $attorney_data['firm_suite_unit_mailcode'] = $firm_suite_unit_mailcode;
+      $attorney_data['po_box'] = $po_box;
+      $attorney_data['firm_city'] = $firm_city;
+      $attorney_data['state_id'] = $firm_state;
+      $attorney_data['county_id'] = $firm_county;
+      $attorney_data['firm_zipcode'] = $firm_zipcode;
+      $attorney_data['firm_telephone'] = $firm_telephone;
+      $attorney_data['firm_fax'] = $firm_fax;
+      $attorney_data['attorney_reg_1_state_id'] = $attorney_reg_1_state_id;
+      // $attorney_data['attorney_reg_2_state_id']=$attorney_reg_2_state_id;
+      // $attorney_data['attorney_reg_3_state_id']=$attorney_reg_3_state_id;
+      $attorney_data['attorney_reg_1_num'] = $attorney_reg_1_num;
+      // $attorney_data['attorney_reg_2_num']=$attorney_reg_2_num;
+      // $attorney_data['attorney_reg_3_num']=$attorney_reg_3_num;
+      $attorney_data['pro_vice_hac_num'] = $pro_vice_hac_num;
+      $attorney_data['updated_at'] = now();
+      $attorney_data['fname'] = $request->fname;
+      $attorney_data['lname'] = $request->lname;
+      $attorney_data['sufname'] = $request->sufname;
+      // $attorney_data['currentstatus']=$request->currentstatus;
+      $attorney_data['gender'] = $request->gender;
+      $attorney_data['attorneytitle'] = $request->attorneytitle;
+      $attorney_data['insured'] = $request->insured;
+      // $attorney_data['admissiondate']=date("Y-m-d",strtotime($request->admissiondate));
+      // $attorney_data['admissiondatevalue']=date("Ymd",strtotime($request->admissiondate));
+      // $attorney_data['howadmitted']=$request->howadmitted;
+      // $attorney_data['birthdate']=date("Y-m-d",strtotime($request->birthdate));
+      // $attorney_data['birthdatevalue']=date("Ymd",strtotime($request->birthdate));
+      $attorney_data['firm_tagline'] = $request->firm_tagline;
+      $attorney_data['firm_state'] = $attorney_state->state;
+      $attorney_data['firm_state_abr'] = $attorney_state->state_abbreviation;
+      $attorney_data['email'] = $request->email;
+      $attorney_data['firm_county'] = $attorney_county->county_name;
+      $attorney_data['registration_state_1'] = $attorney_reg_state->state;
 
-    $attorney_user->mname = $mname;
-    $attorney_user->email = $email;
-    $attorney_user->document_sign_name = $document_sign_name;
-    $attorney_user->special_practice = $special_practice;
-    $attorney_user->special_practice_text = $special_practice_text;
-    $attorney_user->firm_name = $firm_name;
-    $attorney_user->firm_street_address = $firm_street_address;
-    $attorney_user->firm_suite_unit_mailcode = $firm_suite_unit_mailcode;
-    $attorney_user->po_box = $po_box;
-    $attorney_user->firm_city = $firm_city;
-    $attorney_user->state_id = $firm_state;
-    $attorney_user->county_id = $firm_county;
-    $attorney_user->firm_zipcode = $firm_zipcode;
-    $attorney_user->firm_telephone = $firm_telephone;
-    $attorney_user->firm_fax = $firm_fax;
-    $attorney_user->attorney_reg_1_state_id = $attorney_reg_1_state_id;
-    // $attorney_user->attorney_reg_2_state_id=$attorney_reg_2_state_id;
-    // $attorney_user->attorney_reg_3_state_id=$attorney_reg_3_state_id;
-    $attorney_user->attorney_reg_1_num = $attorney_reg_1_num;
-    // $attorney_user->attorney_reg_2_num=$attorney_reg_2_num;
-    // $attorney_user->attorney_reg_3_num=$attorney_reg_3_num;
-    $attorney_user->pro_vice_hac_num = $pro_vice_hac_num;
-    $attorney_user->updated_at = now();
-    $attorney_user->fname = $request->fname;
-    $attorney_user->lname = $request->lname;
-    $attorney_user->sufname = $request->sufname;
-    // $attorney_user->currentstatus=$request->currentstatus;
-    $attorney_user->gender = $request->gender;
-    $attorney_user->attorneytitle = $request->attorneytitle;
-    $attorney_user->insured = $request->insured;
-    // $attorney_user->admissiondate=date("Y-m-d",strtotime($request->admissiondate));
-    // $attorney_user->admissiondatevalue=date("Ymd",strtotime($request->admissiondate));
-    // $attorney_user->howadmitted=$request->howadmitted;
-    // $attorney_user->birthdate=date("Y-m-d",strtotime($request->birthdate));
-    // $attorney_user->birthdatevalue=date("Ymd",strtotime($request->birthdate));
-    $attorney_user->firm_tagline = $request->firm_tagline;
-    $attorney_user->firm_state = $attorney_state->state;
-    $attorney_user->firm_state_abr = $attorney_state->state_abbreviation;
-    $attorney_user->email = $request->email;
-    $attorney_user->firm_county = $attorney_county->county_name;
-    $attorney_user->registration_state_1 = $attorney_reg_state->state;
-    $attorney_user->save();
+     if(isset($attorney_user)){
+      $attorney_user->update($attorney_data);
+     }
+     else{
+      Attorney::Create($attorney_data);
+     }
+    
+  
     // to backup old attorney data before updating in attorney table active
     if (isset($request->update_source_data) && $request->update_source_data == 'Yes') {
       $attorney_active_data_old = DB::table('attorney_table_active')

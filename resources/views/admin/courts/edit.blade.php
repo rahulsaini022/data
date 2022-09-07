@@ -15,29 +15,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-
-                    @if (count($errors) > 0)
-
-                      <div class="alert alert-danger">
-
-                        <strong>Whoops!</strong> There were some problems with your input.<br><br>
-
-                        <ul>
-
-                           @foreach ($errors->all() as $error)
-
-                             <li>{{ $error }}</li>
-
-                           @endforeach
-
-                        </ul>
-
-                      </div>
-
-                    @endif
-
-
-                    {!! Form::model($court, ['method' => 'PATCH','route' => ['courts.update', $court->id], 'id'=>'edit_court_form']) !!}
+  {!! Form::model($court, ['method' => 'PATCH','route' => ['courts.update', $court->id], 'id'=>'court_form']) !!}
 
                     <div class="row">
 
@@ -47,8 +25,10 @@
 
                                 <strong>Name:</strong>
 
-                                {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
-
+                                {!! Form::text('name', null, array('placeholder' => 'Name','required','class' => 'form-control '.$errors->first('name','error'))) !!}
+                              @error('name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                             </div>
 
                         </div>

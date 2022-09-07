@@ -139,7 +139,7 @@
                                 @enderror
                             </div>
                             <div class="col-md-4">
-                                <div class="form-check mt-4">
+                                <div class="form-check mt-4 gender_input_field">
                                     <label for="gender" class="form-check-label col-form-label text-md-left ">{{ __('Gender') }}</label>
                                     <div class="form-check form-check-inline ml-2">
                                         <input type="radio" id="atgen-m" class="gender-input" name="gender" value="M" required="" <?php if (isset($attorney_data->gender) && $attorney_data->gender == 'M') {
@@ -189,9 +189,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group row">
-                              <label class="col-md-2 col-form-label text-md-left">{{ __('Special Practice Type*') }}</label>
-                            <div class="col-md-6">
+                        <div class="form-group row ">
+                              <label class="col-md-2 col-form-label text-md-left ">{{ __('Special Practice Type*') }}</label>
+                            <div class="col-md-6 special_practice_label">
                               
                                 <div class="row">
                                     <div class="col-lg-4 special_practice ">
@@ -212,7 +212,7 @@
                                     </div>
                                     <div class="col-lg-4 special_practice ">
                                         @if($attorney_data && $attorney_data->special_practice =='legal_aid') 
-                                            <input class="special" id="special_practice_legal_aid" type="radio" class="" name="special_practice" value="legal_aid" checked autofocus>
+                                            <input class="special" id="special_practice_legal_aid" type="radio" class="" name="special_practice" value="legal_aid"  autofocus>
                                         @else
                                             <input class="special" id="special_practice_legal_aid" type="radio" class="" name="special_practice" value="legal_aid" autofocus>
                                         @endif
@@ -364,16 +364,17 @@
 
                             <div class="col-md-4">
                                 <label for="firm_zipcode" class=" col-form-label text-md-left">{{ __('Firm Zip Code*') }}</label>
-                                <p class="text-danger no-state-county-found" style="display: none;">No City,
-                                    State, County found for this zipcode.</p>
+                               
                                 <input id="firm_zipcode" type="text" class="form-control @error('firm_zipcode') is-invalid @enderror" name="firm_zipcode" value="<?php if (isset($attorney_data)) {
                                                                                                                                                                         echo $attorney_data->firm_zipcode;
-                                                                                                                                                                    } ?>" required autocomplete="firm_zipcode" autofocus>
+                                                                                                                                                                      } ?>" required autocomplete="firm_zipcode" autofocus>
                                 @error('firm_zipcode')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
+                                 <p class="text-danger no-state-county-found" style="display: none;">No City,
+                                    State, County found for this zipcode.</p>
                             </div>
 
 
@@ -497,6 +498,7 @@
                                                                                                                                     } ?>">
                                 <select id="attorney_reg_1_state_id" name="attorney_reg_1_state_id" class="form-control states_select_input" required="" readonly="" onmousedown="(function(e){ e.preventDefault(); })(event, this)">
                                     <option value="">Choose Attorney Registration #1 State</option>
+                                    <option selected value="35">Ohio</option>
                                 </select>
                                 @error('attorney_reg_1_state_id')
                                 <span class="invalid-feedback" role="alert">
@@ -507,9 +509,7 @@
 
                             <div class="col-md-4">
                                 <label for="attorney_reg_1_num" class=" col-form-label text-md-left">{{ __('Attorney Registration #1*') }}</label>
-                                <input id="attorney_reg_1_num" type="text" class="form-control @error('attorney_reg_1_num') is-invalid @enderror" name="attorney_reg_1_num" value="<?php if (isset($attorney_data)) {
-                                                                                                                                                                                        echo $attorney_data->attorney_reg_1_num;
-                                                                                                                                                                                    } ?>" autocomplete="attorney_reg_1_num" autofocus required="" readonly="">
+                                <input id="attorney_reg_1_num" type="text" class="form-control @error('attorney_reg_1_num') is-invalid @enderror" name="attorney_reg_1_num" value="{{$attorney_data->attorney_reg_1_num ?? ''}}" autocomplete="attorney_reg_1_num" autofocus @if((!isset($attorney_data->pro_vice_hac_num) && $attorney_data->pro_vice_hac_num = '')) required @endif @isset($attorney_data) readonly @endisset>
                                 @error('attorney_reg_1_num')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -574,6 +574,13 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="form-group row mb-0">
+                <div class="col-md-12 text-center p-3">
+                    <button type="submit" class="btn btn-primary">
+                        {{ __('Update') }}
+                    </button>
+                </div>
+            </div>
                 </div>
                 {{-- <!-- <div class="form-group row">
                             <label for="attorney_reg_2_state_id" class=" col-form-label text-md-left">{{ __('Attorney Registration #2 State') }}</label>
@@ -621,13 +628,7 @@
                     @enderror
                 </div>
             </div> --> --}}
-            <div class="form-group row mb-0">
-                <div class="col-md-12 text-center p-3">
-                    <button type="submit" class="btn btn-primary">
-                        {{ __('Update') }}
-                    </button>
-                </div>
-            </div>
+            
             </form>
         </div>
     </div>
@@ -635,17 +636,7 @@
 </div>
 </div>
 <script type="text/javascript">
-    //cusrso set at  the end of input field
-    //          var el = document.getElementById('fname'); 
-    //          console.log(el);
-    //   el.focus()
-    //   if (typeof el.selectionStart == "number") {
-    //       el.selectionStart = el.selectionEnd = el.value.length;
-    //   } else if (typeof el.createTextRange != "undefined") {           
-    //       var range = el.createTextRange();
-    //       range.collapse(false);
-    //       range.select();
-    //   }
+ 
     $(document).ready(function() {
         $('#attorney_edit_form').validate({
             rules: {
@@ -656,7 +647,22 @@
                 firm_fax: {
                     pattern: (/\(?[\d\s]{3}\) [\d\s]{3}-[\d\s]{4}$/)
                 },
+            },
+                errorPlacement: function (error, element) {
+                   
+            if (element.attr("name") === "gender") {
+                error.appendTo(".gender_input_field");
+             
+            } 
+           else if (element.attr("name") === "special_practice") {
+                error.appendTo(".special_practice_label");
+             
+            } 
+            else {
+                error.insertAfter(element);
             }
+        },
+            
         });
         $(window).keydown(function(event) {
             if (event.keyCode == 13) {

@@ -32,27 +32,32 @@
                         <div class="col-md-12">
                             <h2>{{$attorney->name}}</h2>
                             <p>This is your dashboard at First Draft Data. From here, you manage your account, your client information, use tools, etc. Here is where you register your clients because clients are not allowed to register themselves.</p>
-                           <div class="row attorney-dash">
-                            <div class="col-ad-6 ">
+                           <div class="row advertiser-dash">
+                            <div class="col-sm-6 ">
                                 <a class="btn btn-info  my-2 register-case-btn " href="{{route('prospects.index')}}">
                                     {{ __('Prospects »') }}
                                 </a>
                             </div>
-                            <div class="col-ad-6 ">
+                            <div class="col-sm-6 ">
                                 <a class="btn btn-info  my-2  float-sm-right" href="{{route('attorneys.edit', ['id' => Auth::user()->id])}}">
                                     {{ __('Edit Account Info »') }}
                                 </a>
                             </div>
-                            <div class="col-ad-6 ">
+                            <div class="col-sm-6 ">
                                 <a class="btn btn-info  my-2 register-case-btn " href="{{route('cases.index')}}">
                                     {{ __('Cases »') }}
                                 </a>
                             </div>
-                            <div class="col-ad-6 ">
+                            <div class="col-sm-6 ">
                                 <a class="btn btn-info  my-2 register-case-btn  float-sm-right" href="{{route('attorneys.state_seat_license')}}">
                                     {{ __('State Seat Licenses »') }}
                                 </a>
                             </div>
+                              <div class="col-sm-6">
+                                <a class="btn btn-info my-2 text-center register-case-btn " href="{{ route('change.password') }}">
+                                    {{ __(' Change Password »') }}
+                                </a>
+                           </div>
                            </div>
                         </div>
                         <div class="col-md-8 offset-md-4 ">

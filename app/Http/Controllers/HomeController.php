@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
+
 use Illuminate\Http\Request;
 use App\Price;
 use App\CasePaymentPackage;
@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Mail;
 use File;
 use Illuminate\Support\Facades\DB;
 use App\CustomerUploads;
+use App\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
 {
@@ -653,6 +656,30 @@ public function UploadDocument(Request $request){
 }
 
 
-
+    /**
+     * Change Password
+     * @param $password
+     */
+    public function change_password(Request $request)
+    {
+        return view('auth.passwords.changepassword');
+    }
+    /**
+     * Update Pasword
+     * @param $password
+     */
+    public function update_password(Request $request)
+    {
+        $id = Auth::user()->id;
+        $user = User::find($id);
+        $request->validate([
+            'password' => 'required|min:8',
+            'password_confirmation' => 'required|same:password'
+        ], ['same' => 'Password and Confirm Password must be same.']);
+        $password = $request->password;
+        $user->password = Hash::make($password);
+        $user->save();
+        return redirect()->back()->with('success', 'Password changed successfully');
+    }
 
 }

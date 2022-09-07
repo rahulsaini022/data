@@ -56,12 +56,9 @@ $(document).ready(function () {
             }
         },
     });
-    /* testimonial create and edit validation*/
-    $("#testimonial_form").validate();
-    /* page create and edit validation*/
-    $("#page_form").validate();
-    $("#pdfcredit_form").validate();
-    /* case package create and edit validation*/
+    /* admin forms validation*/
+    $("#testimonial_form ,#pdfcredit_form ,#page_form ,#clerk_form ,#court_form ,#division_form ,#stripeplans_form").validate();
+  
     $("#case_package_form").validate({
         errorPlacement: function (error, element) {
             if (element.attr("name") === "case_type_ids[]") {
@@ -72,6 +69,7 @@ $(document).ready(function () {
         },
     });
 });
+/** */
 function onlyNumber(e) {
     var x = e.which || e.keycode;
     if (x >= 48 && x <= 57) {
@@ -80,7 +78,7 @@ function onlyNumber(e) {
         return false;
     }
 }
-
+/**confirmation  on form submission */
 function ConfirmDelete(e) {
     var form = e.path[1];
       var text = $(e.target).val().toLowerCase();
@@ -102,7 +100,7 @@ function ConfirmDelete(e) {
         }
     });
 }
-// case hide
+// case hide/show confirmation
 function ConfirmHide(e) {
     var form = e.path[1];
     var text = $(e.target).data('text');
@@ -124,6 +122,7 @@ function ConfirmHide(e) {
         }
     });
 }
+/** confirmation on status change and confirmation on anchor tag before hit url   */
 function ConfirmStatus(e) {
     var form = e.path[0];
     var text = $(e.target).html().toLowerCase();

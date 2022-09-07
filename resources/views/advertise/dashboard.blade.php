@@ -57,7 +57,7 @@
                                 </a>
                             </div>
                             <div class="col-sm-6">
-                                <a class="btn btn-info my-2 text-center register-case-btn float-sm-right" href="{{ route('advertiser.changepassword') }}">
+                                <a class="btn btn-info my-2 text-center register-case-btn float-sm-right" href="{{ route('change.password') }}">
                                     {{ __(' Change Password »') }}
                                 </a>
                            </div>

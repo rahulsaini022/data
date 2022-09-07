@@ -16,26 +16,7 @@
                 </div>
                 <div class="card-body">
 
-                    @if (count($errors) > 0)
-
-                        <div class="alert-error alert-danger">
-
-                        <strong>Whoops!</strong> There were some problems with your input.<br><br>
-
-                        <ul>
-
-                           @foreach ($errors->all() as $error)
-
-                             <li>{{ $error }}</li>
-
-                           @endforeach
-
-                        </ul>
-
-                      </div>
-
-                    @endif
-
+                
                     {!! Form::model($magistrate, ['method' => 'PATCH','route' => ['magistrates.update', $magistrate->id], 'id'=>'edit_magistrate_form', 'autocomplete'=>'off']) !!}
 
                     <div class="row">
@@ -46,8 +27,10 @@
 
                                 <strong>Name:</strong>
 
-                                {!! Form::text('mag_name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
-
+                                {!! Form::text('mag_name', null, array('placeholder' => 'Name','class' => 'form-control','required')) !!}
+                                  @error('mag_name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                             </div>
 
                         </div>
@@ -58,8 +41,10 @@
 
                                 <strong>Last Name:</strong>
 
-                                {!! Form::text('mag_last_name', null, array('placeholder' => 'Last Name','class' => 'form-control')) !!}
-
+                                {!! Form::text('mag_last_name', null, array('placeholder' => 'Last Name','class' => 'form-control','required')) !!}
+                                  @error('mag_last_name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                             </div>
 
                         </div>
@@ -70,8 +55,10 @@
 
                                 <strong>Magistrate Title:</strong>
 
-                                {!! Form::text('mag_title', null, array('placeholder' => 'Magistrate Title','class' => 'form-control')) !!}
-
+                                {!! Form::text('mag_title', null, array('placeholder' => 'Magistrate Title','class' => 'form-control','required')) !!}
+                                  @error('mag_title')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                             </div>
 
                         </div>  

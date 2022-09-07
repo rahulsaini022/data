@@ -15,28 +15,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    @if (count($errors) > 0)
-
-                        <div class="alert-error alert-danger">
-
-                        <strong>Whoops!</strong> There were some problems with your input.<br><br>
-
-                        <ul>
-
-                           @foreach ($errors->all() as $error)
-
-                             <li>{{ $error }}</li>
-
-                           @endforeach
-
-                        </ul>
-
-                      </div>
-
-                    @endif
-
-
-                    {!! Form::open(array('route' => 'counties.store','method'=>'POST', 'id'=>'create_county_form', 'autocomplete'=>'off')) !!}
+                 {!! Form::open(array('route' => 'counties.store','method'=>'POST', 'id'=>'create_county_form', 'autocomplete'=>'off')) !!}
 
                     <div class="row">
 
@@ -46,8 +25,10 @@
 
                                 <strong>State:</strong>
 
-                                {!! Form::select('state_id', [null=>'Select State'], null, ['class' => 'form-control county-state-select', 'id' => 'state_id', 'required' => 'required']) !!}
-
+                                {!! Form::select('state_id', [null=>'Select State'], null, ['class' => 'form-control county-state-select '.$errors->first('state_id','error'), 'id' => 'state_id', 'required']) !!}
+                                 @error('state_id')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                             </div>
 
                         </div>
@@ -58,8 +39,10 @@
 
                                 <strong>County Name:</strong>
 
-                                {!! Form::text('county_name', null, array('placeholder' => 'County Name','class' => 'form-control')) !!}
-
+                                {!! Form::text('county_name', null, array('placeholder' => 'County Name','required','class' => 'form-control '.$errors->first('county_name','error'))) !!}
+                                 @error('county_name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                             </div>
 
                         </div>
@@ -70,8 +53,10 @@
 
                                 <strong>County Designation:</strong>
 
-                                {!! Form::text('county_designation', null, array('placeholder' => 'County Designation','class' => 'form-control')) !!}
-
+                                {!! Form::text('county_designation', null, array('required','placeholder' => 'County Designation','class' => 'form-control '.$errors->first('county_designation','error'))) !!}
+                                 @error('county_designation')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                             </div>
 
                         </div>
@@ -135,7 +120,7 @@ $(document).ready(function () {
         }
     });
 
-    $('.county-state-select').select2();
+    // $('.county-state-select').select2();
 
     $.ajax({
         url:"{{route('ajax_get_states')}}",

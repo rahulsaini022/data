@@ -16,26 +16,7 @@
                 </div>
                 <div class="card-body">
 
-                    @if (count($errors) > 0)
-
-                        <div class="alert-error alert-danger">
-
-                        <strong>Whoops!</strong> There were some problems with your input.<br><br>
-
-                        <ul>
-
-                           @foreach ($errors->all() as $error)
-
-                             <li>{{ $error }}</li>
-
-                           @endforeach
-
-                        </ul>
-
-                      </div>
-
-                    @endif
-
+            
 
                     {!! Form::model($judge, ['method' => 'PATCH','route' => ['judges.update', $judge->id], 'id'=>'edit_judge_form']) !!}
 
@@ -47,8 +28,10 @@
 
                                 <strong>Adjudicator First Name:</strong>
 
-                                {!! Form::text('adjudicator', null, array('placeholder' => 'Adjudicator First Name','class' => 'form-control')) !!}
-
+                                {!! Form::text('adjudicator', null, array('placeholder' => 'Adjudicator First Name','class' => 'form-control','required')) !!}
+                                  @error('adjudicator')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                             </div>
 
                         </div>
@@ -59,8 +42,10 @@
 
                                 <strong>Adjudicator Last Name:</strong>
 
-                                {!! Form::text('adjudicator_lname', null, array('placeholder' => 'Adjudicator Last Name','class' => 'form-control')) !!}
-
+                                {!! Form::text('adjudicator_lname', null, array('placeholder' => 'Adjudicator Last Name','class' => 'form-control','required')) !!}
+                                  @error('adjudicator_lname')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                             </div>
 
                         </div>
@@ -71,8 +56,10 @@
 
                                 <strong>Adjudicator Title:</strong>
 
-                                {!! Form::text('adj_title', null, array('placeholder' => 'Adjudicator Title','class' => 'form-control')) !!}
-
+                                {!! Form::text('adj_title', null, array('placeholder' => 'Adjudicator Title','class' => 'form-control','required')) !!}
+                                  @error('adj_title')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                             </div>
 
                         </div>
