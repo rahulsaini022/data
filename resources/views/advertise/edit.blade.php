@@ -74,18 +74,7 @@ i.fa.fa-trash.delete.custom-delete {
                         </div>
                     </div>
                     <div class="card-body">
-                        @if ($message = Session::get('success'))
-                            <div class="alert alert-success alert-block">
-                                <button type="button" class="close" data-dismiss="alert">×</button>
-                                <strong>{{ $message }}</strong>
-                            </div>
-                        @endif
-                        @if ($message = Session::get('error'))
-                            <div class="alert alert-danger alert-block">
-                                <button type="button" class="close" data-dismiss="alert">×</button>
-                                <strong>{{ $message }}</strong>
-                            </div>
-                        @endif
+                  
                         <div class="container">
                             <form class="form" id="edit-listing-form" method="post"
                                 action="{{ route('listing.update') }}" enctype="multipart/form-data">
@@ -101,7 +90,7 @@ i.fa.fa-trash.delete.custom-delete {
                                 </div>
                                 <div class="form-group ">
                                     <label for='price'>Price</label>
-                                    <input id='price' type="number" min="1"
+                                    <input id='price' type="number" min="1" onkeypress="if(this.value.length==8) return false;"
                                         value="{{ $listing_data->AD_price }}" required name="AD_price"
                                         class="form-control @error('AD_price') is-invalid @enderror">
                                     @error('AD_price')

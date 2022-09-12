@@ -67,7 +67,7 @@
                                 <form method="POST" action="{{ route('draft_practice_aids') }}">
                                     @csrf
                                    <div class="input-group mb-3">
-                                        <select id="select_practice_aid" name="select_practice_aid" class="form-control col-md-4 custom-select letter_dropdown " required="">
+                                        <select id="select_practice_aid" name="select_practice_aid" class="form-control col-md-4 custom-select letter_dropdown"  style=" white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" required="">
                                             <option value="">Select</option>
                                             @foreach($practice_aids as $practice_aid)
                                                 <option value="{{$practice_aid->package_name}}">{{$practice_aid->package_name}}</option>
