@@ -93,7 +93,7 @@
                           <?php ++$i; ?>
                           <tr id="download-tr_{{ $i }}">
                             <td>{{ $i }}</td>
-                            <td>{{ $file_data->getFilename() }}</td>
+                            <td>{{ Str::limit($file_data->getFilename(),90) }}</td>
                               <td>
                                 <a class="btn btn-primary mr-1 mb-1" href="javascript:void(0)" onclick="event.preventDefault(); document.getElementById('download-form_{{ $i }}').submit(); document.getElementById('download-tr_{{ $i }}').style.display = 'none';">Download</a>
                                 <form id="download-form_{{ $i }}" action="{{ route('attorney.download.file') }}" method="POST" style="display: none;">

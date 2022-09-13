@@ -36,7 +36,7 @@
     <script>
     
           $(document).ready(function(){
-          // DataTable
+          // DataTable 
       var user = "@if(Request::Segment(1) == 'clients') {{'clients'}} @else {{'users'}} @endif";
       var table=  $('.users-table').dataTable({
              processing: true,
