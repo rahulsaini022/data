@@ -128,8 +128,8 @@
                             <div class="col-xs-12 col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <strong>Phone:</strong>
-                                    <input id="prosp_phone" onkeydown="if(this.value.length==12) return false;" type="text" class="form-control" name="prosp_phone"
-                                        onkeypress="return onlyNumber(event);" value="" placeholder="XXX-XXX-XXXX">
+                                    <input id="prosp_phone" type="text" class="form-control" name="prosp_phone"
+                                        onkeypress="return onlyNumber(event);" value=""  placeholder="XXX-XXX-XXXX">
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-6 col-md-6">
@@ -255,14 +255,12 @@
             $('#prospect_form').validate({
                 rules: {
                     prosp_phone: {
-                        required: true,
                         maxlength: 12,
                         minlength: 12,
                     },
                 },
                 messages: {
                     prosp_phone: {
-                        required: "Phone Number is required",
                         maxlength: "Phone Number cannot be more than 10 digit",
                         minlength: "Phone Number should be of 10 digit miniumum",
                     },
@@ -347,7 +345,7 @@
                 if (event.key != 'Backspace' && (faxing.value.length === 7)) {
                     faxing.value += '-';
                 }
-
+if(faxing.value.length === 12) {return false;}
             });
 
         });
