@@ -737,7 +737,7 @@
                                 <div class="col-md-6">
                                     <label for="opdob" class="col-md-4 col-form-label text-md-left">Date of Birth*</label>
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control hasDatepicker"  id="opdob" name="opdob" placeholder="MM/DD/YYYY" value="<?php if(isset($opponent_data[0]->date_of_birth)){ echo date("m/d/Y", strtotime($opponent_data[0]->date_of_birth)); } ?>" autofocus="" required="">
+                                        <input type="text" class="form-control hasDatepicker" id="opdob" name="opdob" placeholder="MM/DD/YYYY" value="<?php if(isset($opponent_data[0]->date_of_birth)){ echo date("m/d/Y", strtotime($opponent_data[0]->date_of_birth)); } ?>" autofocus="" required="">
                                     </div>
                                 </div>
 

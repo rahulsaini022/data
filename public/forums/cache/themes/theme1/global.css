@@ -433,10 +433,6 @@ table {
 	background: #ffdde0;
 }
 
-.thread_start_datetime {
-	color: #999;
-}
-
 .post.unapproved_post .post_author {
 	border-bottom-color: #ffb8be;
 }
@@ -1418,12 +1414,6 @@ a.button.report_user_button span {
 	display: none;
 }
 
-.poll_votedfor {
-	background: #efefef;
-	border: 1px solid;
-	border-color: #fff #ddd #ddd #fff;
-}
-
 .posticons_label {
 	white-space: nowrap;
 }
@@ -1505,7 +1495,7 @@ a.button.report_user_button span {
 	opacity: 0.9;
 	filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=(0.9*100));
 	-ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=(0.9*100));
-	transform: scale(1);
+	zoom: 1;
 	width: 250px;
 	padding: 10px;
 	margin: 10px;
@@ -1545,7 +1535,7 @@ a.button.report_user_button span {
 	opacity: 0.9;
 	filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=(0.9*100));
 	-ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=(0.9*100));
-	transform: scale(1);
+	zoom: 1;
 	width: 250px;
 	padding: 10px;
 	margin: 10px;

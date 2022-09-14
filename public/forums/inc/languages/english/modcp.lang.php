@@ -133,6 +133,7 @@ $l['profile_optional'] = "Optional Fields";
 $l['website_url'] = "Website URL:";
 $l['birthdate'] = "Birthdate:";
 $l['icq_number'] = "ICQ Number:";
+$l['yahoo_id'] = "Yahoo ID:";
 $l['skype_id'] = "Skype ID:";
 $l['google_id'] = "Google Hangouts ID:";
 $l['away_notice'] = "This option will allow you to select whether you are away or not.";

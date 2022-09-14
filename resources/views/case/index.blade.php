@@ -7,22 +7,28 @@
             <div class="card">
                 <div class="card-header"><strong>{{ __('Cases List') }}</strong>
                   <div class="pull-right">
-                       
-                       
-                        <a class="btn btn-primary" href="{{route('attorneys.show',['id' => Auth::user()->id])}}">Back</a>
-                      </div>
+                        <a class="btn btn-info" href="{{ route('cases.index',['show' => 'active']) }}">Show Active cases</a>
+                        <a class="btn btn-info" href="{{ route('cases.index',['show' => 'deactivated']) }}">Show Deactivated cases</a>
+                        <a class="btn btn-info" href="{{ route('cases.index',['show' => 'non-hidden']) }}">Show non-hidden cases</a>
+                        <a class="btn btn-info" href="{{ route('cases.index',['show' => 'all']) }}">Show all cases</a>
+                        <a class="btn btn-success" href="{{ route('cases.create') }}"> Create New Case</a>
+                    </div>
                 </div>
-                
                 <div class="card-body table-sm table-responsive">
-                  
-<div class="filter-btn pb-3 pull-right">
- <a class="btn my-1 btn-info" href="{{ route('cases.index',['show' => 'active']) }}">Show Active cases</a>
-                        <a class="btn my-1 btn-info " href="{{ route('cases.index',['show' => 'deactivated']) }}">Show Deactivated cases</a>
-                        <a class="btn my-1 btn-info" href="{{ route('cases.index',['show' => 'non-hidden']) }}">Show non-hidden cases</a>
-                        <a class="btn my-1 btn-info" href="{{ route('cases.index',['show' => 'all']) }}">Show all cases</a>
-                         <a class="btn my-1 btn-success" href="{{ route('cases.create') }}"> Create New Case</a>
-                </div>
-                    <table class="table table-bordered cases-table table-responsive" style="min-width: 100%">
+                    @if ($message = Session::get('success'))
+                        <div class="alert alert-success alert-block">
+                            <button type="button" class="close" data-dismiss="alert">×</button> 
+                                <strong>{{ $message }}</strong>
+                        </div>
+                    @endif
+                    @if ($message = Session::get('error'))
+                        <div class="alert alert-danger alert-block">
+                            <button type="button" class="close" data-dismiss="alert">×</button> 
+                                <strong>{{ $message }}</strong>
+                        </div>
+                    @endif
+
+                    <table class="table table-bordered cases-table">
                       <thead>
                        <tr>
 
@@ -89,7 +95,7 @@
                              <a class="btn btn-primary mb-2" href="{{ route('cases.edit',$case->id) }}">Edit</a>
                             @endif
                             
-                            @if($case->payment_status=='1' && !$case->deactivated_at)
+                            @if($case->payment_status=='1' && !$case->deactivated_at && $case->max_max_num_parties >= 1)
                               <a class="btn btn-primary mb-2" href="{{route('cases.pleadings',$case->id)}}">Draft Docket</a>
 
                               @if($case->payment_status=='1' && $case->is_package_upgrade_available===TRUE)                            
@@ -113,7 +119,7 @@
 
                             <!-- {!! Form::open(['method' => 'DELETE','route' => ['cases.destroy', $case->id],'style'=>'display:inline']) !!}
 
-                                {!! Form::submit('Delete', ['class' => 'btn btn-danger confirm-delete mb-2', 'onclick' => 'return ConfirmDelete(event);']) !!}
+                                {!! Form::submit('Delete', ['class' => 'btn btn-danger confirm-delete mb-2', 'onclick' => 'return ConfirmDelete();']) !!}
 
                             {!! Form::close() !!} -->
                             @if($case->hidden_at && !$case->deactivated_at)
@@ -121,15 +127,15 @@
 
                                   {{ Form::hidden('show_hide', 'show') }}
 
-                                  {!! Form::submit('Show', ['class' => 'btn btn-success confirm-activate mb-2', 'onclick' => 'return ConfirmDelete(event);']) !!}
+                                  {!! Form::submit('Show', ['class' => 'btn btn-success confirm-activate mb-2', 'onclick' => 'return ConfirmShow();']) !!}
 
                                 {!! Form::close() !!}
                             @elseif(!$case->hidden_at && !$case->deactivated_at)
                                 {!! Form::open(['method' => 'POST','route' => ['cases.show_hide',$case->id],'style'=>'display:inline']) !!}
 
                                   {{ Form::hidden('show_hide', 'hide') }}
-            
-                                  {!! Form::submit('Hide', ['class' => 'btn btn-danger confirm-deactivate mb-2','data-text'=>'Hidden cases with no activity for 6 months will automatically be Deactivated and will require a case Registration fee to be reactivated and that, when a case is Deactivated for 6 months(Not Family Law) and 36 months(Family Law), it will be automatically Deleted. Are you sure you want to hide this case?', 'onclick' => 'return ConfirmHide(event);']) !!}
+
+                                  {!! Form::submit('Hide', ['class' => 'btn btn-danger confirm-deactivate mb-2', 'onclick' => 'return ConfirmHide();']) !!}
 
                                 {!! Form::close() !!}
                             @endif
@@ -190,7 +196,32 @@
   </div>
     <!-- Modal End-->
 <script>
- 
+  function ConfirmShow()
+  {
+      var x = confirm("Are you sure you want to show this case?");
+      if (x)
+          return true;
+      else
+        return false;
+  }
+
+  function ConfirmHide()
+  {
+      var x = confirm("Hidden cases with no activity for 6 months will automatically be Deactivated and will require a case Registration fee to be reactivated and that, when a case is Deactivated for 6 months(Not Family Law) and 36 months(Family Law), it will be automatically Deleted. Are you sure you want to hide this case?");
+      if (x)
+          return true;
+      else
+        return false;
+  }
+
+  function ConfirmDelete()
+  {
+      var x = confirm("Are you sure you want to delete this case?");
+      if (x)
+          return true;
+      else
+        return false;
+  }
 
   function setCaseCustody(case_id, state_id)
   {
@@ -201,7 +232,7 @@
   $(document).ready( function () {
     $('.cases-table').DataTable({
         pageLength: 50,
-       
+        responsive: true,
         aaSorting: []
     });
   });

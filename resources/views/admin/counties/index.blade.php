@@ -55,9 +55,38 @@
 
                         </tr>
                       </thead>
-                      
+                      <tbody>
+                        <?php $i=0; ?>
+                        @foreach ($data as $key => $county)
+
+                        <tr>
+
+                          <td>{{ ++$i }}</td>
+
+                          <td><a class="text-primary" href="{{ route('counties.show',$county->id) }}">{{ $county->county_name }}</a></td>
+
+                          <td>{{ $county->county_designation }}</td>
+                          
+                          <td>{{ $county->state_abbreviation }}</td>
+
+                          <td>
+
+                             <a class="btn btn-primary mb-1" href="{{ route('counties.edit',$county->id) }}">Edit</a>
+                             
+                             <!-- {!! Form::open(['method' => 'DELETE','route' => ['counties.destroy', $county->id],'style'=>'display:inline']) !!}
+
+                                  {!! Form::submit('Delete', ['class' => 'btn btn-danger confirm-delete', 'onclick' => 'return ConfirmDelete();']) !!}
+
+                              {!! Form::close() !!}
+-->
+                          </td>
+
+                        </tr>
+
+                        @endforeach
+                      </tbody>
                     </table>
-                    {{-- <div class="row">
+                    <div class="row">
                       <div class="col-xs-12 col-sm-12 col-md-12">{{ $data->links() }}
                       </div>
                       <div class="col-xs-12 col-sm-12 col-md-12 table-sm table-responsive">
@@ -75,7 +104,7 @@
                           </tr>
                         </table>
                       </div>
-                    </div> --}}
+                    </div>
                 </div>
             </div>
         </div> 
@@ -93,31 +122,9 @@
 
   $(document).ready( function () {
     $('.counties-table').DataTable({
-          processing: true,
-        serverSide: true,
-               
-        ajax: "{{url('/counties') }}",
-        columns: [
-            // {data: 'id'},
-            {data: 'id'},
-            { data: 'county_name'  },
-               { data: 'state_abbreviation' },
-              { data: 'county_designation' },
-            {orderable: false,
-               render: (data,type,row,val) => {
-                // console.log(row);
-                   return "<a class='btn btn-primary' href='{{url('/counties')}}/"+row.id+"/edit'>Edit</a>";
-                 }
-            },
-            
-        ],
-  
-     oLanguage: {sProcessing: "<i  class='spinner-border'></i> Loading...."},
-          });
-          $(".dataTables_filter label input[type=search]").attr('placeholder',' Enter keyword....');
-           var table = $('.attorneytableactive-table').DataTable();
-       
+        pageLength: 50,
+        responsive: true
     });
- 
+  } );
 </script>
 @endsection

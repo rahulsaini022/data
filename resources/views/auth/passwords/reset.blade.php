@@ -2,26 +2,8 @@
 
 @section('content')
 <div class="container">
-    
     <div class="row justify-content-center">
-        
         <div class="col-md-8">
-             @if ($message = Session::get('success'))
-
-                    <div class=" alert-success">
-         <button type="button" class="close" data-dismiss="alert">×</button> 
-                      <p>{{ $message }}</p>
-
-                    </div>
-
-                    @endif
-
-                    @if ($message = Session::get('error'))
-                      <div class=" alert-danger alert-block">
-                          <button type="button" class="close" data-dismiss="alert">×</button> 
-                              <strong>{{ $message }}</strong>
-                      </div>
-                    @endif
             <div class="card">
                 <div class="card-header">{{ __('Reset Password') }}</div>
 

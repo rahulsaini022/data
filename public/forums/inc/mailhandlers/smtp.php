@@ -247,10 +247,7 @@ class SmtpMail extends MailHandler
 				return false;
 			}
 
-			if(!$this->send_data('.', 250))
-			{
-				$this->fatal_error("Mail may not be delivered. Reason: ".$this->get_error());
-			}
+			$this->send_data('.', 250);
 
 			if(!$this->keep_alive)
 			{

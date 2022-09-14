@@ -10,7 +10,7 @@
                 <div class="card-header"><strong>{{ __('User Detail') }}</strong>
                     <div class="pull-right">
 
-                        <a class="btn btn-primary" href="{{ url()->previous() }}"> Back</a>
+                        <a class="btn btn-primary" href="{{ route('users.index') }}"> Back</a>
 
                     </div>
                 </div>

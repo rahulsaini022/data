@@ -15,8 +15,28 @@
                 </div>
                 <div class="card-body">
 
-                  
-                    {!! Form::model($package, ['method' => 'PATCH','id'=>'case_package_form','route' => ['casepaymentpackages.update', $package->id]]) !!}
+                    @if (count($errors) > 0)
+
+                      <div class="alert alert-danger">
+
+                        <strong>Whoops!</strong> There were some problems with your input.<br><br>
+
+                        <ul>
+
+                           @foreach ($errors->all() as $error)
+
+                             <li>{{ $error }}</li>
+
+                           @endforeach
+
+                        </ul>
+
+                      </div>
+
+                    @endif
+
+
+                    {!! Form::model($package, ['method' => 'PATCH','route' => ['casepaymentpackages.update', $package->id]]) !!}
 
                     <div class="row">
 
@@ -26,10 +46,8 @@
 
                                 <strong>Title:</strong>
 
-                                {!! Form::text('package_title', null, array('placeholder' => 'Title','class' => 'form-control','required')) !!}
-                                    @error('package_title')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                {!! Form::text('package_title', null, array('placeholder' => 'Title','class' => 'form-control')) !!}
+
                             </div>
 
                         </div>
@@ -41,9 +59,7 @@
                                 <strong>Description:</strong>
 
                                 {!! Form::textarea('package_description', null, array('placeholder' => 'Description','class' => 'form-control text-description-editor-tool', 'rows' => 10)) !!}
-                                    @error('package_description')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+
                             </div>
 
                         </div>
@@ -55,17 +71,15 @@
 
                                 <strong>Price:</strong>
 
-                                {!! Form::number('package_price', null, array('placeholder' => 'Price($)','class' => 'form-control','onkeypress'=>'if(this.value.length==8) return false;','min'=>1,'oninput'=>"validity.valid||(value='');")) !!}
-                                        @error('package_price')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                {!! Form::number('package_price', null, array('placeholder' => 'Price($)','class' => 'form-control')) !!}
+
                             </div>
 
                         </div>
 
                         <div class="col-xs-12 col-sm-12 col-md-12">
 
-                            <div class="form-group case_type_error">
+                            <div class="form-group">
 
                                 <strong>Case Types:</strong>
 
@@ -80,9 +94,7 @@
                                     </div>
 
                                 @endforeach
-                                    @error('case_type_ids')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+
                             </div>
 
                         </div>
@@ -97,9 +109,7 @@
                                 <input type="radio" id="active-0" class="active-input" name="active" value="0" <?php if($package->active=='0'){ echo "checked"; }?>>
                                 <label for="active-0">No</label>&nbsp;&nbsp;&nbsp;
                             </div>
-                                    @error('active')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+
                         </div>
                         
                         <div class="col-xs-12 col-sm-12 col-md-12 text-center">

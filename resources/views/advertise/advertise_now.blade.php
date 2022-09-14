@@ -34,13 +34,20 @@
                           <p>
                             Because your FDD advertiser registration is free with your first paid listing fee, let’s start here. Don’t
                             worry, at the end of this process you can decline to pay the listing fee, the transaction will stop, your
-                            registration will be cancelled and you won’t be charged anything. In other words, you won’t have to pay
+                            registration will be cancelled and your won’t be charged anything. In other words, you won’t have to pay
                             until you know the total cost of the listing fee.
                             In which category would you like your advertisement to appear?</p>
                             <ul>
-                            @foreach($categories as $k=>$v)
-                            <li><a href="{{route('advertisenow.courtreporter',$v->id)}}" >{{ $v->name}}</li></a>
-                           @endforeach
+                            <li><a href="{{route('courtreporter')}}" >Court Reporters</li></a>
+                            <li>Case Research</li>
+                            <li>Office and Conference Facilities</li>
+                            <li>Insurance</li>
+                            <li>IT Support 
+                            <li>Legal Temps </li>
+                            <li>Private Investigation</li>
+                            <li>For Sale</li>
+                            <li>For Rent</li>
+                            <li>For Barter/Trade</li>
                           </ul>
                          
                                 

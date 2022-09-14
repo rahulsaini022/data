@@ -15,7 +15,28 @@
                     </div>
                 </div>
                 <div class="card-body">
-                  {!! Form::open(array('route' => 'stripeplans.store','method'=>'POST', 'id'=>'stripeplans_form', 'autocomplete'=>'off')) !!}
+                    @if (count($errors) > 0)
+
+                      <div class="alert alert-danger">
+
+                        <strong>Whoops!</strong> There were some problems with your input.<br><br>
+
+                        <ul>
+
+                           @foreach ($errors->all() as $error)
+
+                             <li>{{ $error }}</li>
+
+                           @endforeach
+
+                        </ul>
+
+                      </div>
+
+                    @endif
+
+
+                    {!! Form::open(array('route' => 'stripeplans.store','method'=>'POST', 'id'=>'create_stripeplans_form', 'autocomplete'=>'off')) !!}
 
                     <div class="row">
 
@@ -25,10 +46,8 @@
 
                                 <strong>Plan ID:</strong>
 
-                                {!! Form::text('plan_id', null, array('placeholder' => 'Plan ID','required','class' => 'form-control '.$errors->first('plan_id','error'))) !!}
-                              @error('plan_id')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                {!! Form::text('plan_id', null, array('placeholder' => 'Plan ID','class' => 'form-control','required' => 'required')) !!}
+
                             </div>
 
                         </div>
@@ -39,10 +58,8 @@
 
                                 <strong>Plan Name:</strong>
 
-                                {!! Form::text('plan_name', null, array('placeholder' => 'Plan Name','required','class' => 'form-control '.$errors->first('plan_name','error'))) !!}
-                              @error('plan_name')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                {!! Form::text('plan_name', null, array('placeholder' => 'Plan Name','class' => 'form-control','required' => 'required')) !!}
+
                             </div>
 
                         </div>
@@ -53,10 +70,8 @@
 
                                 <strong>Plan Title:</strong>
 
-                                {!! Form::text('plan_title', null, array('placeholder' => 'Plan Title','class' => 'form-control '.$errors->first('plan_title','error'))) !!}
-                              @error('plan_title')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                {!! Form::text('plan_title', null, array('placeholder' => 'Plan Title','class' => 'form-control','required' => 'required')) !!}
+
                             </div>
 
                         </div>
@@ -67,10 +82,8 @@
 
                                 <strong>Plan Description:</strong>
 
-                                {!! Form::text('plan_description', null, array('placeholder' => 'Plan Description','class' => 'form-control '.$errors->first('plan_description','error'))) !!}
-                              @error('plan_description')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                {!! Form::text('plan_description', null, array('placeholder' => 'Plan Description','class' => 'form-control','required' => 'required')) !!}
+
                             </div>
 
                         </div>

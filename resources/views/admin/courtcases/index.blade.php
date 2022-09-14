@@ -72,7 +72,7 @@
 
                                   {{ Form::hidden('payment_status', '0') }}
 
-                                  {!! Form::submit('Deactivate', ['class' => 'btn btn-danger confirm-deactivate', 'onclick' => 'return ConfirmDelete(event);']) !!}
+                                  {!! Form::submit('Deactivate', ['class' => 'btn btn-danger confirm-deactivate', 'onclick' => 'return ConfirmDeActivate();']) !!}
 
                                 {!! Form::close() !!}
                             @else
@@ -80,7 +80,7 @@
 
                                   {{ Form::hidden('payment_status', '1') }}
 
-                                  {!! Form::submit('Activate', ['class' => 'btn btn-success confirm-activate', 'onclick' => 'return ConfirmDelete(event);']) !!}
+                                  {!! Form::submit('Activate', ['class' => 'btn btn-success confirm-activate', 'onclick' => 'return ConfirmActivate();']) !!}
 
                                 {!! Form::close() !!}
                             @endif
@@ -99,7 +99,23 @@
 </div>         
 <script>
 
- 
+  function ConfirmDeActivate()
+  {
+      var x = confirm("Are you sure you want to deactivate this case?");
+      if (x)
+          return true;
+      else
+        return false;
+  }
+
+  function ConfirmActivate()
+  {
+      var x = confirm("Are you sure you want to activate this case?");
+      if (x)
+          return true;
+      else
+        return false;
+  }
 
   $(document).ready( function () {
     $('.courtcases-table').DataTable({

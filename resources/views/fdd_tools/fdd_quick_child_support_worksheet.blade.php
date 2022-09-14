@@ -30,7 +30,7 @@
                             <form method="POST" action="#" id="computation_sheet_form">
                                 @csrf
                                 <input type="hidden" id="selected_state" value="{{$attorney_data->state_id}}">
-                                 <input type="hidden" name="sheet_state" value="35">
+                                <input type="hidden" name="sheet_state" value="35">
                                 <div class="row">
                                     <!-- div class="col-sm-3 column-box-width">    
                                         <select id="sheet_state" name="sheet_state" class="form-control" required="" autofocus="">
@@ -49,8 +49,8 @@
                                         <input type="checkbox" name="chk_prefill" id="chk_prefill" value="1" checked=""><label for="chk_prefill" class="chk_prefill" >Prefill with my last submission.</label>
                                     </div>  --> 
                                     <input type="hidden" name="chk_prefill" value="0">
-                                    <div class="col-sm-4 column-box-width">        
-                                        <input type="submit" id="computation-btn" style="width: auto!important;" class="btn btn-success btn-computation new-btn new-btn-green " value="FDD Quick
+                                    <div class="col-sm-3 column-box-width">        
+                                        <input type="submit" id="computation-btn" class="btn btn-success btn-computation new-btn new-btn-green" value="FDD Quick
                                         Child Computation Worksheet">       
                                     </div>
                                 </div>  
@@ -70,7 +70,7 @@
                             <h5 class="mt-2"> Choose to Prefill from previous Worksheet </h5>
                         </div>                        
                     </div>
-                    <table  class="table table-bordered fdd-computations-list-table table-responsive " >
+                    <table class="table table-bordered fdd-computations-list-table">
                         <thead>
                             <tr>
 
@@ -97,7 +97,7 @@
                             @foreach ($users_attorney_submissions_data[0] as $computation_sheet)
                             <tr>
                               <!-- <td>{{ ++$i }}</td> -->
-                                <td class="wid" >{{ date('m/d/y H:i:s', strtotime($computation_sheet->sole_shared_submissions_updated_at)) }}</td>
+                                <td>{{ date('m/d/y H:i:s', strtotime($computation_sheet->sole_shared_submissions_updated_at)) }}</td>
 
                                 <td>{{ $computation_sheet->state }}</td>
                                 
@@ -107,20 +107,20 @@
 
                                 <td>{{ $computation_sheet->form_custody }}</td>
 
-                              <td class="wid">
+                              <td>
                                  @if($computation_sheet->active=='1')
-                                    <a class="btn btn-danger  confirm-deactivate"  onclick="return ConfirmStatus(event);" href="{{ route('computations_sheet.deactivate',$computation_sheet->id) }}">Deactivate</a>
+                                    <a class="btn btn-danger mb-1 confirm-deactivate"  onclick="return ConfirmDeActivate();" href="{{ route('computations_sheet.deactivate',$computation_sheet->id) }}">Deactivate</a>
                                     
-                                    <form method="POST" action="{{route('computations.sole-shared')}}" id="computation_form" class="d-inline-flex">
+                                    <form method="POST" action="{{route('computations.sole-shared')}}" id="computation_form">
                                         @csrf
                                         <input type="hidden" name="sheet_state" value="{{$computation_sheet->form_state}}">
                                         <input type="hidden" name="sheet_custody" value="{{$computation_sheet->form_custody}}">
                                         <input type="hidden" name="chk_prefill" value="1">
                                         <input type="hidden" name="prefill_selected_computation" value="{{$computation_sheet->id}}">       
-                                        <input type="submit" id="prefill-computation" style="width: auto!important;" class="btn btn-success " value="Prefill computation">   
+                                        <input type="submit" id="computation-btn" class="btn btn-success btn-computation new-btn new-btn-green" value="Prefill computation">   
                                     </form>
                                  @else
-                                    <a class="btn btn-success confirm-activate"  onclick="return ConfirmStatus(event);" href="{{ route('computations_sheet.activate',$computation_sheet->id) }}">Activate</a>
+                                    <a class="btn btn-success mb-1 confirm-activate"  onclick="return ConfirmActivate();" href="{{ route('computations_sheet.activate',$computation_sheet->id) }}">Activate</a>
                                  @endif
                               </td>
 
@@ -132,7 +132,7 @@
 
                             <tr>
                               <!-- <td>{{ ++$i }}</td> -->
-                                <td class="wid">{{ date('m/d/y H:i:s', strtotime($computation_sheet->split_submissions_updated_at)) }}</td>
+                                <td>{{ date('m/d/y H:i:s', strtotime($computation_sheet->split_submissions_updated_at)) }}</td>
 
                                 <td>{{ $computation_sheet->state }}</td>
                                 
@@ -142,19 +142,19 @@
 
                                 <td>{{ $computation_sheet->form_custody }}</td>
 
-                              <td class="wid">
+                              <td>
                                  @if($computation_sheet->active=='1')
-                                    <a class="btn btn-danger  confirm-deactivate"  onclick="return ConfirmDeActivate();" href="{{ route('computations_sheet.deactivate',$computation_sheet->id) }}">Deactivate</a>
-                                        <form method="POST" action="{{route('computations.split')}}" id="computation_form" class="d-inline-flex">
+                                    <a class="btn btn-danger mb-1 confirm-deactivate"  onclick="return ConfirmDeActivate();" href="{{ route('computations_sheet.deactivate',$computation_sheet->id) }}">Deactivate</a>
+                                        <form method="POST" action="{{route('computations.split')}}" id="computation_form">
                                         @csrf
                                         <input type="hidden" name="sheet_state" value="{{$computation_sheet->form_state}}">
                                         <input type="hidden" name="sheet_custody" value="{{$computation_sheet->form_custody}}">
                                         <input type="hidden" name="chk_prefill" value="1">
                                         <input type="hidden" name="prefill_selected_computation" value="{{$computation_sheet->id}}">       
-                                        <input type="submit" id="prefill-computation" style="width: auto!important;" class="btn btn-success " value="Prefill computation">   
+                                        <input type="submit" id="computation-btn" class="btn btn-success btn-computation new-btn new-btn-green" value="Prefill computation">   
                                     </form>
                                  @else
-                                    <a class="btn btn-success confirm-activate"  onclick="return ConfirmActivate();" href="{{ route('computations_sheet.activate',$computation_sheet->id) }}">Activate</a>
+                                    <a class="btn btn-success mb-1 confirm-activate"  onclick="return ConfirmActivate();" href="{{ route('computations_sheet.activate',$computation_sheet->id) }}">Activate</a>
                                  @endif
                               </td>
 
@@ -171,7 +171,23 @@
 <script src="{{ asset('js/polyfiller.js') }}"></script>
 
 <script type="text/javascript">
- 
+    function ConfirmDeActivate()
+    {
+        var x = confirm("Are you sure you want to deactivate this record?");
+        if (x)
+              return true;
+        else
+            return false;
+    }
+
+    function ConfirmActivate()
+    {
+        var x = confirm("Are you sure you want to activate this record?");
+        if (x)
+              return true;
+        else
+            return false;
+    }
 
     $(document).ready(function(){
         $(window).keydown(function(event){
@@ -188,7 +204,7 @@
 
         $('.fdd-computations-list-table').DataTable({
             pageLength: 50,
-            // responsive: true
+            responsive: true
         });
 
         $('#computation-btn').click(function(){

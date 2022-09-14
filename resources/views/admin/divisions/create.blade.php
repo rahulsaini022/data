@@ -15,8 +15,28 @@
                     </div>
                 </div>
                 <div class="card-body">
+                    @if (count($errors) > 0)
 
-                    {!! Form::open(array('route' => 'divisions.store','method'=>'POST', 'id'=>'division_form')) !!}
+                      <div class="alert alert-danger">
+
+                        <strong>Whoops!</strong> There were some problems with your input.<br><br>
+
+                        <ul>
+
+                           @foreach ($errors->all() as $error)
+
+                             <li>{{ $error }}</li>
+
+                           @endforeach
+
+                        </ul>
+
+                      </div>
+
+                    @endif
+
+
+                    {!! Form::open(array('route' => 'divisions.store','method'=>'POST', 'id'=>'create_division_form')) !!}
 
                     <div class="row">
 
@@ -26,10 +46,8 @@
 
                                 <strong>Name:</strong>
 
-                                {!! Form::text('name', null, array('placeholder' => 'Name','required','class' => 'form-control '.$errors->first('name','error'))) !!}
-                              @error('name')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+
                             </div>
 
                         </div>

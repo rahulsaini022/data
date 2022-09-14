@@ -2,7 +2,7 @@
 
 @section('content')
 
-
+<div class="container">
     <div class="row page_sidebar_outer admin-dashboard">
         <div class="col dashboard_content_box">
             @hasrole('super admin')
@@ -29,69 +29,50 @@
             </div>
             <div class="all-stats-div">
 	            <div class="col-md-12">	
-	            	<div class="col-md-6 col-lg-3 col-sm-6 card dashboard-count-box mt-4">
+	            	<div class="col-md-4 col-sm-6 card dashboard-count-box mt-4">
 	            		<div class="card-body">
-										  <a class="card-link text-dark"  href="{{ route('users.index') }}">
 		            		<div class="h1 text-muted text-right mb-4">
 					        	<i class="fa fa-users"></i>
 					        </div>	
 					        <div class="h4 mb-0">
 					        	<span class="users-count"></span>
 					        </div>
-					        <span class="text-muted  font-weight-bold">Users</span>
-											</a>
+					        <small class="text-muted  font-weight-bold">Users</small>
 	            		</div>
 	            	</div>	
-	            	<div class="col-md-6 col-lg-3 col-sm-6 card dashboard-count-box mt-4">
+	            	<div class="col-md-4 col-sm-6 card dashboard-count-box mt-4">
 	            		<div class="card-body">
-										<a class="card-link text-dark" href="{{ route('attorneys.index') }}">
 		            		<div class="h1 text-muted text-right mb-4">
 					        	<i class="fa fa-users"></i>
 					        </div>	
 					        <div class="h4 mb-0">
 					        	<span class="attornies-count"></span>
 					        </div>
-					        <span class="text-muted  font-weight-bold">Attorneys</span>
-										</a>
+					        <small class="text-muted  font-weight-bold">Attorneys</small>
 	            		</div>
 	            	</div>	
-	            	<div class="col-md-6 col-lg-3 col-sm-6 card dashboard-count-box mt-4">
+	            	<div class="col-md-4 col-sm-6 card dashboard-count-box mt-4">
 	            		<div class="card-body">
-											<a class="card-link text-dark" href="{{ route('all.clients') }}">
 		            		<div class="h1 text-muted text-right mb-4">
 					        	<i class="fa fa-users"></i>
 					        </div>	
 					        <div class="h4 mb-0">
 					        	<span class="clients-count"></span>
 					        </div>
-					        <span class="text-muted  font-weight-bold">Clients</span>
-											</a>
+					        <small class="text-muted  font-weight-bold">Clients</small>
 	            		</div>
 	            	</div>	
-	            	<div class="col-md-6 col-lg-3 col-sm-6 card dashboard-count-box mt-4">
+	            	<div class="col-md-4 col-sm-6 card dashboard-count-box mt-4">
 	            		<div class="card-body">
-										<a class="card-link text-dark" href="{{ route('cases.all') }}">
 		            		<div class="h1 text-muted text-right mb-4">
-					        	<i class="fa fa-book"></i>
+					        	<i class="fa fa-contao" aria-hidden="true"></i>
 					        </div>	
 					        <div class="h4 mb-0">
 					        	<span class="cases-count"></span>
 					        </div>
-					        <span class="text-muted  font-weight-bold">Cases</span>
-										</a>
+					        <small class="text-muted  font-weight-bold">Cases</small>
 	            		</div>
 	            	</div>
-	            	{{-- <div class="col-md-6 col-lg-3 col-sm-6 card dashboard-count-box mt-4">
-	            		<div class="card-body">
-		            		<div class="h1 text-muted text-right mb-4">
-					        	<i class="fa fa-users" aria-hidden="true"></i>
-					        </div>	
-					        <div class="h4 mb-0">
-					        	<span class="advertiser-count"></span>
-					        </div>
-					        <span class="text-muted  font-weight-bold">Advertisers</span>
-	            		</div>
-	            	</div> --}}
 	            </div>
 	        </div>
         	<div class="col-sm-12 col-md-12 last-active-users-div mt-4" style="display: inline-block;">
@@ -165,7 +146,7 @@
 
         </div>
     </div>
-
+</div>
 <script type="text/javascript">
 
     $(document).ready(function(){
@@ -184,9 +165,7 @@
             success: function(data){
                 if(data==null || data=='null'){
                 } else {
-									
                     $('.users-count').text(data.users);
-                    // $('.advertiser-count').text(data.advertisers);
                     $('.attornies-count').text(data.attornies);
                     $('.clients-count').text(data.clients);
                     $('.cases-count').text(data.cases);
@@ -220,7 +199,6 @@
                     if(data==null || data=='null'){
                     } else {
                         $('.users-count').text(data.users);
-												// $('.advertiser-count').text(data.advertisers);
                         $('.attornies-count').text(data.attornies);
                         $('.clients-count').text(data.clients);
                         $('.cases-count').text(data.cases);

@@ -6,11 +6,7 @@
     <div class="row justify-content-center attorney-registration">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header"><strong>{{ __('FDD Advertiser Registration') }}</strong>
-                    <div class="pull-right">
-                        <a class="btn btn-primary" href="{{ route('advertisenow')}}">Back</a>
-                    </div>
-                </div>
+                <div class="card-header">{{ __('FDD Advertiser Registration') }}</div>
 
                 <div class="card-body">
                 	@if ($message = Session::get('success'))
@@ -32,20 +28,17 @@
 
                             
                              <div class="col-md-6">
-                                      <div class="col-md-10 form-group">
-                                
-                                          <label for="case_county" class=" col-form-label text-md-left">Listing County*</label>
+                                    <label for="case_county" class="col-md-4 col-form-label text-md-left">County*</label>
+                                    <div class="col-md-8">
                                         <select id="case_county" name="listing_county" class="form-control case_county_inputs" autofocus="" required="">
                                             <option value="">Choose County</option>
                                         </select>    
-                                      </div>
+                                    </div>
                                 </div>
 
                             
-                           
-                            <div class="col-md-6 attorney_reg_1_num_label">
-                                    <div class="col-md-10 form-group">
-                                 <label for="Full_Name" class=" col-form-label text-md-left attorney_reg_1_num_label">{{ __('Company or Your Full Name*') }}</label>
+                            <label for="Full_Name" class="col-md-2 col-form-label text-md-left attorney_reg_1_num_label">{{ __('Company or Your Full Name*') }}</label>
+                            <div class="col-md-4 attorney_reg_1_num_label">
                                 <input id="Full_Name" type="text" class="form-control @error('Full_Name') is-invalid @enderror" name="Full_Name" value="{{ old('Full_Name') }}" autocomplete="Full_Name" required="" autofocus="">
 
                                 @error('Full_Name')
@@ -53,17 +46,14 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                                    </div>
                             </div>
 
-                     
+                        </div>
 
-                        
-                           
-                            <div class="col-md-6">
-                                    <div class="col-md-10 form-group">
-                                 <label for="contact_full_name" class=" col-form-label text-md-left">{{ __('Contact person Full Name*') }}</label>
+                        <div class="form-group row">
+                            <label for="contact_full_name" class="col-md-2 col-form-label text-md-left">{{ __('Contact person Full Name*') }}</label>
 
+                            <div class="col-md-4">
                                 <input id="contact_full_name" type="text" class="form-control @error('contact_full_name') is-invalid @enderror" name="contact_full_name" value="{{ old('contact_full_name') }}" required autocomplete="contact_full_name" autofocus>
 
                                 @error('contact_full_name')
@@ -71,14 +61,11 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                                    </div>
                             </div>
 
-                            
-                            <div class="col-md-6">
-                                    <div class="col-md-10 form-group">
-                                <label for="email" class=" col-form-label text-md-left">{{ __('Email*') }}</label>
+                            <label for="email" class="col-md-2 col-form-label text-md-left">{{ __('Email*') }}</label>
 
+                            <div class="col-md-4">
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autocomplete="email" autofocus required>
 
                                 @error('email')
@@ -86,107 +73,122 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                                    </div>
                             </div>
 
-                        
-                        	<div class="col-md-6">
-                                    <div class="col-md-10 form-group">
-                                <label for="" class=" col-form-label text-md-left">{{ __('Telephone')}}</label>
-                        	
-                        		<input id="Telephone" type="text"  maxlength="12" class="form-control has-pattern-one" name="Telephone" value="" autofocus="" placeholder="XXX-XXX-XXXX">
+                        </div>
+                        <div class="form-group row">
+                        	<label for="" class="col-md-2 col-form-label text-md-left">{{ __('Telephone')}}</label>
+                        	<div class="col-md-4">
+                        		<input id="Telephone" type="text" class="form-control has-pattern-one" name="Telephone" value="" autofocus="" placeholder="XXX-XXX-XXXX">
                         		@error('Telephone')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                                    </div>
                         	</div>
-                        	
-                               
-    
-                       
-                        <div class="col-md-6">
-                                <div class="col-md-10 form-group">
-                            	<label class=" col-form-label text-md-left">{{ __('Street Address*') }}</label>
-                        	
+                        	 <label for="clzip" class="col-md-2 col-form-label text-md-left">{{ __('ZIP*') }}</label>
+                        	<div class="col-md-4">
+                                <p class="text-danger no-state-county-cl" style="display: none;">No City, State, County found for this zipcode.</p>
+                                   <input type="text" class="form-control" id="clzip" name="ZIP_Code" autofocus="" required="">
+                                    
+                                </div>
+                                @error('ZIP_Code')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                        </div>
+                        <div class="form-group row">
+                        	<label class="col-md-2 col-form-label text-md-left">{{ __('Street Address*') }}</label>
+                        	<div class="col-md-4">
                         		<input type="text" class="form-control" id="Street_Address" name="Street_Address"  autofocus="" required="">
                         		@error('Street_Address')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                                </div>
                         	</div>
-                        <div class="col-md-6">
-                                <div class="col-md-10 form-group">
-                            	<label class=" col-form-label text-md-left">Suite/Unit, if any:</label>
-                        	
+                        	<label class="col-md-2 col-form-label text-md-left">Suite/Unit, if any:</label>
+                        	<div class="col-md-4">
                         		<input type="text" class="form-control" id="Suite_Unit" name="Suite_Unit" />
-                                </div>
+                        		
                         	</div>
 
- <div class="col-md-6">
-                                    <div class="col-md-10 form-group">
-                                <label for="clzip" class=" col-form-label text-md-left">{{ __('ZIP*') }}   <span class="text-danger no-state-county-cl" style="display: none;">No City, State, County found for this zipcode.</span></label>
-                        	
-                              
-                                   <input type="text" class="form-control" id="clzip" name="ZIP_Code" autofocus="" required="">
-                                    @error('ZIP_Code')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror 
-                                    </div>
-                                </div>
-                       
+                        </div>
+
+                        <div class="form-group row">
                         	<div class="col-md-6">
-                                    <div class="col-md-10 form-group">
-                                      <label for="clstate" class="col-form-label text-md-left">State*</label>
-                                   
+                                    <label for="clstate" class="col-md-4 col-form-label text-md-left">State*</label>
+                                    <div class="col-md-8">
                                       <input type="hidden" name="selected-state-cl"  class="selected-state-cl">
                                         <select id="clstate" name="State" class="form-control cl-state" autofocus="" required="">                                     
                                             <option value="">Choose State</option>
-                                        </select>
-                                    </div>    
+                                        </select>    
                                     </div>
-                              
+                                </div>
 
                                 <div class="col-md-6">
-                                    <div class="col-md-10 form-group">
-                                       <label for="clcounty" class="col-form-label text-md-left">County*</label>
-                                  
+                                    <label for="clcounty" class="col-md-4 col-form-label text-md-left">County*</label>
+                                    <div class="col-md-8">
                                         <select id="clcounty" name="County" class="form-control cl-county" autofocus="" required="">
                                             <option value="">Choose County</option>
                                         </select>
-                                    
+                                    </div>
                                 </div>
                         </div>
-                        
+                        <div class="form-group row">
                         	<div class="col-md-6">
-                                   <div class="col-md-10 form-group">
-                                       <label for="clcity" class="col-form-label text-md-left">City*</label>
-                                    
+                                    <label for="clcity" class="col-md-4 col-form-label text-md-left">City*</label>
+                                    <div class="col-md-8">
+                                      
                                         <select id="clcity" name="City" class="form-control cl-city" required="" autofocus="">
                                             <option value="">Choose City</option>
                                         </select>
-                                   </div>
+                                    </div>
                                 </div>
 
                                 <div class="col-md-6">
-                               <div class="col-md-10 form-group">
-                                     <label for="website" class="col-form-label text-md-left">Website</label>
-                                    
+                                    <label for="website" class="col-md-4 col-form-label text-md-left">Website</label>
+                                    <div class="col-md-8">
                                         <input type="text" class="form-control" id="" name="website" autofocus="" >
-                               </div>
+
+                                    </div>
                                 </div>
                         </div>
                     
-                    <input type="hidden" name="category_id" value="{{ $id }}">
-                    <div class="form-group col-12 text-center">
-                        <button type="submit" class="btn btn-success px-3"> Register</button>
-                    </div>
-                    
+                        <div class="col-md-12">
+                        <p> Check which services you provide: </p>
+                        <div class="col-md-6">
+                                
+                                <div class="form-check">
+                        			<input type="checkbox" class="form-check-input" id="" name="Oral_Depositions" value="1"><label for="Oral_Depositions" class="form-check-label">Oral Depositions</label><br/>
+
+                        			<input type="checkbox" class="form-check-input" id="" name="Video_Depositions" value="1"><label for="Video Depositions" class="form-check-label">Video Depositions</label><br/>
+
+
+                        			<input type="checkbox" class="form-check-input" id="" name="Audio_Transcriptions" value="1"><label for="Audio_Transcriptions" class="form-check-label">Audio Transcriptions</label><br/>
+
+                        			</div>
+                        </div>
+                        <div class="col-md-6">
+                        	<input type="checkbox" id="" class="form-check-input" name="Conference_Room" value="1"><label for="Conference Room" class="form-check-label">Conference Room</label><br/>
+
+                        	<input type="checkbox" class="form-check-input" id="" name="Process_Service" value="1"><label for="Process Service" class="form-check-label">Process Service</label><br/>
+
+                        	<input type="checkbox" class="form-check-input" id="" name="Court_Runner" value="1"><label for="Court Runner" class="form-check-label">Court Runner</label>
+
+                        </div>
+                        <br/>
+                       
+                    <p>
+                    	The listing fee for Court Reporters is  ${{ $Court_Reporters_List_Fee }} for a term of {{ $Court_Reporters_List_Term }}. This fee gets your information on the list when a
+						legal professional is seeking a Court Reporter offering your services in (listing county) County. There are
+						additional ways you can control where you appear on that list for an additional charge after paying the
+						listing fee, but you don’t have to pay anything more if you’re satisfied just being on the list.
+                    </p>
+              
+                </div>
+                    <button type="submit" class="btn btn-success pull-right"> Register & Pay</button>
                     </form>
 
                 </div>
@@ -311,16 +313,6 @@
         }
 
     });
-});
-var tele = document.querySelector('#Telephone');
-
-tele.addEventListener('keydown', function(e){
-  if (event.key != 'Backspace' && (tele.value.length === 3 || tele.value.length === 3)){
-  tele.value += '-';
-  }
-  if (event.key != 'Backspace' && (tele.value.length === 7 || tele.value.length === 3)){
-  tele.value += '-';
-  }
 });
 </script>    
 @endsection

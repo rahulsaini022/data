@@ -13,6 +13,9 @@ PROCESSED=/var/www/html/public/FDD_PDF_Tools/FDD_PDF_Scrubber/OutputPDF_Document
 shopt -s nullglob # Sets nullglob
 for FILENAME in $SOURCE/*.{pdf,Pdf,PDf,PdF,pDf,PDF}; do
 shopt -u nullglob # Unsets nullglob
+	n1="${FILENAME##*/}" #bname
+	distdirname="${n1%%_*}"	
+	postdistname="${n1#*_}"
 	bnwext=$(basename "$FILENAME") &> /dev/null
 	bnFILENAME=$(basename "${FILENAME%%.*}") &> /dev/null
 	current_time=$(($(date "+%Y%m%d%H%M%S%3N"))) &> /dev/null
@@ -21,7 +24,7 @@ shopt -u nullglob # Unsets nullglob
 	#hash attorneyusernumber and current_time to make unique file prepend
 	uniquefilename=$""$1"_"$current_time"" &> /dev/null
 	#replace filename
-	cp "$SOURCE"/"$bnwext" "$WORKDIR"/"$uniquefilename"_FDD_TEMP_comp.pdf &> /dev/null
+	mv "$SOURCE"/"$bnwext" "$WORKDIR"/"$uniquefilename"_FDD_TEMP_comp.pdf &> /dev/null
 #first find if this is simply an image with ocr
 		#uncompress the pdf file in the WORKDIR
 		qpdf --qdf --object-streams=disable --coalesce-contents "$WORKDIR"/"$uniquefilename"_FDD_TEMP_comp.pdf "$WORKDIR"/"$uniquefilename"_FDD_TEMP_uncomp.qdf &> /dev/null
@@ -46,7 +49,7 @@ shopt -u nullglob # Unsets nullglob
 			exiftool -overwrite_original -tagsFromFile "$FILENAME" "$WORKDIR"/"$uniquefilename"_1_"$bnwext" &> /dev/null
 				if [ $DIST != "None" ]
 					then
-					mv "$WORKDIR"/"$uniquefilename"_1_"$bnwext" "$DIST"/"$uniquefilename"_"$bnFILENAME"_FDDSC.pdf &> /dev/null
+					mv "$WORKDIR"/"$uniquefilename"_1_"$bnwext" "/var/www/html/public/uiodirs/""$distdirname""/download/""$bnFILENAME"_FDDSC.pdf &> /dev/null
 					else
 					mv "$WORKDIR"/"$uniquefilename"_1_"$bnwext" "$PROCESSED"/"$bnwext" &> /dev/null
 				fi			
@@ -69,7 +72,7 @@ shopt -u nullglob # Unsets nullglob
 			exiftool -overwrite_original -tagsFromFile "$FILENAME" "$WORKDIR"/"$uniquefilename"_2_"$bnwext" &> /dev/null
 				if [ $DIST != "None" ]
 					then
-					mv "$WORKDIR"/"$uniquefilename"_2_"$bnwext" "$DIST"/"$uniquefilename"_"$bnFILENAME"_FDDSC.pdf &> /dev/null
+					mv "$WORKDIR"/"$uniquefilename"_2_"$bnwext" "/var/www/html/public/uiodirs/""$distdirname""/download/""$bnFILENAME"_FDDSC.pdf &> /dev/null
 					else
 					mv "$WORKDIR"/"$uniquefilename"_2_"$bnwext" "$PROCESSED"/"$bnwext" &> /dev/null
 				fi

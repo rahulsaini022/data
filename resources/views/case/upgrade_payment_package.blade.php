@@ -37,9 +37,7 @@
                         @foreach($case_packages as $case_package)
                             @if($i==0)
                             <div class="col-sm-12 payment-content-box packages-grid">
-                            @endif  
-                          
-                            {{-- @if($case_package->package_price > $old_package_details->package_price)   --}}
+                            @endif    
                                 @if (count($case_packages) > 2)
                                 <div class="col-sm-4 package-div">
                                 @else
@@ -55,11 +53,7 @@
                                         <!-- <button class="btn btn-primary" type="button" class="package-button" onclick="selectPackage('<?php //echo $case_package->package_title.','.$case_package->package_price; ?>')">Select</button> -->
 
                                         <?php
-                                      if($case_package->package_price <= $old_package_details->package_price)
-                                      {
-
-                                      }
-                                        elseif(($old_package==true || $old_package_details->active == '0' ) ){
+                                        if($old_package==true || $old_package_details->active == '0'){
                                             $package_title= preg_replace('/[^A-Za-z0-9\-]/', ' ', $case_package->package_title); // Removes special chars.
                                             echo '<button class="btn btn-primary package-button" onclick="selectPackage(\'' . $package_title . '\',\'' . $case_package->package_price . '\',\'' . $case_package->id . '\')">Select</button>';
                                         } else {
@@ -70,8 +64,7 @@
                                         ?>
 
                                     </div>
-                                </div> 
-                                {{-- @endif    --}}
+                                </div>    
                             <?php if($i==2 || $total_packages-1 == $j ){ ?>
                             </div>
                             <?php } ?>
@@ -162,9 +155,7 @@
             $('#payment_method').val(setupIntent.payment_method);
             $('#stripe_message').text('');
             $("#submit_btn").click();  
-             $("#card-button").html(' <i class="fa fa-spinner fa-spin"></i>Loading ');
-                    $("#card-button").prop('disabled', true); 
-           
+
         }
     });
 </script>

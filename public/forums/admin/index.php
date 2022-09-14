@@ -45,6 +45,10 @@ $mybb->settings['cookiepath'] = substr($loc, 0, strrpos($loc, "/{$config['admin_
 
 if(!isset($cp_language))
 {
+	if(!file_exists(MYBB_ROOT."inc/languages/".$mybb->settings['cplanguage']."/admin/home_dashboard.lang.php"))
+	{
+		$mybb->settings['cplanguage'] = "english";
+	}
 	$lang->set_language($mybb->settings['cplanguage'], "admin");
 }
 
@@ -197,7 +201,7 @@ elseif($mybb->input['do'] == "login")
 		$loginattempts = login_attempt_check_acp($login_user['uid'], true);
 
 		// Have we attempted too many times?
-		if($loginattempts !== false && $loginattempts['loginattempts'] > 0)
+		if($loginattempts['loginattempts'] > 0)
 		{
 			// Have we set an expiry yet?
 			if($loginattempts['loginlockoutexpiry'] == 0)
@@ -247,7 +251,7 @@ elseif($mybb->input['do'] == "login")
 		$mybb->user = get_user($loginhandler->login_data['uid']);
 	}
 
-	if(!empty($mybb->user['uid']))
+	if($mybb->user['uid'])
 	{
 		if(login_attempt_check_acp($mybb->user['uid']) == true)
 		{
@@ -283,7 +287,6 @@ elseif($mybb->input['do'] == "login")
 			"lastactive" => TIME_NOW,
 			"data" => my_serialize(array()),
 			"useragent" => $db->escape_string($useragent),
-			"authenticated" => 0,
 		);
 		$db->insert_query("adminsessions", $admin_session);
 		$admin_session['data'] = array();
@@ -342,15 +345,15 @@ elseif($mybb->input['do'] == "login")
 
 		$plugins->run_hooks("admin_login_fail");
 
-		$loginattempts = false;
-		if(!empty($login_user['uid']) && $login_user['uid'] > 0)
+		if($login_user['uid'] > 0)
 		{
 			$db->update_query("adminoptions", array("loginattempts" => "loginattempts+1"), "uid='".(int)$login_user['uid']."'", '', true);
-			$loginattempts = login_attempt_check_acp($login_user['uid'], true);
 		}
 
+		$loginattempts = login_attempt_check_acp($login_user['uid'], true);
+
 		// Have we attempted too many times?
-		if($loginattempts !== false && $loginattempts['loginattempts'] > 0)
+		if($loginattempts['loginattempts'] > 0)
 		{
 			// Have we set an expiry yet?
 			if($loginattempts['loginlockoutexpiry'] == 0)
@@ -404,7 +407,7 @@ else
 		$admin_session = $db->fetch_array($query);
 
 		// No matching admin session found - show message on login screen
-		if(empty($admin_session) || !$admin_session['sid'])
+		if(!$admin_session['sid'])
 		{
 			$login_message = $lang->error_invalid_admin_session;
 		}
@@ -497,7 +500,7 @@ if($mybb->input['action'] == "logout" && $mybb->user)
 {
 	$plugins->run_hooks("admin_logout");
 
-	if(verify_post_check($mybb->get_input('my_post_key')))
+	if(verify_post_check($mybb->input['my_post_key']))
 	{
 		$db->delete_query("adminsessions", "sid='".$db->escape_string($mybb->cookies['adminsid'])."'");
 		my_unsetcookie('adminsid');
@@ -515,11 +518,7 @@ else
 }
 $mybb->usergroup = usergroup_permissions($mybbgroups);
 
-$is_super_admin = false;
-if(isset($mybb->user['uid']))
-{
-	$is_super_admin = is_super_admin($mybb->user['uid']);
-}
+$is_super_admin = is_super_admin($mybb->user['uid']);
 
 if($mybb->usergroup['cancp'] != 1 && !$is_super_admin || !$mybb->user['uid'])
 {
@@ -538,23 +537,6 @@ if(!empty($mybb->user['uid']))
 	$query = $db->simple_select("adminoptions", "*", "uid='".$mybb->user['uid']."'");
 	$admin_options = $db->fetch_array($query);
 
-	// Only update language / theme once fully authenticated
-	if(empty($admin_options['authsecret']) || $admin_session['authenticated'] == 1)
-	{
-		if(!empty($admin_options['cplanguage']))
-		{
-			$cp_language = $admin_options['cplanguage'];
-			$lang->set_language($cp_language, "admin");
-			$lang->load("global"); // Reload global language vars
-			$lang->load("messages", true);
-		}
-
-		if(!empty($admin_options['cpstyle']) && file_exists(MYBB_ADMIN_DIR."/styles/{$admin_options['cpstyle']}/main.css"))
-		{
-			$cp_style = $admin_options['cpstyle'];
-		}
-	}
-
 	// Update the session information in the DB
 	if($admin_session['sid'])
 	{
@@ -565,43 +547,16 @@ if(!empty($mybb->user['uid']))
 	$mybb->admin['permissions'] = get_admin_permissions($mybb->user['uid']);
 }
 
-// Include the layout generation class overrides for this style
-if(file_exists(MYBB_ADMIN_DIR."/styles/{$cp_style}/style.php"))
-{
-	require_once MYBB_ADMIN_DIR."/styles/{$cp_style}/style.php";
-}
-
-// Check if any of the layout generation classes we can override exist in the style file
-$classes = array(
-	"Page" => "DefaultPage",
-	"SidebarItem" => "DefaultSidebarItem",
-	"PopupMenu" => "DefaultPopupMenu",
-	"Table" => "DefaultTable",
-	"Form" => "DefaultForm",
-	"FormContainer" => "DefaultFormContainer"
-);
-foreach($classes as $style_name => $default_name)
-{
-	// Style does not have this layout generation class, create it
-	if(!class_exists($style_name))
-	{
-		eval("class {$style_name} extends {$default_name} { }");
-	}
-}
-
-$page = new Page;
-$page->style = $cp_style;
-
 // Do not have a valid Admin user, throw back to login page.
 if(!isset($mybb->user['uid']) || $logged_out == true)
 {
 	if($logged_out == true)
 	{
-		$page->show_login($lang->success_logged_out);
+		$default_page->show_login($lang->success_logged_out);
 	}
 	elseif($fail_check == 1)
 	{
-		$page->show_login($login_lang_string, "error");
+		$default_page->show_login($login_lang_string, "error");
 	}
 	else
 	{
@@ -611,7 +566,7 @@ if(!isset($mybb->user['uid']) || $logged_out == true)
 			echo json_encode(array("errors" => array("login")));
 			exit;
 		}
-		$page->show_login($login_message, "error");
+		$default_page->show_login($login_message, "error");
 	}
 }
 
@@ -648,7 +603,8 @@ if($mybb->input['do'] == "do_2fa" && $mybb->request_method == "post")
 		$admin_session['authenticated'] = 1;
 		$db->update_query("adminoptions", array("loginattempts" => 0, "loginlockoutexpiry" => 0), "uid='{$mybb->user['uid']}'");
 		my_setcookie('acploginattempts', 0);
-		admin_redirect("index.php");
+		// post would result in an authorization code mismatch error
+		$mybb->request_method = "get";
 	}
 	else
 	{
@@ -662,7 +618,7 @@ if($mybb->input['do'] == "do_2fa" && $mybb->request_method == "post")
 		$loginattempts = login_attempt_check_acp($mybb->user['uid'], true);
 
 		// Have we attempted too many times?
-		if($loginattempts !== false && $loginattempts['loginattempts'] > 0)
+		if($loginattempts['loginattempts'] > 0)
 		{
 			// Have we set an expiry yet?
 			if($loginattempts['loginlockoutexpiry'] == 0)
@@ -694,19 +650,59 @@ if($mybb->input['do'] == "do_2fa" && $mybb->request_method == "post")
 				)
 			);
 
-			$page->show_lockedout();
+			$default_page->show_lockedout();
 		}
 
 		// Still here? Show a custom login page
-		$page->show_login($lang->my2fa_failed, "error");
+		$default_page->show_login($lang->my2fa_failed, "error");
 	}
 }
 
 // Show our 2FA page
 if(!empty($admin_options['authsecret']) && $admin_session['authenticated'] != 1)
 {
-	$page->show_2fa();
+	$default_page->show_2fa();
 }
+
+// Now the user is fully authenticated setup their personal options
+if(!empty($admin_options['cplanguage']) && file_exists(MYBB_ROOT."inc/languages/".$admin_options['cplanguage']."/admin/home_dashboard.lang.php"))
+{
+	$cp_language = $admin_options['cplanguage'];
+	$lang->set_language($cp_language, "admin");
+	$lang->load("global"); // Reload global language vars
+	$lang->load("messages", true);
+}
+if(!empty($admin_options['cpstyle']) && file_exists(MYBB_ADMIN_DIR."/styles/{$admin_options['cpstyle']}/main.css"))
+{
+	$cp_style = $admin_options['cpstyle'];
+}
+
+// Include the layout generation class overrides for this style
+if(file_exists(MYBB_ADMIN_DIR."/styles/{$cp_style}/style.php"))
+{
+	require_once MYBB_ADMIN_DIR."/styles/{$cp_style}/style.php";
+}
+
+// Check if any of the layout generation classes we can override exist in the style file
+$classes = array(
+	"Page" => "DefaultPage",
+	"SidebarItem" => "DefaultSidebarItem",
+	"PopupMenu" => "DefaultPopupMenu",
+	"Table" => "DefaultTable",
+	"Form" => "DefaultForm",
+	"FormContainer" => "DefaultFormContainer"
+);
+foreach($classes as $style_name => $default_name)
+{
+	// Style does not have this layout generation class, create it
+	if(!class_exists($style_name))
+	{
+		eval("class {$style_name} extends {$default_name} { }");
+	}
+}
+
+$page = new Page;
+$page->style = $cp_style;
 
 $page->add_breadcrumb_item($lang->home, "index.php");
 
@@ -810,7 +806,7 @@ if($mybb->request_method == "post")
 	if($post_verify == true)
 	{
 		// If the post key does not match we switch the action to GET and set a message to show the user
-		if(!verify_post_check($mybb->get_input('my_post_key'), true))
+		if(!isset($mybb->input['my_post_key']) || $mybb->post_code !== $mybb->input['my_post_key'])
 		{
 			$mybb->request_method = "get";
 			$page->show_post_verify_error = true;

@@ -135,20 +135,16 @@
                                 <div class="col-md-6">
                                     <label class="col-form-label text-md-left">Resides with </label><br>
                                     <label for="This_Marriage_First_Child_Resides_With_ClientName" class="radio-label">{{$client_name}}
-                                        <input id="This_Marriage_First_Child_Resides_With_ClientName" type="radio" name="This_Marriage_First_Child_Resides_With" class="This_Marriage_Child_Resides_With First ClientName" value="{{$client_name}}" checked="" onchange="ResideWithOther(this,'First');">
+                                        <input id="This_Marriage_First_Child_Resides_With_ClientName" type="radio" name="This_Marriage_First_Child_Resides_With" class="This_Marriage_Child_Resides_With First ClientName" value="{{$client_name}}" checked="">
                                     </label>
                                     <label for="This_Marriage_First_Child_Resides_With_OpName" class="radio-label">{{$opponent_name}}
-                                        <input id="This_Marriage_First_Child_Resides_With_OpName" type="radio" name="This_Marriage_First_Child_Resides_With" class="This_Marriage_Child_Resides_With First OpName" value="{{$opponent_name}}" onchange="ResideWithOther(this,'First');"> 
+                                        <input id="This_Marriage_First_Child_Resides_With_OpName" type="radio" name="This_Marriage_First_Child_Resides_With" class="This_Marriage_Child_Resides_With First OpName" value="{{$opponent_name}}"> 
                                     </label>
                                     <label for="This_Marriage_First_Child_Resides_With_Both" class="radio-label">Both
-                                        <input id="This_Marriage_First_Child_Resides_With_Both" type="radio" name="This_Marriage_First_Child_Resides_With" class="This_Marriage_Child_Resides_With First Both" value="Both" onchange="ResideWithOther(this,'First');">
+                                        <input id="This_Marriage_First_Child_Resides_With_Both" type="radio" name="This_Marriage_First_Child_Resides_With" class="This_Marriage_Child_Resides_With First Both" value="Both">
                                     <label for="This_Marriage_First_Child_Resides_With_Other" class="radio-label">Other
-                                        <input id="This_Marriage_First_Child_Resides_With_Other" type="radio" name="This_Marriage_First_Child_Resides_With" class="This_Marriage_Child_Resides_With First Other" value="Other" onchange="ResideWithOther(this,'First');"> 
+                                        <input id="This_Marriage_First_Child_Resides_With_Other" type="radio" name="This_Marriage_First_Child_Resides_With" class="This_Marriage_Child_Resides_With First Other" value="Other"> 
                                     </label>
-                                </div>
-                                <div class="col-md-6 First_Child_Resides_With_Other_Div" style="display: none;">
-                                    <label for="This_Marriage_First_Child_Resides_With_Other" class="col-form-label text-md-right">Name of Person  Reside with</label>
-                                    <input id="This_Marriage_First_Child_Resides_With_Other_Name" type="text" class="form-control" name="This_Marriage_First_Child_Resides_With_Other_Name" value="">
                                 </div>
                                 <div class="col-md-6">
                                     <label class="col-form-label text-md-left">Will Reside with </label><br>
@@ -206,19 +202,19 @@
                                     <label for="Subject to an existing order of parenting or support from another Court?">Subject to an existing order of parenting or support from another Court?</label>
                                     <br>
                                     <label for="This_Marriage_First_Child_Sub_to_Court_Order_Y_N_Yes" class="radio-label">YES
-                                        <input id="This_Marriage_First_First_Sub_to_Court_Order_Y_N_Yes" type="radio" name="This_Marriage_First_Child_Sub_to_Court_Order" class="This_Marriage_First_Child_Sub_to_Court_Order_Y_N" value="Yes" onchange="childsubcourtorder(this,'First');">
+                                        <input id="This_Marriage_First_First_Sub_to_Court_Order_Y_N_Yes" type="radio" name="This_Marriage_First_Child_Sub_to_Court_Order" class="This_Marriage_First_Child_Sub_to_Court_Order_Y_N" value="Yes">
                                     </label>
                                     <label for="This_Marriage_First_Child_Sub_to_Court_Order_Y_N_No" class="radio-label">NO
-                                        <input id="This_Marriage_First_Child_Sub_to_Court_Order_Y_N_No" type="radio" name="This_Marriage_First_Child_Sub_to_Court_Order" class="This_Marriage_First_Child_Sub_to_Court_Order_Y_N" value="NO" checked="" onchange="childsubcourtorder(this,'First');"> 
+                                        <input id="This_Marriage_First_Child_Sub_to_Court_Order_Y_N_No" type="radio" name="This_Marriage_First_Child_Sub_to_Court_Order" class="This_Marriage_First_Child_Sub_to_Court_Order_Y_N" value="NO" checked=""> 
                                     </label>
                                 </div>
 
-                                 <div class="col-md-6 First_Child_Court_div" style="display: none;">
+                                 <div class="col-md-6" style="display: none;">
                                     <label for="This_Marriage_First_Child_Court" class="col-form-label text-md-left">Which Court?</label>
                                     <input id="This_Marriage_First_Child_Court" type="text" class="form-control Child_Court" name="This_Marriage_First_Child_Court" value=""> 
                                 </div>
 
-                                <div class="col-md-6 First_Child_Court_Case_Num_div" style="display: none;">
+                                <div class="col-md-6" style="display: none;">
                                     <label for="This_Marriage_First_Child_Court_Case_Num" class="col-form-label text-md-left">Case Number?</label>
                                     <input id="This_Marriage_First_Child_Court_Case_Num" type="text" class="form-control Case_Num" name="This_Marriage_First_Child_Court_Case_Num" value=""> 
                                 </div>
@@ -278,20 +274,16 @@
                                 <div class="col-md-6">
                                     <label class="col-form-label text-md-left">Resides with </label><br>
                                     <label for="This_Marriage_Second_Child_Resides_With_ClientName" class="radio-label">{{$client_name}}
-                                        <input id="This_Marriage_Second_Child_Resides_With_ClientName" type="radio" name="This_Marriage_Second_Child_Resides_With" class="This_Marriage_Child_Resides_With Second ClientName" value="{{$client_name}}" checked="" onchange="ResideWithOther(this,'Second');">
+                                        <input id="This_Marriage_Second_Child_Resides_With_ClientName" type="radio" name="This_Marriage_Second_Child_Resides_With" class="This_Marriage_Child_Resides_With Second ClientName" value="{{$client_name}}" checked="">
                                     </label>
                                     <label for="This_Marriage_Second_Child_Resides_With_OpName" class="radio-label">{{$opponent_name}}
-                                        <input id="This_Marriage_Second_Child_Resides_With_OpName" type="radio" name="This_Marriage_Second_Child_Resides_With" class="This_Marriage_Child_Resides_With Second OpName" value="{{$opponent_name}}" onchange="ResideWithOther(this,'Second');"> 
+                                        <input id="This_Marriage_Second_Child_Resides_With_OpName" type="radio" name="This_Marriage_Second_Child_Resides_With" class="This_Marriage_Child_Resides_With Second OpName" value="{{$opponent_name}}"> 
                                     </label>
                                     <label for="This_Marriage_Second_Child_Resides_With_Both" class="radio-label">Both
-                                        <input id="This_Marriage_Second_Child_Resides_With_Both" type="radio" name="This_Marriage_Second_Child_Resides_With" class="This_Marriage_Child_Resides_With Second Both" value="Both" onchange="ResideWithOther(this,'Second');">
+                                        <input id="This_Marriage_Second_Child_Resides_With_Both" type="radio" name="This_Marriage_Second_Child_Resides_With" class="This_Marriage_Child_Resides_With Second Both" value="Both">
                                     <label for="This_Marriage_Second_Child_Resides_With_Other" class="radio-label">Other
-                                        <input id="This_Marriage_Second_Child_Resides_With_Other" type="radio" name="This_Marriage_Second_Child_Resides_With" class="This_Marriage_Child_Resides_With Second Other" value="Other" onchange="ResideWithOther(this,'Second');"> 
+                                        <input id="This_Marriage_Second_Child_Resides_With_Other" type="radio" name="This_Marriage_Second_Child_Resides_With" class="This_Marriage_Child_Resides_With Second Other" value="Other"> 
                                     </label>
-                                </div>
-                                <div class="col-md-6 Second_Child_Resides_With_Other_Div" style="display: none;">
-                                    <label for="This_Marriage_Second_Child_Resides_With_Other" class="col-form-label text-md-right">Name of Person  Reside with</label>
-                                    <input id="This_Marriage_Second_Child_Resides_With_Other_name" type="text" class="form-control" name="This_Marriage_Second_Child_Resides_With_Other_Name" value="">
                                 </div>
                                 <div class="col-md-6">
                                     <label class="col-form-label text-md-left">Will Reside with </label><br>
@@ -349,19 +341,19 @@
                                     <label for="Subject to an existing order of parenting or support from another Court?">Subject to an existing order of parenting or support from another Court?</label>
                                     <br>
                                     <label for="This_Marriage_Second_Child_Sub_to_Court_Order_Y_N_Yes" class="radio-label">YES
-                                        <input id="This_Marriage_Third_Second_Sub_to_Court_Order_Y_N_Yes" type="radio" name="This_Marriage_Second_Child_Sub_to_Court_Order" class="This_Marriage_Second_Child_Sub_to_Court_Order_Y_N" value="Yes" onchange="childsubcourtorder(this,'Second');">
+                                        <input id="This_Marriage_Third_Second_Sub_to_Court_Order_Y_N_Yes" type="radio" name="This_Marriage_Second_Child_Sub_to_Court_Order" class="This_Marriage_Second_Child_Sub_to_Court_Order_Y_N" value="Yes">
                                     </label>
                                     <label for="This_Marriage_Second_Child_Sub_to_Court_Order_Y_N_No" class="radio-label">NO
-                                        <input id="This_Marriage_Second_Child_Sub_to_Court_Order_Y_N_No" type="radio" name="This_Marriage_Second_Child_Sub_to_Court_Order" class="This_Marriage_Second_Child_Sub_to_Court_Order_Y_N" value="NO" checked="" onchange="childsubcourtorder(this,'Second');"> 
+                                        <input id="This_Marriage_Second_Child_Sub_to_Court_Order_Y_N_No" type="radio" name="This_Marriage_Second_Child_Sub_to_Court_Order" class="This_Marriage_Second_Child_Sub_to_Court_Order_Y_N" value="NO" checked=""> 
                                     </label>
                                 </div>
 
-                                 <div class="col-md-6 Second_Child_Court_div" style="display: none;">
+                                 <div class="col-md-6" style="display: none;">
                                     <label for="This_Marriage_Second_Child_Court" class="col-form-label text-md-left">Which Court?</label>
                                     <input id="This_Marriage_Second_Child_Court" type="text" class="form-control Child_Court" name="This_Marriage_Second_Child_Court" value=""> 
                                 </div>
 
-                                <div class="col-md-6 Second_Child_Court_Case_Num_div" style="display: none;">
+                                <div class="col-md-6" style="display: none;">
                                     <label for="This_Marriage_Second_Child_Court_Case_Num" class="col-form-label text-md-left">Case Number?</label>
                                     <input id="This_Marriage_Second_Child_Court_Case_Num" type="text" class="form-control Case_Num" name="This_Marriage_Second_Child_Court_Case_Num" value=""> 
                                 </div>
@@ -421,20 +413,16 @@
                                 <div class="col-md-6">
                                     <label class="col-form-label text-md-left">Resides with </label><br>
                                     <label for="This_Marriage_Third_Child_Resides_With_ClientName" class="radio-label">{{$client_name}}
-                                        <input id="This_Marriage_Third_Child_Resides_With_ClientName" type="radio" name="This_Marriage_Third_Child_Resides_With" class="This_Marriage_Child_Resides_With Third ClientName" value="{{$client_name}}" checked="" onchange="ResideWithOther(this,'Third');">
+                                        <input id="This_Marriage_Third_Child_Resides_With_ClientName" type="radio" name="This_Marriage_Third_Child_Resides_With" class="This_Marriage_Child_Resides_With Third ClientName" value="{{$client_name}}" checked="">
                                     </label>
                                     <label for="This_Marriage_Third_Child_Resides_With_OpName" class="radio-label">{{$opponent_name}}
-                                        <input id="This_Marriage_Third_Child_Resides_With_OpName" type="radio" name="This_Marriage_Third_Child_Resides_With" class="This_Marriage_Child_Resides_With Third OpName" value="{{$opponent_name}}" onchange="ResideWithOther(this,'Third');"> 
+                                        <input id="This_Marriage_Third_Child_Resides_With_OpName" type="radio" name="This_Marriage_Third_Child_Resides_With" class="This_Marriage_Child_Resides_With Third OpName" value="{{$opponent_name}}"> 
                                     </label>
                                     <label for="This_Marriage_Third_Child_Resides_With_Both" class="radio-label">Both
-                                        <input id="This_Marriage_Third_Child_Resides_With_Both" type="radio" name="This_Marriage_Third_Child_Resides_With" class="This_Marriage_Child_Resides_With Third Both" value="Both" onchange="ResideWithOther(this,'Third');">
+                                        <input id="This_Marriage_Third_Child_Resides_With_Both" type="radio" name="This_Marriage_Third_Child_Resides_With" class="This_Marriage_Child_Resides_With Third Both" value="Both">
                                     <label for="This_Marriage_Third_Child_Resides_With_Other" class="radio-label">Other
-                                        <input id="This_Marriage_Third_Child_Resides_With_Other" type="radio" name="This_Marriage_Third_Child_Resides_With" class="This_Marriage_Child_Resides_With Third Other" value="Other" onchange="ResideWithOther(this,'Third');"> 
+                                        <input id="This_Marriage_Third_Child_Resides_With_Other" type="radio" name="This_Marriage_Third_Child_Resides_With" class="This_Marriage_Child_Resides_With Third Other" value="Other"> 
                                     </label>
-                                </div>
-                                <div class="col-md-6 Third_Child_Resides_With_Other_Div" style="display: none;">
-                                    <label for="This_Marriage_Third_Child_Resides_With_Other_name" class="col-form-label text-md-right">Name of Person  Reside with</label>
-                                    <input id="This_Marriage_Third_Child_Resides_With_Other_name" type="text" class="form-control" name="This_Marriage_Third_Child_Resides_With_Other_Name" value="">
                                 </div>
                                 <div class="col-md-6">
                                     <label class="col-form-label text-md-left">Will Reside with </label><br>
@@ -492,19 +480,19 @@
                                     <label for="Subject to an existing order of parenting or support from another Court?">Subject to an existing order of parenting or support from another Court?</label>
                                     <br>
                                     <label for="This_Marriage_Third_Child_Sub_to_Court_Order_Y_N_Yes" class="radio-label">YES
-                                        <input id="This_Marriage_Third_Child_Sub_to_Court_Order_Y_N_Yes" type="radio" name="This_Marriage_Third_Child_Sub_to_Court_Order" class="This_Marriage_Third_Child_Sub_to_Court_Order_Y_N" value="Yes" onchange="childsubcourtorder(this,'Third');">
+                                        <input id="This_Marriage_Third_Child_Sub_to_Court_Order_Y_N_Yes" type="radio" name="This_Marriage_Third_Child_Sub_to_Court_Order" class="This_Marriage_Third_Child_Sub_to_Court_Order_Y_N" value="Yes">
                                     </label>
                                     <label for="This_Marriage_Third_Child_Sub_to_Court_Order_Y_N_No" class="radio-label">NO
-                                        <input id="This_Marriage_Third_Child_Sub_to_Court_Order_Y_N_No" type="radio" name="This_Marriage_Third_Child_Sub_to_Court_Order" class="This_Marriage_Third_Child_Sub_to_Court_Order_Y_N" value="NO" checked="" onchange="childsubcourtorder(this,'Third');"> 
+                                        <input id="This_Marriage_Third_Child_Sub_to_Court_Order_Y_N_No" type="radio" name="This_Marriage_Third_Child_Sub_to_Court_Order" class="This_Marriage_Third_Child_Sub_to_Court_Order_Y_N" value="NO" checked=""> 
                                     </label>
                                 </div>
 
-                                 <div class="col-md-6 Third_Child_Court_div" style="display: none;">
+                                 <div class="col-md-6" style="display: none;">
                                     <label for="This_Marriage_Third_Child_Court" class="col-form-label text-md-left">Which Court?</label>
                                     <input id="This_Marriage_Third_Child_Court" type="text" class="form-control Child_Court" name="This_Marriage_Third_Child_Court" value=""> 
                                 </div>
 
-                                <div class="col-md-6 Third_Child_Court_Case_Num_div" style="display: none;">
+                                <div class="col-md-6" style="display: none;">
                                     <label for="This_Marriage_Third_Child_Court_Case_Num" class="col-form-label text-md-left">Case Number?</label>
                                     <input id="This_Marriage_Third_Child_Court_Case_Num" type="text" class="form-control Case_Num" name="This_Marriage_Third_Child_Court_Case_Num" value=""> 
                                 </div>
@@ -564,20 +552,16 @@
                                 <div class="col-md-6">
                                     <label class="col-form-label text-md-left">Resides with </label><br>
                                     <label for="This_Marriage_Fourth_Child_Resides_With_ClientName" class="radio-label">{{$client_name}}
-                                        <input id="This_Marriage_Fourth_Child_Resides_With_ClientName" type="radio" name="This_Marriage_Fourth_Child_Resides_With" class="This_Marriage_Child_Resides_With Fourth ClientName" value="{{$client_name}}" checked="" onchange="ResideWithOther(this,'Fourth');">
+                                        <input id="This_Marriage_Fourth_Child_Resides_With_ClientName" type="radio" name="This_Marriage_Fourth_Child_Resides_With" class="This_Marriage_Child_Resides_With Fourth ClientName" value="{{$client_name}}" checked="">
                                     </label>
                                     <label for="This_Marriage_Fourth_Child_Resides_With_OpName" class="radio-label">{{$opponent_name}}
-                                        <input id="This_Marriage_Fourth_Child_Resides_With_OpName" type="radio" name="This_Marriage_Fourth_Child_Resides_With" class="This_Marriage_Child_Resides_With Fourth OpName" value="{{$opponent_name}}" onchange="ResideWithOther(this,'Fourth');"> 
+                                        <input id="This_Marriage_Fourth_Child_Resides_With_OpName" type="radio" name="This_Marriage_Fourth_Child_Resides_With" class="This_Marriage_Child_Resides_With Fourth OpName" value="{{$opponent_name}}"> 
                                     </label>
                                     <label for="This_Marriage_Fourth_Child_Resides_With_Both" class="radio-label">Both
-                                        <input id="This_Marriage_Fourth_Child_Resides_With_Both" type="radio" name="This_Marriage_Fourth_Child_Resides_With" class="This_Marriage_Child_Resides_With Fourth Both" value="Both" onchange="ResideWithOther(this,'Fourth');">
+                                        <input id="This_Marriage_Fourth_Child_Resides_With_Both" type="radio" name="This_Marriage_Fourth_Child_Resides_With" class="This_Marriage_Child_Resides_With Fourth Both" value="Both">
                                     <label for="This_Marriage_Fourth_Child_Resides_With_Other" class="radio-label">Other
-                                        <input id="This_Marriage_Fourth_Child_Resides_With_Other" type="radio" name="This_Marriage_Fourth_Child_Resides_With" class="This_Marriage_Child_Resides_With Fourth Other" value="Other" onchange="ResideWithOther(this,'Fourth');"> 
+                                        <input id="This_Marriage_Fourth_Child_Resides_With_Other" type="radio" name="This_Marriage_Fourth_Child_Resides_With" class="This_Marriage_Child_Resides_With Fourth Other" value="Other"> 
                                     </label>
-                                </div>
-                                <div class="col-md-6 Fourth_Child_Resides_With_Other_Div" style="display: none;">
-                                    <label for="This_Marriage_Third_Child_Resides_With_Other" class="col-form-label text-md-right">Name of Person  Reside with</label>
-                                    <input id="This_Marriage_Fourth_Child_Resides_With_Other_Name" type="text" class="form-control" name="This_Marriage_Fourth_Child_Resides_With_Other_Name" value="">
                                 </div>
                                 <div class="col-md-6">
                                     <label class="col-form-label text-md-left">Will Reside with </label><br>
@@ -635,19 +619,19 @@
                                     <label for="Subject to an existing order of parenting or support from another Court?">Subject to an existing order of parenting or support from another Court?</label>
                                     <br>
                                     <label for="This_Marriage_Fourth_Child_Sub_to_Court_Order_Y_N_Yes" class="radio-label">YES
-                                        <input id="This_Marriage_Fourth_Child_Sub_to_Court_Order_Y_N_Yes" type="radio" name="This_Marriage_Fourth_Child_Sub_to_Court_Order" class="This_Marriage_Fourth_Child_Sub_to_Court_Order_Y_N" value="Yes" onchange="childsubcourtorder(this,'Fourth');">
+                                        <input id="This_Marriage_Fourth_Child_Sub_to_Court_Order_Y_N_Yes" type="radio" name="This_Marriage_Fourth_Child_Sub_to_Court_Order" class="This_Marriage_Fourth_Child_Sub_to_Court_Order_Y_N" value="Yes">
                                     </label>
                                     <label for="This_Marriage_Fourth_Child_Sub_to_Court_Order_Y_N_No" class="radio-label">NO
-                                        <input id="This_Marriage_Fourth_Child_Sub_to_Court_Order_Y_N_No" type="radio" name="This_Marriage_Fourth_Child_Sub_to_Court_Order" class="This_Marriage_Fourth_Child_Sub_to_Court_Order_Y_N" value="NO" checked="" onchange="childsubcourtorder(this,'Fourth');"> 
+                                        <input id="This_Marriage_Fourth_Child_Sub_to_Court_Order_Y_N_No" type="radio" name="This_Marriage_Fourth_Child_Sub_to_Court_Order" class="This_Marriage_Fourth_Child_Sub_to_Court_Order_Y_N" value="NO" checked=""> 
                                     </label>
                                 </div>
 
-                                 <div class="col-md-6 Fourth_Child_Court_div" style="display: none;">
+                                 <div class="col-md-6" style="display: none;">
                                     <label for="This_Marriage_Fourth_Child_Court" class="col-form-label text-md-left">Which Court?</label>
                                     <input id="This_Marriage_Fourth_Child_Court" type="text" class="form-control Child_Court" name="This_Marriage_Fourth_Child_Court" value=""> 
                                 </div>
 
-                                <div class="col-md-6 Fourth_Child_Court_Case_Num_div" style="display: none;">
+                                <div class="col-md-6" style="display: none;">
                                     <label for="This_Marriage_Fourth_Child_Court_Case_Num" class="col-form-label text-md-left">Case Number?</label>
                                     <input id="This_Marriage_Fourth_Child_Court_Case_Num" type="text" class="form-control Case_Num" name="This_Marriage_Fourth_Child_Court_Case_Num" value=""> 
                                 </div>
@@ -708,20 +692,16 @@
                                 <div class="col-md-6">
                                     <label class="col-form-label text-md-left">Resides with </label><br>
                                     <label for="This_Marriage_Fifth_Child_Resides_With_ClientName" class="radio-label">{{$client_name}}
-                                        <input id="This_Marriage_Fifth_Child_Resides_With_ClientName" type="radio" name="This_Marriage_Fifth_Child_Resides_With" class="This_Marriage_Child_Resides_With Fifth ClientName" value="{{$client_name}}" checked="" onchange="ResideWithOther(this,'Fifth');">
+                                        <input id="This_Marriage_Fifth_Child_Resides_With_ClientName" type="radio" name="This_Marriage_Fifth_Child_Resides_With" class="This_Marriage_Child_Resides_With Fifth ClientName" value="{{$client_name}}" checked="">
                                     </label>
                                     <label for="This_Marriage_Fifth_Child_Resides_With_OpName" class="radio-label">{{$opponent_name}}
-                                        <input id="This_Marriage_Fifth_Child_Resides_With_OpName" type="radio" name="This_Marriage_Fifth_Child_Resides_With" class="This_Marriage_Child_Resides_With Fifth OpName" value="{{$opponent_name}}" onchange="ResideWithOther(this,'Fifth');"> 
+                                        <input id="This_Marriage_Fifth_Child_Resides_With_OpName" type="radio" name="This_Marriage_Fifth_Child_Resides_With" class="This_Marriage_Child_Resides_With Fifth OpName" value="{{$opponent_name}}"> 
                                     </label>
                                     <label for="This_Marriage_Fifth_Child_Resides_With_Both" class="radio-label">Both
-                                        <input id="This_Marriage_Fifth_Child_Resides_With_Both" type="radio" name="This_Marriage_Fifth_Child_Resides_With" class="This_Marriage_Child_Resides_With Fifth Both" value="Both" onchange="ResideWithOther(this,'Fifth');">
+                                        <input id="This_Marriage_Fifth_Child_Resides_With_Both" type="radio" name="This_Marriage_Fifth_Child_Resides_With" class="This_Marriage_Child_Resides_With Fifth Both" value="Both">
                                     <label for="This_Marriage_Fifth_Child_Resides_With_Other" class="radio-label">Other
-                                        <input id="This_Marriage_Fifth_Child_Resides_With_Other" type="radio" name="This_Marriage_Fifth_Child_Resides_With" class="This_Marriage_Child_Resides_With Fifth Other" value="Other" onchange="ResideWithOther(this,'Fifth');"> 
+                                        <input id="This_Marriage_Fifth_Child_Resides_With_Other" type="radio" name="This_Marriage_Fifth_Child_Resides_With" class="This_Marriage_Child_Resides_With Fifth Other" value="Other"> 
                                     </label>
-                                </div>
-                                 <div class="col-md-6 Fifth_Child_Resides_With_Other_Div" style="display: none;">
-                                    <label for="This_Marriage_Fifth_Child_Resides_With_Other" class="col-form-label text-md-right">Name of Person  Reside with</label>
-                                    <input id="This_Marriage_Fifth_Child_Resides_With_Other_Name" type="text" class="form-control" name="This_Marriage_Fifth_Child_Resides_With_Other_Name" value="">
                                 </div>
                                 <div class="col-md-6">
                                     <label class="col-form-label text-md-left">Will Reside with </label><br>
@@ -779,19 +759,19 @@
                                     <label for="Subject to an existing order of parenting or support from another Court?">Subject to an existing order of parenting or support from another Court?</label>
                                     <br>
                                     <label for="This_Marriage_Fifth_Child_Sub_to_Court_Order_Y_N_Yes" class="radio-label">YES
-                                        <input id="This_Marriage_Fifth_Child_Sub_to_Court_Order_Y_N_Yes" type="radio" name="This_Marriage_Fifth_Child_Sub_to_Court_Order" class="This_Marriage_Fifth_Child_Sub_to_Court_Order_Y_N" value="Yes" onchange="childsubcourtorder(this,'Fifth');">
+                                        <input id="This_Marriage_Fifth_Child_Sub_to_Court_Order_Y_N_Yes" type="radio" name="This_Marriage_Fifth_Child_Sub_to_Court_Order" class="This_Marriage_Fifth_Child_Sub_to_Court_Order_Y_N" value="Yes">
                                     </label>
                                     <label for="This_Marriage_Fifth_Child_Sub_to_Court_Order_Y_N_No" class="radio-label">NO
-                                        <input id="This_Marriage_Fifth_Child_Sub_to_Court_Order_Y_N_No" type="radio" name="This_Marriage_Fifth_Child_Sub_to_Court_Order" class="This_Marriage_Fifth_Child_Sub_to_Court_Order_Y_N" value="NO" checked="" onchange="childsubcourtorder(this,'Fifth');"> 
+                                        <input id="This_Marriage_Fifth_Child_Sub_to_Court_Order_Y_N_No" type="radio" name="This_Marriage_Fifth_Child_Sub_to_Court_Order" class="This_Marriage_Fifth_Child_Sub_to_Court_Order_Y_N" value="NO" checked=""> 
                                     </label>
                                 </div>
 
-                                 <div class="col-md-6 Fifth_Child_Court_div" style="display: none;">
+                                 <div class="col-md-6" style="display: none;">
                                     <label for="This_Marriage_Fifth_Child_Court" class="col-form-label text-md-left">Which Court?</label>
                                     <input id="This_Marriage_Fifth_Child_Court" type="text" class="form-control Child_Court" name="This_Marriage_Fifth_Child_Court" value=""> 
                                 </div>
 
-                                <div class="col-md-6 Fifth_Child_Court_Case_Num_div" style="display: none;">
+                                <div class="col-md-6" style="display: none;">
                                     <label for="This_Marriage_Fifth_Child_Court_Case_Num" class="col-form-label text-md-left">Case Number?</label>
                                     <input id="This_Marriage_Fifth_Child_Court_Case_Num" type="text" class="form-control Case_Num" name="This_Marriage_Fifth_Child_Court_Case_Num" value=""> 
                                 </div>
@@ -852,20 +832,16 @@
                                 <div class="col-md-6">
                                     <label class="col-form-label text-md-left">Resides with </label><br>
                                     <label for="This_Marriage_Sixth_Child_Resides_With_ClientName" class="radio-label">{{$client_name}}
-                                        <input id="This_Marriage_Sixth_Child_Resides_With_ClientName" type="radio" name="This_Marriage_Sixth_Child_Resides_With" class="This_Marriage_Child_Resides_With Sixth ClientName" value="{{$client_name}}" checked="" onchange="ResideWithOther(this,'Sixth');">
+                                        <input id="This_Marriage_Sixth_Child_Resides_With_ClientName" type="radio" name="This_Marriage_Sixth_Child_Resides_With" class="This_Marriage_Child_Resides_With Sixth ClientName" value="{{$client_name}}" checked="">
                                     </label>
                                     <label for="This_Marriage_Sixth_Child_Resides_With_OpName" class="radio-label">{{$opponent_name}}
-                                        <input id="This_Marriage_Sixth_Child_Resides_With_OpName" type="radio" name="This_Marriage_Sixth_Child_Resides_With" class="This_Marriage_Child_Resides_With Sixth OpName" value="{{$opponent_name}}" onchange="ResideWithOther(this,'Sixth');"> 
+                                        <input id="This_Marriage_Sixth_Child_Resides_With_OpName" type="radio" name="This_Marriage_Sixth_Child_Resides_With" class="This_Marriage_Child_Resides_With Sixth OpName" value="{{$opponent_name}}"> 
                                     </label>
                                     <label for="This_Marriage_Sixth_Child_Resides_With_Both" class="radio-label">Both
-                                        <input id="This_Marriage_Sixth_Child_Resides_With_Both" type="radio" name="This_Marriage_Sixth_Child_Resides_With" class="This_Marriage_Child_Resides_With Sixth Both" value="Both" onchange="ResideWithOther(this,'Sixth');">
+                                        <input id="This_Marriage_Sixth_Child_Resides_With_Both" type="radio" name="This_Marriage_Sixth_Child_Resides_With" class="This_Marriage_Child_Resides_With Sixth Both" value="Both">
                                     <label for="This_Marriage_Sixth_Child_Resides_With_Other" class="radio-label">Other
-                                        <input id="This_Marriage_Sixth_Child_Resides_With_Other" type="radio" name="This_Marriage_Sixth_Child_Resides_With" class="This_Marriage_Child_Resides_With Sixth Other" value="Other" onchange="ResideWithOther(this,'Sixth');"> 
+                                        <input id="This_Marriage_Sixth_Child_Resides_With_Other" type="radio" name="This_Marriage_Sixth_Child_Resides_With" class="This_Marriage_Child_Resides_With Sixth Other" value="Other"> 
                                     </label>
-                                </div>
-                                <div class="col-md-6 Sixth_Child_Resides_With_Other_Div" style="display: none;">
-                                    <label for="This_Marriage_Sixth_Child_Resides_With_Other" class="col-form-label text-md-right">Name of Person  Reside with</label>
-                                    <input id="This_Marriage_Sixth_Child_Resides_With_Other_Name" type="text" class="form-control" name="This_Marriage_Sixth_Child_Resides_With_Other_Name" value="">
                                 </div>
                                 <div class="col-md-6">
                                     <label class="col-form-label text-md-left">Will Reside with </label><br>
@@ -923,19 +899,19 @@
                                     <label for="Subject to an existing order of parenting or support from another Court?">Subject to an existing order of parenting or support from another Court?</label>
                                     <br>
                                     <label for="This_Marriage_Sixth_Child_Sub_to_Court_Order_Y_N_Yes" class="radio-label">YES
-                                        <input id="This_Marriage_Sixth_Child_Sub_to_Court_Order_Y_N_Yes" type="radio" name="This_Marriage_Sixth_Child_Sub_to_Court_Order" class="This_Marriage_Sixth_Child_Sub_to_Court_Order_Y_N" value="Yes" onchange="childsubcourtorder(this,'Sixth');">
+                                        <input id="This_Marriage_Sixth_Child_Sub_to_Court_Order_Y_N_Yes" type="radio" name="This_Marriage_Sixth_Child_Sub_to_Court_Order" class="This_Marriage_Sixth_Child_Sub_to_Court_Order_Y_N" value="Yes">
                                     </label>
                                     <label for="This_Marriage_Sixth_Child_Sub_to_Court_Order_Y_N_No" class="radio-label">NO
-                                        <input id="This_Marriage_Sixth_Child_Sub_to_Court_Order_Y_N_No" type="radio" name="This_Marriage_Sixth_Child_Sub_to_Court_Order" class="This_Marriage_Sixth_Child_Sub_to_Court_Order_Y_N" value="NO" checked="" onchange="childsubcourtorder(this,'Sixth');"> 
+                                        <input id="This_Marriage_Sixth_Child_Sub_to_Court_Order_Y_N_No" type="radio" name="This_Marriage_Sixth_Child_Sub_to_Court_Order" class="This_Marriage_Sixth_Child_Sub_to_Court_Order_Y_N" value="NO" checked=""> 
                                     </label>
                                 </div>
 
-                                 <div class="col-md-6 Sixth_Child_Court_div" style="display: none;">
+                                 <div class="col-md-6" style="display: none;">
                                     <label for="This_Marriage_Sixth_Child_Court" class="col-form-label text-md-left">Which Court?</label>
                                     <input id="This_Marriage_Sixth_Child_Court" type="text" class="form-control Child_Court" name="This_Marriage_Sixth_Child_Court" value=""> 
                                 </div>
 
-                                <div class="col-md-6 Sixth_Child_Court_Case_Num_div" style="display: none;">
+                                <div class="col-md-6" style="display: none;">
                                     <label for="This_Marriage_Sixth_Child_Court_Case_Num" class="col-form-label text-md-left">Case Number?</label>
                                     <input id="This_Marriage_Sixth_Child_Court_Case_Num" type="text" class="form-control Case_Num" name="This_Marriage_Sixth_Child_Court_Case_Num" value=""> 
                                 </div>
@@ -995,20 +971,16 @@
                                 <div class="col-md-6">
                                     <label class="col-form-label text-md-left">Resides with </label><br>
                                     <label for="This_Marriage_Seventh_Child_Resides_With_ClientName" class="radio-label">{{$client_name}}
-                                        <input id="This_Marriage_Seventh_Child_Resides_With_ClientName" type="radio" name="This_Marriage_Seventh_Child_Resides_With" class="This_Marriage_Child_Resides_With Seventh ClientName" value="{{$client_name}}" checked="" onchange="ResideWithOther(this,'Seventh');">
+                                        <input id="This_Marriage_Seventh_Child_Resides_With_ClientName" type="radio" name="This_Marriage_Seventh_Child_Resides_With" class="This_Marriage_Child_Resides_With Seventh ClientName" value="{{$client_name}}" checked="">
                                     </label>
                                     <label for="This_Marriage_Seventh_Child_Resides_With_OpName" class="radio-label">{{$opponent_name}}
-                                        <input id="This_Marriage_Seventh_Child_Resides_With_OpName" type="radio" name="This_Marriage_Seventh_Child_Resides_With" class="This_Marriage_Child_Resides_With Seventh OpName" value="{{$opponent_name}}" onchange="ResideWithOther(this,'Seventh');"> 
+                                        <input id="This_Marriage_Seventh_Child_Resides_With_OpName" type="radio" name="This_Marriage_Seventh_Child_Resides_With" class="This_Marriage_Child_Resides_With Seventh OpName" value="{{$opponent_name}}"> 
                                     </label>
                                     <label for="This_Marriage_Seventh_Child_Resides_With_Both" class="radio-label">Both
-                                        <input id="This_Marriage_Seventh_Child_Resides_With_Both" type="radio" name="This_Marriage_Seventh_Child_Resides_With" class="This_Marriage_Child_Resides_With Seventh Both" value="Both" onchange="ResideWithOther(this,'Seventh');">
+                                        <input id="This_Marriage_Seventh_Child_Resides_With_Both" type="radio" name="This_Marriage_Seventh_Child_Resides_With" class="This_Marriage_Child_Resides_With Seventh Both" value="Both">
                                     <label for="This_Marriage_Seventh_Child_Resides_With_Other" class="radio-label">Other
-                                        <input id="This_Marriage_Seventh_Child_Resides_With_Other" type="radio" name="This_Marriage_Seventh_Child_Resides_With" class="This_Marriage_Child_Resides_With Seventh Other" value="Other" onchange="ResideWithOther(this,'Seventh');"> 
+                                        <input id="This_Marriage_Seventh_Child_Resides_With_Other" type="radio" name="This_Marriage_Seventh_Child_Resides_With" class="This_Marriage_Child_Resides_With Seventh Other" value="Other"> 
                                     </label>
-                                </div>
-                                <div class="col-md-6 Seventh_Child_Resides_With_Other_Div" style="display: none;">
-                                    <label for="This_Marriage_Seventh_Child_Resides_With_Other" class="col-form-label text-md-right">Name of Person  Reside with</label>
-                                    <input id="This_Marriage_Seventh_Child_Resides_With_Other_Name" type="text" class="form-control" name="This_Marriage_Seventh_Child_Resides_With_Other_Name" value="">
                                 </div>
                                 <div class="col-md-6">
                                     <label class="col-form-label text-md-left">Will Reside with </label><br>
@@ -1066,19 +1038,19 @@
                                     <label for="Subject to an existing order of parenting or support from another Court?">Subject to an existing order of parenting or support from another Court?</label>
                                     <br>
                                     <label for="This_Marriage_Seventh_Child_Sub_to_Court_Order_Y_N_Yes" class="radio-label">YES
-                                        <input id="This_Marriage_Seventh_Child_Sub_to_Court_Order_Y_N_Yes" type="radio" name="This_Marriage_Seventh_Child_Sub_to_Court_Order" class="This_Marriage_Seventh_Child_Sub_to_Court_Order_Y_N" value="Yes" onchange="childsubcourtorder(this,'Seventh');">
+                                        <input id="This_Marriage_Seventh_Child_Sub_to_Court_Order_Y_N_Yes" type="radio" name="This_Marriage_Seventh_Child_Sub_to_Court_Order" class="This_Marriage_Seventh_Child_Sub_to_Court_Order_Y_N" value="Yes">
                                     </label>
                                     <label for="This_Marriage_Seventh_Child_Sub_to_Court_Order_Y_N_No" class="radio-label">NO
-                                        <input id="This_Marriage_Seventh_Child_Sub_to_Court_Order_Y_N_No" type="radio" name="This_Marriage_Seventh_Child_Sub_to_Court_Order" class="This_Marriage_Seventh_Child_Sub_to_Court_Order_Y_N" value="NO" checked="" onchange="childsubcourtorder(this,'Seventh');"> 
+                                        <input id="This_Marriage_Seventh_Child_Sub_to_Court_Order_Y_N_No" type="radio" name="This_Marriage_Seventh_Child_Sub_to_Court_Order" class="This_Marriage_Seventh_Child_Sub_to_Court_Order_Y_N" value="NO" checked=""> 
                                     </label>
                                 </div>
 
-                                 <div class="col-md-6 Seventh_Child_Court_div" style="display: none;">
+                                 <div class="col-md-6" style="display: none;">
                                     <label for="This_Marriage_Seventh_Child_Court" class="col-form-label text-md-left">Which Court?</label>
                                     <input id="This_Marriage_Seventh_Child_Court" type="text" class="form-control Child_Court" name="This_Marriage_First_Child_Court" value=""> 
                                 </div>
 
-                                <div class="col-md-6 Seventh_Child_Court_Case_Num_div" style="display: none;">
+                                <div class="col-md-6" style="display: none;">
                                     <label for="This_Marriage_Seventh_Child_Court_Case_Num" class="col-form-label text-md-left">Case Number?</label>
                                     <input id="This_Marriage_Seventh_Child_Court_Case_Num" type="text" class="form-control Case_Num" name="This_Marriage_Seventh_Child_Court_Case_Num" value=""> 
                                 </div>
@@ -1138,20 +1110,16 @@
                                 <div class="col-md-6">
                                     <label class="col-form-label text-md-left">Resides with </label><br>
                                     <label for="This_Marriage_Eighth_Child_Resides_With_ClientName" class="radio-label">{{$client_name}}
-                                        <input id="This_Marriage_Eighth_Child_Resides_With_ClientName" type="radio" name="This_Marriage_Eighth_Child_Resides_With" class="This_Marriage_Child_Resides_With Eighth ClientName" value="{{$client_name}}" checked="" onchange="ResideWithOther(this,'Eight');">
+                                        <input id="This_Marriage_Eighth_Child_Resides_With_ClientName" type="radio" name="This_Marriage_Eighth_Child_Resides_With" class="This_Marriage_Child_Resides_With Eighth ClientName" value="{{$client_name}}" checked="">
                                     </label>
                                     <label for="This_Marriage_Eighth_Child_Resides_With_OpName" class="radio-label">{{$opponent_name}}
-                                        <input id="This_Marriage_Eighth_Child_Resides_With_OpName" type="radio" name="This_Marriage_Eighth_Child_Resides_With" class="This_Marriage_Child_Resides_With Eighth OpName" value="{{$opponent_name}}" onchange="ResideWithOther(this,'Eight');"> 
+                                        <input id="This_Marriage_Eighth_Child_Resides_With_OpName" type="radio" name="This_Marriage_Eighth_Child_Resides_With" class="This_Marriage_Child_Resides_With Eighth OpName" value="{{$opponent_name}}"> 
                                     </label>
                                     <label for="This_Marriage_Eighth_Child_Resides_With_Both" class="radio-label">Both
-                                        <input id="This_Marriage_Eighth_Child_Resides_With_Both" type="radio" name="This_Marriage_Eighth_Child_Resides_With" class="This_Marriage_Child_Resides_With EightBoth" value="Both" onchange="ResideWithOther(this,'Eight');">
+                                        <input id="This_Marriage_Eighth_Child_Resides_With_Both" type="radio" name="This_Marriage_Eighth_Child_Resides_With" class="This_Marriage_Child_Resides_With EightBoth" value="Both">
                                     <label for="This_Marriage_Eighth_Child_Resides_With_Other" class="radio-label">Other
-                                        <input id="This_Marriage_Eighth_Child_Resides_With_Other" type="radio" name="This_Marriage_Eighth_Child_Resides_With" class="This_Marriage_Child_Resides_With Eighth Other" value="Other" onchange="ResideWithOther(this,'Eight');"> 
+                                        <input id="This_Marriage_Eighth_Child_Resides_With_Other" type="radio" name="This_Marriage_Eighth_Child_Resides_With" class="This_Marriage_Child_Resides_With Eighth Other" value="Other"> 
                                     </label>
-                                </div>
-                                <div class="col-md-6 Eighth_Child_Resides_With_Other_Div" style="display: none;">
-                                    <label for="This_Marriage_Eighth_Child_Resides_With_Other" class="col-form-label text-md-right">Name of Person  Reside with</label>
-                                    <input id="This_Marriage_Eighth_Child_Resides_With_Other_Name" type="text" class="form-control" name="This_Marriage_Eighth_Child_Resides_With_Other_Name" value="">
                                 </div>
                                 <div class="col-md-6">
                                     <label class="col-form-label text-md-left">Will Reside with </label><br>
@@ -1210,19 +1178,19 @@
                             <label for="Subject to an existing order of parenting or support from another Court?">Subject to an existing order of parenting or support from another Court?</label>
                             <br>
                             <label for="This_Marriage_Eighth_Child_Sub_to_Court_Order_Y_N_Yes" class="radio-label">YES
-                                <input id="This_Marriage_Eighth_Child_Sub_to_Court_Order_Y_N_Yes" type="radio" name="This_Marriage_Eighth_Child_Sub_to_Court_Order" class="This_Marriage_Eighth_Child_Sub_to_Court_Order_Y_N" value="Yes" onchange="childsubcourtorder(this,'Eighth');">
+                                <input id="This_Marriage_Eighth_Child_Sub_to_Court_Order_Y_N_Yes" type="radio" name="This_Marriage_Eighth_Child_Sub_to_Court_Order" class="This_Marriage_Eighth_Child_Sub_to_Court_Order_Y_N" value="Yes">
                             </label>
                             <label for="This_Marriage_Eighth_Child_Sub_to_Court_Order_Y_N_No" class="radio-label">NO
-                                <input id="This_Marriage_Eighth_Child_Sub_to_Court_Order_Y_N_No" type="radio" name="This_Marriage_Eighth_Child_Sub_to_Court_Order" class="This_Marriage_Eighth_Child_Sub_to_Court_Order_Y_N" value="NO" checked="" onchange="childsubcourtorder(this,'Eighth');"> 
+                                <input id="This_Marriage_Eighth_Child_Sub_to_Court_Order_Y_N_No" type="radio" name="This_Marriage_Eighth_Child_Sub_to_Court_Order" class="This_Marriage_Eighth_Child_Sub_to_Court_Order_Y_N" value="NO" checked=""> 
                             </label>
                         </div>
 
-                                 <div class="col-md-6 Eighth_Child_Court_div" style="display: none;">
+                                 <div class="col-md-6" style="display: none;">
                                     <label for="This_Marriage_Eighth_Child_Court" class="col-form-label text-md-left">Which Court?</label>
                                     <input id="This_Marriage_Eighth_Child_Court" type="text" class="form-control Child_Court" name="This_Marriage_First_Child_Court" value=""> 
                                 </div>
 
-                                    <div class="col-md-6 Eighth_Child_Court_Case_Num_div" style="display: none;">
+                                    <div class="col-md-6" style="display: none;">
                                     <label for="This_Marriage_Eighth_Child_Court_Case_Num" class="col-form-label text-md-left">Case Number?</label>
                                     <input id="This_Marriage_Eighth_Child_Court_Case_Num" type="text" class="form-control Case_Num" name="This_Marriage_Eighth_Child_Court_Case_Num" value=""> 
                                 </div>
@@ -2079,32 +2047,6 @@
                 }
 
             }
-        }
-    }
-
-    function ResideWithOther(other, num){
-        if(other.checked && other.value=='Other'){
-            $('.'+num+'_Child_Resides_With_Other_Div').show();
-            $('#This_Marriage_'+num+'_Child_Resides_With_Other_Name').prop('required', true);
-        } else {
-            $('.'+num+'_Child_Resides_With_Other_Div').hide();
-            $('#This_Marriage_'+num+'_Child_Resides_With_Other_Name').prop('required', false);
-
-        }
-    }
-    //show coourt number and court 
-
-    function childsubcourtorder(other,num){
-        if(other.checked && other.value =="Yes"){
-          $('.'+num+'_Child_Court_div').show();
-          $('#This_Marriage_'+num+'_Child_Court').prop('required', true);
-          $('.'+num+'_Child_Court_Case_Num_div').show();
-          $('#This_Marriage_'+num+'_Child_Court_Case_Num').prop('required', true);
-        }else{
-            $('.'+num+'_Child_Court_div').hide();
-          $('#This_Marriage_'+num+'_Child_Court').prop('required', false);
-          $('.'+num+'_Child_Court_Case_Num_div').hide();
-          $('#This_Marriage_'+num+'_Child_Court_Case_Num').prop('required', false);
         }
     }
 

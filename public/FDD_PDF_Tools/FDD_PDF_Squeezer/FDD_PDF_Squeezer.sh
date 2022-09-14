@@ -13,6 +13,9 @@ PROCESSED=/var/www/html/public/FDD_PDF_Tools/FDD_PDF_Squeezer/OutputPDF_Document
 shopt -s nullglob # Sets nullglob
 for FILENAME in $SOURCE/*.{pdf,Pdf,PDf,PdF,pDf,PDF}; do
 shopt -u nullglob # Unsets nullglob
+	n1="${FILENAME##*/}" #bname
+	distdirname="${n1%%_*}"	
+	postdistname="${n1#*_}"
 	bnwext=$(basename "$FILENAME")
 	bnFILENAME=$(basename "${FILENAME%%.*}")
 	current_time=$(($(date "+%Y%m%d%H%M%S%3N")))
@@ -29,9 +32,9 @@ shopt -u nullglob # Unsets nullglob
 	#compare and keep the smaller file
 	if [ $DIST = "None" ]
 	then
-	[ $(stat -c%s "$WORKDIR"/"$uniquefilename"_comp_JUNK.pdf) -ge $(stat -c%s "$FILENAME") ] && cp "$FILENAME" "$PROCESSED"/"$bnwext" || mv "$WORKDIR"/"$uniquefilename"_comp_JUNK.pdf "$PROCESSED"/"$bnwext"
+	[ $(stat -c%s "$WORKDIR"/"$uniquefilename"_comp_JUNK.pdf) -ge $(stat -c%s "$FILENAME") ] && mv "$FILENAME" "/var/www/html/public/uiodirs/""$distdirname""/download/""$bnFILENAME"_FDDSQ.pdf || mv "$WORKDIR"/"$uniquefilename"_comp_JUNK.pdf "/var/www/html/public/uiodirs/""$distdirname""/download/""$bnFILENAME"_FDDSQ.pdf &> /dev/null
 	else
-	[ $(stat -c%s "$WORKDIR"/"$uniquefilename"_comp_JUNK.pdf) -ge $(stat -c%s "$FILENAME") ] && cp "$FILENAME" "$DIST"/"$uniquefilename"_"$bnFILENAME"_FDDSQ.pdf || mv "$WORKDIR"/"$uniquefilename"_comp_JUNK.pdf "$DIST"/"$uniquefilename"_"$bnFILENAME"_FDDSQ.pdf
+	[ $(stat -c%s "$WORKDIR"/"$uniquefilename"_comp_JUNK.pdf) -ge $(stat -c%s "$FILENAME") ] && mv "$FILENAME" "/var/www/html/public/uiodirs/""$distdirname""/download/""$bnFILENAME"_FDDSQ.pdf || mv "$WORKDIR"/"$uniquefilename"_comp_JUNK.pdf "/var/www/html/public/uiodirs/""$distdirname""/download/""$bnFILENAME"_FDDSQ.pdf &> /dev/null
 	fi
 
 	#clear workdir of unique files associated with attorneyusernumber and current_time

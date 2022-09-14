@@ -102,7 +102,7 @@ function build_mass_mail_query($conditions)
 	}
 
 	// Usergroup based searching
-	if(!empty($conditions['usergroup']))
+	if($conditions['usergroup'])
 	{
 		if(!is_array($conditions['usergroup']))
 		{

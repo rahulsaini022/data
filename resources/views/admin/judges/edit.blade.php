@@ -16,7 +16,26 @@
                 </div>
                 <div class="card-body">
 
-            
+                    @if (count($errors) > 0)
+
+                      <div class="alert alert-danger">
+
+                        <strong>Whoops!</strong> There were some problems with your input.<br><br>
+
+                        <ul>
+
+                           @foreach ($errors->all() as $error)
+
+                             <li>{{ $error }}</li>
+
+                           @endforeach
+
+                        </ul>
+
+                      </div>
+
+                    @endif
+
 
                     {!! Form::model($judge, ['method' => 'PATCH','route' => ['judges.update', $judge->id], 'id'=>'edit_judge_form']) !!}
 
@@ -26,12 +45,10 @@
 
                             <div class="form-group">
 
-                                <strong>Adjudicator First Name:</strong>
+                                <strong>Adjudicator:</strong>
 
-                                {!! Form::text('adjudicator', null, array('placeholder' => 'Adjudicator First Name','class' => 'form-control','required')) !!}
-                                  @error('adjudicator')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                {!! Form::text('adjudicator', null, array('placeholder' => 'Adjudicator','class' => 'form-control')) !!}
+
                             </div>
 
                         </div>
@@ -40,12 +57,10 @@
 
                             <div class="form-group">
 
-                                <strong>Adjudicator Last Name:</strong>
+                                <strong>Adjudicator Lname:</strong>
 
-                                {!! Form::text('adjudicator_lname', null, array('placeholder' => 'Adjudicator Last Name','class' => 'form-control','required')) !!}
-                                  @error('adjudicator_lname')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                {!! Form::text('adjudicator_lname', null, array('placeholder' => 'Adjudicator Lname','class' => 'form-control')) !!}
+
                             </div>
 
                         </div>
@@ -54,12 +69,10 @@
 
                             <div class="form-group">
 
-                                <strong>Adjudicator Title:</strong>
+                                <strong>Adj Title:</strong>
 
-                                {!! Form::text('adj_title', null, array('placeholder' => 'Adjudicator Title','class' => 'form-control','required')) !!}
-                                  @error('adj_title')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                {!! Form::text('adj_title', null, array('placeholder' => 'Adj Title','class' => 'form-control')) !!}
+
                             </div>
 
                         </div>
@@ -68,7 +81,7 @@
 
                             <div class="form-group">
 
-                                <strong>Adjudicator Phone:</strong>
+                                <strong>Adj Phone:</strong>
 
                                 {!! Form::text('adj_phone', null, array('placeholder' => '(XXX) XXX-XXXX','class' => 'form-control')) !!}
 
@@ -80,7 +93,7 @@
 
                             <div class="form-group">
 
-                                <strong>Adjudicator Fax:</strong>
+                                <strong>Adj Fax:</strong>
 
                                 {!! Form::text('adj_fax', null, array('placeholder' => '(XXX) XXX-XXXX','class' => 'form-control')) !!}
 
@@ -92,21 +105,9 @@
 
                             <div class="form-group">
 
-                                <strong>Adjudicator Court:</strong>
+                                <strong>Adj Court:</strong>
 
-                                {!! Form::text('adj_court', null, array('placeholder' => 'Adjudicator Court','class' => 'form-control')) !!}
-
-                            </div>
-
-                        </div>
-
-                        <div class="col-xs-12 col-sm-12 col-md-12">
-
-                            <div class="form-group">
-
-                                <strong>Adjudicator Address 1:</strong>
-
-                                {!! Form::text('adj_address1', null, array('placeholder' => 'Adjudicator Address 1','class' => 'form-control')) !!}
+                                {!! Form::text('adj_court', null, array('placeholder' => 'Adj Court','class' => 'form-control')) !!}
 
                             </div>
 
@@ -116,21 +117,9 @@
 
                             <div class="form-group">
 
-                                <strong>Adjudicator Address 2:</strong>
+                                <strong>Adj Address 1:</strong>
 
-                                {!! Form::text('adj_address2', null, array('placeholder' => 'Adjudicator Address 2','class' => 'form-control')) !!}
-
-                            </div>
-
-                        </div>
-
-                        <div class="col-xs-12 col-sm-12 col-md-12">
-
-                            <div class="form-group">
-
-                                <strong>Adjudicator City:</strong>
-
-                                {!! Form::text('adj_city', null, array('placeholder' => 'Adjudicator City','class' => 'form-control')) !!}
+                                {!! Form::text('adj_address1', null, array('placeholder' => 'Adj Address 1','class' => 'form-control')) !!}
 
                             </div>
 
@@ -140,9 +129,9 @@
 
                             <div class="form-group">
 
-                                <strong>Adjudicator State:</strong>
+                                <strong>Adj Address 2:</strong>
 
-                                {!! Form::text('adj_state', null, array('placeholder' => 'Adjudicator City','class' => 'form-control')) !!}
+                                {!! Form::text('adj_address2', null, array('placeholder' => 'Adj Address 2','class' => 'form-control')) !!}
 
                             </div>
 
@@ -152,9 +141,33 @@
 
                             <div class="form-group">
 
-                                <strong>Adjudicator Zip:</strong>
+                                <strong>Adj City:</strong>
 
-                                {!! Form::text('adj_zip', null, array('placeholder' => 'Adjudicator City','class' => 'form-control')) !!}
+                                {!! Form::text('adj_city', null, array('placeholder' => 'Adj City','class' => 'form-control')) !!}
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+
+                            <div class="form-group">
+
+                                <strong>Adj State:</strong>
+
+                                {!! Form::text('adj_state', null, array('placeholder' => 'Adj City','class' => 'form-control')) !!}
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+
+                            <div class="form-group">
+
+                                <strong>Adj Zip:</strong>
+
+                                {!! Form::text('adj_zip', null, array('placeholder' => 'Adj City','class' => 'form-control')) !!}
 
                             </div>
 

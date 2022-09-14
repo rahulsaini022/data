@@ -35,7 +35,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="">Phone*</label>
-                                    <input id="phone" type="text" maxlength="12" class="form-control " name="phone" value="" placeholder="XXX-XXX-XXXX" required="">
+                                    <input id="phone" type="text" class="form-control " name="phone" value="" placeholder="(XXX) XXX-XXXX" required="">
                                 </div>
                                 <div class="form-group">
                                     <label for="">Subject*</label>
@@ -91,28 +91,11 @@
                 phone: {
                     // phoneUS: true
                     // pattern: /[0-9]{3}-[0-9]{3}-[0-9]{4}/
-                    
-                     pattern:(/[\d\s]{3}-[\d\s]{3}-[\d\s]{4}$/)
+                     pattern:(/\(?[\d\s]{3}\) [\d\s]{3}-[\d\s]{4}$/)
                 },
             }
         });
-    
     });
-//         document.querySelector('#phone').addEventListener('input', function(e) {
-//   var foo = this.value.split("-").join("");
-//   if (foo.length > 0) {
-//     foo = foo.match(new RegExp('.{1,3}', 'g')).join("-");
-//   }
-//   this.value = foo;
-// });
-var tele = document.querySelector('#phone');
-
-tele.addEventListener('keydown', function(e){
-
-  if (event.key != 'Backspace' && (tele.value.length === 7 || tele.value.length === 3)){
-  tele.value += '-';
-  }
-});
         
 </script>    
 @endsection

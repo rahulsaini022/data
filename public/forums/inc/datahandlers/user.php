@@ -440,15 +440,6 @@ class UserDataHandler extends DataHandler
 			$this->set_error("invalid_birthday_privacy");
 			return false;
 		}
-		else if ($birthdayprivacy == 'age')
-		{
-			$birthdayyear = &$this->data['birthday']['year'];
-			if(empty($birthdayyear))
-			{
-				$this->set_error("conflicted_birthday_privacy");
-				return false;
-			}
-		}
 		return true;
 	}
 
@@ -515,24 +506,7 @@ class UserDataHandler extends DataHandler
 					$profilefield['editableby'] = -1;
 				}
 
-				if(isset($user['usergroup']))
-				{
-					$usergroup = $user['usergroup'];
-				}
-				else
-				{
-					$usergroup = '';
-				}
-				if(isset($user['additionalgroups']))
-				{
-					$additionalgroups = $user['additionalgroups'];
-				}
-				else
-				{
-					$additionalgroups = '';
-				}
-
-				if(!is_member($profilefield['editableby'], array('usergroup' => $usergroup, 'additionalgroups' => $additionalgroups)))
+				if(!is_member($profilefield['editableby'], array('usergroup' => $user['usergroup'], 'additionalgroups' => $user['additionalgroups'])))
 				{
 					continue;
 				}
@@ -629,7 +603,7 @@ class UserDataHandler extends DataHandler
 		$user = &$this->data;
 
 		// Does the referrer exist or not?
-		if($mybb->settings['usereferrals'] == 1 && !empty($user['referrer']))
+		if($mybb->settings['usereferrals'] == 1 && $user['referrer'] != '')
 		{
 			$referrer = get_user_by_username($user['referrer']);
 
@@ -659,11 +633,6 @@ class UserDataHandler extends DataHandler
 		global $mybb;
 
 		$options = &$this->data['options'];
-
-		if(!is_array($options))
-		{
-			$options = array();
-		}
 
 		// Verify yes/no options.
 		$this->verify_yesno_option($options, 'allownotices', 1);
@@ -711,20 +680,27 @@ class UserDataHandler extends DataHandler
 			{
 				$options['dstcorrection'] = 0;
 			}
-
-			if($options['dstcorrection'] == 1)
-			{
-				$options['dst'] = 1;
-			}
-			elseif($options['dstcorrection'] == 0)
-			{
-				$options['dst'] = 0;
-			}
 		}
 
-		if($this->method == "insert" || (isset($options['threadmode']) && $options['threadmode'] != "linear" && $options['threadmode'] != "threaded" && $options['threadmode'] != ''))
+		if($options['dstcorrection'] == 1)
 		{
-			$options['threadmode'] = '';
+			$options['dst'] = 1;
+		}
+		elseif($options['dstcorrection'] == 0)
+		{
+			$options['dst'] = 0;
+		}
+
+		if($this->method == "insert" || (isset($options['threadmode']) && $options['threadmode'] != "linear" && $options['threadmode'] != "threaded"))
+		{
+			if($mybb->settings['threadusenetstyle'])
+			{
+				$options['threadmode'] = 'threaded';
+			}
+			else
+			{
+				$options['threadmode'] = 'linear';
+			}
 		}
 
 		// Verify the "threads per page" option.
@@ -912,7 +888,7 @@ class UserDataHandler extends DataHandler
 
 		$user = &$this->data;
 
-		if(!empty($user['style']))
+		if($user['style'])
 		{
 			$theme = get_theme($user['style']);
 
@@ -952,13 +928,11 @@ class UserDataHandler extends DataHandler
 	 */
 	function verify_timezone()
 	{
-		global $mybb;
-
 		$user = &$this->data;
 
 		$timezones = get_supported_timezones();
 
-		if(!isset($user['timezone']) || !array_key_exists($user['timezone'], $timezones))
+		if(!array_key_exists($user['timezone'], $timezones))
 		{
 			$user['timezone'] = $mybb->settings['timezoneoffset'];
 			return false;
@@ -1121,28 +1095,13 @@ class UserDataHandler extends DataHandler
 
 		$user = &$this->data;
 
-		$array = array('postnum', 'threadnum', 'avatar', 'avatartype', 'additionalgroups', 'displaygroup', 'icq', 'skype', 'google', 'bday', 'signature', 'style', 'dateformat', 'timeformat', 'notepad', 'regip', 'lastip', 'coppa_user');
+		$array = array('postnum', 'threadnum', 'avatar', 'avatartype', 'additionalgroups', 'displaygroup', 'icq', 'yahoo', 'skype', 'google', 'bday', 'signature', 'style', 'dateformat', 'timeformat', 'notepad');
 		foreach($array as $value)
 		{
 			if(!isset($user[$value]))
 			{
 				$user[$value] = '';
 			}
-		}
-
-		$array = array('subscriptionmethod', 'dstcorrection');
-		foreach($array as $value)
-		{
-			if(!isset($user['options'][$value]))
-			{
-				$user['options'][$value] = '';
-			}
-		}
-
-		// If user is being created from ACP, there is no last visit or last active
-		if(defined('IN_ADMINCP'))
-		{
-			$user['lastvisit'] = $user['lastactive'] = 0;
 		}
 
 		$this->user_insert_data = array(
@@ -1164,6 +1123,7 @@ class UserDataHandler extends DataHandler
 			"lastvisit" => (int)$user['lastvisit'],
 			"website" => $db->escape_string($user['website']),
 			"icq" => (int)$user['icq'],
+			"yahoo" => $db->escape_string($user['yahoo']),
 			"skype" => $db->escape_string($user['skype']),
 			"google" => $db->escape_string($user['google']),
 			"birthday" => $user['bday'],
@@ -1192,7 +1152,6 @@ class UserDataHandler extends DataHandler
 			"dateformat" => $db->escape_string($user['dateformat']),
 			"timeformat" => $db->escape_string($user['timeformat']),
 			"regip" => $db->escape_binary($user['regip']),
-			"lastip" => $db->escape_binary($user['lastip']),
 			"language" => $db->escape_string($user['language']),
 			"showcodebuttons" => (int)$user['options']['showcodebuttons'],
 			"sourceeditor" => (int)$user['options']['sourceeditor'],
@@ -1202,11 +1161,12 @@ class UserDataHandler extends DataHandler
 			"awaydate" => (int)$user['away']['date'],
 			"returndate" => $user['away']['returndate'],
 			"awayreason" => $db->escape_string($user['away']['awayreason']),
+			"notepad" => $db->escape_string($user['notepad']),
 			"referrer" => (int)$user['referrer_uid'],
 			"referrals" => 0,
 			"buddylist" => '',
 			"ignorelist" => '',
-			"pmfolders" => "0**$%%$1**$%%$2**$%%$3**$%%$4**",
+			"pmfolders" => '',
 			"notepad" => '',
 			"warningpoints" => 0,
 			"moderateposts" => 0,
@@ -1377,6 +1337,10 @@ class UserDataHandler extends DataHandler
 		{
 			$this->user_update_data['icq'] = (int)$user['icq'];
 		}
+		if(isset($user['yahoo']))
+		{
+			$this->user_update_data['yahoo'] = $db->escape_string($user['yahoo']);
+		}
 		if(isset($user['skype']))
 		{
 			$this->user_update_data['skype'] = $db->escape_string($user['skype']);
@@ -1412,10 +1376,6 @@ class UserDataHandler extends DataHandler
 		if(isset($user['regip']))
 		{
 			$this->user_update_data['regip'] = $db->escape_string($user['regip']);
-		}
-		if(isset($user['lastip']))
-		{
-			$this->user_update_data['lastip'] = $db->escape_string($user['lastip']);
 		}
 		if(isset($user['language']))
 		{
@@ -1485,7 +1445,7 @@ class UserDataHandler extends DataHandler
 		{
 			$query = $db->simple_select("userfields", "*", "ufid='{$user['uid']}'");
 			$fields = $db->fetch_array($query);
-			if(empty($fields['ufid']))
+			if(!$fields['ufid'])
 			{
 				$user_fields = array(
 					'ufid' => $user['uid']
@@ -1630,6 +1590,7 @@ class UserDataHandler extends DataHandler
 		$plugins->run_hooks("datahandler_user_delete_end", $this);
 
 		// Update  cache
+		$cache->update_banned();
 		$cache->update_moderators();
 		$cache->update_forumsdisplay();
 		$cache->update_reportedcontent();
@@ -1789,6 +1750,7 @@ class UserDataHandler extends DataHandler
 			"website" => "",
 			"birthday" => "",
 			"icq" => "",
+			"yahoo" => "",
 			"skype" => "",
 			"google" => "",
 			"usertitle" => "",
@@ -1831,11 +1793,6 @@ class UserDataHandler extends DataHandler
 	{
 		global $mybb, $parser;
 
-		if(!isset($this->data['signature']))
-		{
-			return true;
-		}
-
 		if(!isset($parser))
 		{
 			require_once MYBB_ROOT."inc/class_parser.php";
@@ -1844,6 +1801,7 @@ class UserDataHandler extends DataHandler
 
 		$parser_options = array(
 			'allow_html' => $mybb->settings['sightml'],
+			'filter_badwords' => 1,
 			'allow_mycode' => $mybb->settings['sigmycode'],
 			'allow_smilies' => $mybb->settings['sigsmilies'],
 			'allow_imgcode' => $mybb->settings['sigimgcode'],
@@ -1877,23 +1835,20 @@ class UserDataHandler extends DataHandler
 			$parsed_sig = $this->data['signature'];
 		}
 
-		if($mybb->settings['siglength'] > 0)
+		$parsed_sig = preg_replace("#\s#", "", $parsed_sig);
+		$sig_length = my_strlen($parsed_sig);
+
+		if($sig_length > $mybb->settings['siglength'])
 		{
-			$parsed_sig = preg_replace("#\s#", "", $parsed_sig);
-			$sig_length = my_strlen($parsed_sig);
+			$this->set_error('sig_too_long', array($mybb->settings['siglength']));
 
-			if($sig_length > $mybb->settings['siglength'])
+			if($sig_length - $mybb->settings['siglength'] > 1)
 			{
-				$this->set_error('sig_too_long', array($mybb->settings['siglength']));
-
-				if($sig_length - $mybb->settings['siglength'] > 1)
-				{
-					$this->set_error('sig_remove_chars_plural', array($sig_length-$mybb->settings['siglength']));
-				}
-				else
-				{
-					$this->set_error('sig_remove_chars_singular');
-				}
+				$this->set_error('sig_remove_chars_plural', array($sig_length-$mybb->settings['siglength']));
+			}
+			else
+			{
+				$this->set_error('sig_remove_chars_singular');
 			}
 		}
 

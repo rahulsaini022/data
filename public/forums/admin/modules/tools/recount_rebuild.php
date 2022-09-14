@@ -111,20 +111,22 @@ function acp_recount_user_posts()
 	$start = ($page-1) * $per_page;
 	$end = $start + $per_page;
 
-	$fids = array();
 	$query = $db->simple_select("forums", "fid", "usepostcounts = 0");
 	while($forum = $db->fetch_array($query))
 	{
 		$fids[] = $forum['fid'];
 	}
-	if(!empty($fids))
+	if(is_array($fids))
+    {
+        $fids = implode(',', $fids);
+    }
+	if($fids)
 	{
-		$fids = implode(',', $fids);
 		$fids = " AND p.fid NOT IN($fids)";
 	}
 	else
 	{
-		$fids = '';
+		$fids = "";
 	}
 
 	$query = $db->simple_select("users", "uid", '', array('order_by' => 'uid', 'order_dir' => 'asc', 'limit_start' => $start, 'limit' => $per_page));
@@ -160,20 +162,22 @@ function acp_recount_user_threads()
 	$start = ($page-1) * $per_page;
 	$end = $start + $per_page;
 
-	$fids = array();
 	$query = $db->simple_select("forums", "fid", "usethreadcounts = 0");
 	while($forum = $db->fetch_array($query))
 	{
 		$fids[] = $forum['fid'];
 	}
-	if(!empty($fids))
+	if(is_array($fids))
+    {
+        $fids = implode(',', $fids);
+    }
+	if($fids)
 	{
-		$fids = implode(',', $fids);
 		$fids = " AND t.fid NOT IN($fids)";
 	}
 	else
 	{
-		$fids = '';
+		$fids = "";
 	}
 
 	$query = $db->simple_select("users", "uid", '', array('order_by' => 'uid', 'order_dir' => 'asc', 'limit_start' => $start, 'limit' => $per_page));
@@ -362,7 +366,11 @@ function acp_rebuild_attachment_thumbnails()
 	$start = ($page-1) * $per_page;
 	$end = $start + $per_page;
 
-	$uploadspath_abs = mk_path_abs($mybb->settings['uploadspath']);
+	$uploadspath = $mybb->settings['uploadspath'];
+	if(my_substr($uploadspath, 0, 1) == '.')
+	{
+		$uploadspath = MYBB_ROOT . $mybb->settings['uploadspath'];
+	}
 
 	require_once MYBB_ROOT."inc/functions_image.php";
 
@@ -373,7 +381,7 @@ function acp_rebuild_attachment_thumbnails()
 		if($ext == "gif" || $ext == "png" || $ext == "jpg" || $ext == "jpeg" || $ext == "jpe")
 		{
 			$thumbname = str_replace(".attach", "_thumb.$ext", $attachment['attachname']);
-			$thumbnail = generate_thumbnail($uploadspath_abs."/".$attachment['attachname'], $uploadspath_abs, $thumbname, $mybb->settings['attachthumbh'], $mybb->settings['attachthumbw']);
+			$thumbnail = generate_thumbnail($uploadspath."/".$attachment['attachname'], $uploadspath, $thumbname, $mybb->settings['attachthumbh'], $mybb->settings['attachthumbw']);
 			if($thumbnail['code'] == 4)
 			{
 				$thumbnail['filename'] = "SMALL";
@@ -412,7 +420,30 @@ function check_proceed($current, $finish, $next_page, $per_page, $name, $name2, 
 		echo $form->generate_hidden_field("page", $next_page);
 		echo $form->generate_hidden_field($name, $per_page);
 		echo $form->generate_hidden_field($name2, $lang->go);
-		output_auto_redirect($form, $lang->confirm_proceed_rebuild);
+		echo "<div class=\"confirm_action\">\n";
+		echo "<p>{$lang->confirm_proceed_rebuild}</p>\n";
+		echo "<br />\n";
+		echo "<script type=\"text/javascript\">
+			$(function() { 
+				var button = $(\"#proceed_button\"); 
+				if(button.length > 0) {
+					button.val(\"{$lang->automatically_redirecting}\");
+					button.attr(\"disabled\", true);
+					button.css(\"color\", \"#aaa\");
+					button.css(\"borderColor\", \"#aaa\");
+                    
+					var parent_form = button.closest('form');
+
+					if (parent_form.length > 0) {
+						parent_form.submit();
+					}
+				}
+			});
+		</script>";
+		echo "<p class=\"buttons\">\n";
+		echo $form->generate_submit_button($lang->proceed, array('class' => 'button_yes', 'id' => 'proceed_button'));
+		echo "</p>\n";
+		echo "</div>\n";
 
 		$form->end();
 

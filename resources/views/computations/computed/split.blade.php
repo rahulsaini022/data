@@ -1719,7 +1719,7 @@ if(isset($OH_Minimum_Wage)){
                     <input type="submit" name="submit" value="Calculate" class="btn btn-success">
                     <a name="bottomsheet"></a>
                     <br/><br/>
-                    <input type="submit" name="submit_email" value="Print" class="btn btn-success" style="display: none;">
+                    <input type="submit" name="submit_email" value="Print" class="btn btn-success">
                     <input type="submit" name="save_form" value="Save" class="btn btn-success">
                     <input type="submit" name="download_form" value="Download" class="btn btn-success" id="download_form">
                   </td>

@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-header"><strong>{{ __('Advertise to Ohio Attorneys on FDD') }}</strong>
                     <div class="pull-right">
-                        <a class="btn btn-primary" href="{{ url('/home')}}">Back</a>
+                        <a class="btn btn-primary" href="{{ route('/') }}">Back</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -36,11 +36,11 @@
                                 on a premium paid platform, not the general public, or mere "looki loos". Moreover, your brand is not
                                 tarnished by annoying pop-ups cluttering the workspace or interfering with a legal professional’s
                                 deadlines. Instead, your advertisement is presented on a list in response to a specific request by those legal
-                                professionals looking specifically for your products and/or services.</p><p>
+                                professionals looking specifically for your products and/or services.
                                 Our fee structure makes listing your product or service extremely competitive to print media which is
                                 reported to charge upwards of $200 for just one column inch of black/white ad space. After that, you just
                                 have to hope a potential customer buys the newspaper and reads your one column inch advertisement and
-                                remembers it when they’re ready to buy. Good luck with that.</p><p>
+                                remembers it when they’re ready to buy. Good luck with that.
                                 Better yet, your FDD advertiser registration is free with your first paid listing fee!
 
                             </p>

@@ -1,4 +1,3 @@
-
 @extends('layouts.app')
 @section('content')
 
@@ -32,7 +31,7 @@
                     @endif
 
                     <div class="col-sm-12">
-                      <table class="table table-bordered" style="min-width: 650px">
+                      <table class="table table-bordered">
                         <tbody>
                           <tr>
                             @if(isset($hascaseid) && $hascaseid=='1' && $case_data->state_id=='35')
@@ -52,14 +51,13 @@
                                 </button>
                             </td>
                             <td>
-                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModalDraftNewMotion">Draft New Motion</button>
+                                <a class="btn btn-success" href="javascript:void(0);"> Draft New Motion</a>
                             </td>
                             <td>
                                 <a class="btn btn-success" href="{{ route('cases.motions.create',['case_id' => $case_data->id]) }}"> Register New Motion</a>
                             </td>
                             <td>
-                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModalDraftNewPleading"> Draft New Pleading</button>
-
+                                <a class="btn btn-success" href="javascript:void(0);"> Draft New Pleading</a>
                             </td>
                             <td>
                                 <a class="btn btn-success" href="{{ route('cases.pleadings.create',['case_id' => $case_data->id]) }}"> Register New Pleading</a>
@@ -68,10 +66,7 @@
                           <tr>
                             @if(isset($hascaseid) && $hascaseid=='1' && $case_data->state_id=='35')
                                 <td>
-                                  <!-- <button type="button" class="btn btn-success notices-famlaw" data-toggle="modal" data-target="#myNewDynamicModal" onclick="getPopupSelectOptions('notices-famlaw');"> Notices </button> -->
-                                  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModalNotices">Notices</button>
-
-
+                                  <button type="button" class="btn btn-success notices-famlaw" data-toggle="modal" data-target="#myNewDynamicModal" onclick="getPopupSelectOptions('notices-famlaw');"> Notices </button>
                                 </td>
                                 <td>
                                   <button type="button" class="btn btn-success correspondence-famlaw-nonfamlaw" data-toggle="modal" data-target="#myNewDynamicModal" onclick="getPopupSelectOptions('correspondence-famlaw-nonfamlaw');"> Correspondence </button>
@@ -100,8 +95,7 @@
                         </tbody>
                       </table>
                     </div>
-                    <div class="col-md-12">
-                    <table class="table table-bordered pleadings-table" style="min-width:650px;">
+                    <table class="table table-bordered pleadings-table">
                       <caption style="font-weight: bold; color: #212529; caption-side:top;"></caption>
                       <thead>
                          <tr>
@@ -113,12 +107,12 @@
                            @if($case_data->filing_type == 'to_be_filed_new')
                             <th>Reg Date</th>
                            @else
-                            <th width="150px">Desired Filing Date</th>
+                            <th>Desired Filing Date</th>
                            @endif
                            @if($case_data->filing_type == 'to_be_filed_new')
-                            <th width="150px">Desired Filing Date</th>
+                            <th>Desired Filing Date</th>
                            @else
-                            <th width="150px">Deadline to Amend</th>
+                            <th>Deadline to Amend</th>
                            @endif
                            <th>Select Action</th>
                            <th>Draft It/Do It</th>
@@ -244,19 +238,17 @@
                       </tbody>
 
                     </table>
-                    </div>
                     @if(isset($pleadings) && count($pleadings) > 0 )
                     <?php $filings=array();$responsibles=array(); $j=0; //$i=0; $z=0;  ?>
                     @foreach($pleadings as $pleading)
-                    <div class="col-md-12"> 
-                      <table class="table table-bordered pleadings-table" style="min-width: 650px">
+                      <table class="table table-bordered pleadings-table">
                         <caption style="font-weight: bold; color: #212529; caption-side:top;">CP #{{$pleading->pleading_level}} ({{$pleading->pleading_name}})</caption>
                         <thead>
                            <tr>
                              <th>Responsible Party</th>
                              <!-- <th></th> -->
                              <th>Type</th>
-                             <th  width="150px">Deadline</th>
+                             <th>Deadline</th>
                              <th>Select Action</th>
                              <th>Draft It/Do It</th>
                            </tr>
@@ -333,7 +325,6 @@
                           </tr>
                         </tbody>
                       </table>
-                    </div>
                       <?php //$i++; ?>
                           <?php $k=1; //$l=$j.'.'.$k; $mr=35;?>
                           @if(count($pleading->subpleadings))
@@ -356,7 +347,7 @@
     </div>
 </div>
 
-<!-- Case Practice Aids The Modal -->
+<!-- The Modal -->
 <div class="modal" id="myModal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -378,11 +369,10 @@
                 <select id="select_case_practice_aid" name="select_case_practice_aid" class="form-control col-md-5 custom-select letter_dropdown mb-2" required="">
                     <option value="">Select</option>
                     @foreach($case_practice_aids_FamLaw as $case_practice_aid)
-                        <option value="{{$case_practice_aid->package_name}}" data-id ="{{ $case_practice_aid->document_out_format }}">{{$case_practice_aid->package_name}}</option>
+                        <option value="{{$case_practice_aid->package_name}}">{{$case_practice_aid->package_name}}</option>
 
                     @endforeach
                 </select>
-                <input type="hidden" name="doctype" class="doctype">
                 <input type="submit" class="btn btn-success mb-2" name="submit" value="Draft/Download">
             </div>
         </form>
@@ -395,144 +385,14 @@
                 <select id="select_case_practice_aid" name="select_case_practice_aid" class="form-control col-md-5 custom-select letter_dropdown mb-2" required="">
                     <option value="">Select</option>
                     @foreach($case_practice_aids_NFL as $case_practice_aid)
-                        <option value="{{$case_practice_aid->package_name}}" data-id ="{{ $case_practice_aid->document_out_format }}">{{$case_practice_aid->package_name}}</option>
+                        <option value="{{$case_practice_aid->package_name}}">{{$case_practice_aid->package_name}}</option>
 
                     @endforeach
                 </select>
-                <input type="hidden" name="doctype" class="doctype">
                 <input type="submit" class="btn btn-success mb-2" name="submit" value="Draft/Download">
             </div>
         </form>
       @endif
-      </div>
-
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-      </div>
-
-    </div>
-  </div>
-</div>
-<!-- end Modal -->
-
-<!--  Draft New Motion The Modal -->
-<div class="modal" id="myModalDraftNewMotion">
-  <div class="modal-dialog">
-    <div class="modal-content">
-
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Draft/Download  Draft New Motion </h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-
-      <!-- Modal body -->
-      <div class="modal-body text-center">
-      
-        <form method="POST" action="{{ route('draft_case_practice_aids') }}">
-            @csrf
-            <input type="hidden" name="case_practice_aid_type" value="fam_law" style="display: none;">
-            <input type="hidden" name="case_id" value="{{$case_data->id}}" style="display: none;">
-            <div class="">
-                <select id="select_case_practice_aid" name="select_case_practice_aid" class="form-control col-md-5 custom-select letter_dropdown mb-2" required="">
-                    <option value="">Select</option>
-                    @foreach($DraftNewMotion as $case_practice_aid)
-                        <option value="{{$case_practice_aid->package_name}}" data-id ="{{ $case_practice_aid->document_out_format }}">{{$case_practice_aid->package_name}}</option>
-
-                    @endforeach
-                </select>
-                <input type="hidden" name="doctype" class="doctype">
-                <input type="submit" class="btn btn-success mb-2" name="submit" value="Draft/Download">
-            </div>
-        </form>
-     
-      </div>
-
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-      </div>
-
-    </div>
-  </div>
-</div>
-<!-- end Modal -->
-
-<!--  Draft New Pleading The Modal -->
-<div class="modal" id="myModalDraftNewPleading">
-  <div class="modal-dialog">
-    <div class="modal-content">
-
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Draft/Download  Draft New Pleading </h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-
-      <!-- Modal body -->
-      <div class="modal-body text-center">
-      
-        <form method="POST" action="{{ route('draft_case_practice_aids') }}">
-            @csrf
-            <input type="hidden" name="case_practice_aid_type" value="fam_law" style="display: none;">
-            <input type="hidden" name="case_id" value="{{$case_data->id}}" style="display: none;">
-            <div class="">
-                <select id="select_case_practice_aid" name="select_case_practice_aid" class="form-control col-md-5 custom-select letter_dropdown mb-2" required="">
-                    <option value="">Select</option>
-                    @foreach($DraftNewPleading as $case_practice_aid)
-                        <option value="{{$case_practice_aid->package_name}}" data-id ="{{ $case_practice_aid->document_out_format }}">{{$case_practice_aid->package_name}}</option>
-
-                    @endforeach
-                </select>
-                <input type="hidden" name="doctype" class="doctype">
-                <input type="submit" class="btn btn-success mb-2" name="submit" value="Draft/Download">
-            </div>
-        </form>
-     
-      </div>
-
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-      </div>
-
-    </div>
-  </div>
-</div>
-<!-- end Modal -->
-
-<!--  Notices The Modal -->
-<div class="modal" id="myModalNotices">
-  <div class="modal-dialog">
-    <div class="modal-content">
-
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Draft/Download  Notices </h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-
-      <!-- Modal body -->
-      <div class="modal-body text-center">
-      
-        <form method="POST" action="{{ route('draft_case_practice_aids') }}">
-            @csrf
-            <input type="hidden" name="case_practice_aid_type" value="fam_law" style="display: none;">
-            <input type="hidden" name="case_id" value="{{$case_data->id}}" style="display: none;">
-            <div class="">
-                <select id="select_case_practice_aid" name="select_case_practice_aid" class="form-control col-md-5 custom-select letter_dropdown mb-2" required="">
-                    <option value="">Select</option>
-                    @foreach($Notices as $case_practice_aid)
-                        <option value="{{$case_practice_aid->package_name}}" data-id ="{{ $case_practice_aid->document_out_format }}">{{$case_practice_aid->package_name}}</option>
-
-                    @endforeach
-                </select>
-                <input type="hidden" name="doctype" class="doctype">
-                <input type="submit" class="btn btn-success mb-2" name="submit" value="Draft/Download">
-            </div>
-        </form>
-     
       </div>
 
       <!-- Modal footer -->
@@ -797,10 +657,5 @@
     })
 
   });
-$(document).on('change','.custom-select',function(){
-    console.log($(this).val());
-    var doctype = $(this).find(':selected').data('id');
-    $(".doctype").val(doctype);
-});
 </script>
 @endsection

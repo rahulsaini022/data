@@ -15,9 +15,29 @@
                     </div>
                 </div>
                 <div class="card-body">
-                   
+                    @if (count($errors) > 0)
 
-                    {!! Form::open(array('route' => 'casepaymentpackages.store','id'=>'case_package_form','method'=>'POST')) !!}
+                      <div class="alert alert-danger">
+
+                        <strong>Whoops!</strong> There were some problems with your input.<br><br>
+
+                        <ul>
+
+                           @foreach ($errors->all() as $error)
+
+                             <li>{{ $error }}</li>
+
+                           @endforeach
+
+                        </ul>
+
+                      </div>
+
+                    @endif
+
+
+
+                    {!! Form::open(array('route' => 'casepaymentpackages.store','method'=>'POST')) !!}
 
                     <div class="row">
 
@@ -27,10 +47,8 @@
 
                                 <strong>Title:</strong>
 
-                                {!! Form::text('package_title', null, array('placeholder' => 'Title','required','class' => 'form-control')) !!}
-                                    @error('package_title')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                {!! Form::text('package_title', null, array('placeholder' => 'Title','class' => 'form-control')) !!}
+
                             </div>
 
                         </div>
@@ -41,10 +59,8 @@
 
                                 <strong>Description:</strong>
 
-                                {!! Form::textarea('package_description', null, array('placeholder' => 'Description','required','class' => 'form-control text-description-editor-tool', 'rows' => 10)) !!}
-                                    @error('package_description')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                {!! Form::textarea('package_description', null, array('placeholder' => 'Description','class' => 'form-control text-description-editor-tool', 'rows' => 10)) !!}
+
                             </div>
 
                         </div>
@@ -55,17 +71,15 @@
 
                                 <strong>Price:</strong>
 
-                                {!! Form::number('package_price', null, array('placeholder' => 'Price($)','required','min'=>1,'class' => 'form-control','onkeypress'=>'if(this.value.length==8) return false;','oninput'=>"validity.valid||(value='');")) !!}
-                                        @error('package_price')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                {!! Form::number('package_price', null, array('placeholder' => 'Price($)','class' => 'form-control')) !!}
+    
                             </div>
 
                         </div>
 
                         <div class="col-xs-12 col-sm-12 col-md-12">
 
-                            <div class="form-group case_type_error">
+                            <div class="form-group">
 
                                 <strong>Case Types:</strong>
 
@@ -74,16 +88,13 @@
                                 @foreach($case_types as $value)
 
                                     <div class="col-xs-6 col-sm-6 col-md-6 pull-left">
-                                        <label>{{ Form::checkbox('case_type_ids[]', $value->id, false, array('class' => 'case_type','required')) }}
+                                        <label>{{ Form::checkbox('case_type_ids[]', $value->id, false, array('class' => 'case_type')) }}
 
                                         {{ $value->case_type }}</label>
                                     </div>
 
                                 @endforeach
-                                
-                                    @error('case_type_ids')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+
                             </div>
 
                         </div>
@@ -98,9 +109,7 @@
                                 <input type="radio" id="active-0" class="active-input" name="active" value="0">
                                 <label for="active-0">No</label>&nbsp;&nbsp;&nbsp;
                             </div>
-                                    @error('active')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+
                         </div>
 
                         <div class="col-xs-12 col-sm-12 col-md-12 text-center">

@@ -27,28 +27,19 @@
                 <div class="card-body table-sm table-responsive">
 
                     @if ($message = Session::get('success'))
-                         @if($message)
-                         <div class="alert alert-success">
-                      <button type="button" class="close" data-dismiss="alert">×</button> 
-                      <p>{{$message}}
-                      </p>
 
-                    </div>
-                    @else
                     <div class="alert alert-success">
                       <button type="button" class="close" data-dismiss="alert">×</button> 
                       <p>
                         @foreach($settings as $setting)
                           @if($setting->setting_key == 'documents_ready_soon_message')
                             {{$setting->setting_value}}
-                            @else
-                           
                           @endif
                         @endforeach
                       </p>
 
                     </div>
-                  @endif
+
                     @endif
 
                     @if ($message = Session::get('error'))
@@ -93,7 +84,7 @@
                           <?php ++$i; ?>
                           <tr id="download-tr_{{ $i }}">
                             <td>{{ $i }}</td>
-                            <td>{{ Str::limit($file_data->getFilename(),90) }}</td>
+                            <td>{{ $file_data->getFilename() }}</td>
                               <td>
                                 <a class="btn btn-primary mr-1 mb-1" href="javascript:void(0)" onclick="event.preventDefault(); document.getElementById('download-form_{{ $i }}').submit(); document.getElementById('download-tr_{{ $i }}').style.display = 'none';">Download</a>
                                 <form id="download-form_{{ $i }}" action="{{ route('attorney.download.file') }}" method="POST" style="display: none;">
@@ -104,7 +95,7 @@
                                 {!! Form::open(['method' => 'POST','route' => ['attorney.delete_download_file', Auth::user()->id],'style'=>'display:inline']) !!}
 
                                     {!! Form::hidden('file_name', $file_data->getFilename() , array('class' => 'form-control')) !!}
-                                    {!! Form::submit('Delete', ['class' => 'btn btn-danger mb-1 confirm-delete', 'onclick' => 'return ConfirmDelete(event);']) !!}
+                                    {!! Form::submit('Delete', ['class' => 'btn btn-danger mb-1 confirm-delete', 'onclick' => 'return ConfirmDelete();']) !!}
 
                                 {!! Form::close() !!}
 
@@ -126,6 +117,14 @@
 </div>
 
 <script>
+  function ConfirmDelete()
+  {
+      var x = confirm("Are you sure you want to delete this file.");
+      if (x)
+          return true;
+      else
+        return false;
+  }
 
   $(window).on('load', function(){
 

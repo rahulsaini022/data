@@ -150,15 +150,14 @@
                             </div>
                             <h5 class="col-sm-12 mt-5">Children of this Marriage Info Section</h5>
                             <!-- <div class="row mb-5"> -->
-                                  <div class="col-sm-6">
-                                    <label>Number of children born to and/or adopted by {{$client_name}} and  {{$opponent_name}} BEFORE their marriage.?</label>
-                                    <input id="Num_Children_Born_ONLY_These_Parties_Before_Marriage" type="number" class="form-control" name="Num_Children_Born_ONLY_These_Parties_Before_Marriage" value="<?php if(isset($drcaseoverview->Num_Children_Born_ONLY_These_Parties_Before_Marriage)){ echo $drcaseoverview->Num_Children_Born_ONLY_These_Parties_Before_Marriage; } else { echo "0"; } ?>" min="0" max="6" required>
-                                </div>
                                 <div class="col-sm-6">
                                     <label>Number of children born to and/or adopted by {{$client_name}} and {{$opponent_name}} DURING their marriage. ?</label>
                                     <input id="Num_Children_ONLY_This_Marriage" type="number" class="form-control" name="Num_Children_ONLY_This_Marriage" value="<?php if(isset($drcaseoverview->Num_Children_ONLY_This_Marriage)){ echo $drcaseoverview->Num_Children_ONLY_This_Marriage; } else { echo "0"; } ?>" min="0" max="8" required>
                                 </div>
-                               
+                                <div class="col-sm-6">
+                                        <label>How many children are Minor and/or otherwise Dependent in this marriage?</label>
+                                        <input id="Num_MinorDepChildren_ONLY_This_Marriage" type="number" class="form-control" name="Num_MinorDepChildren_ONLY_This_Marriage" value="<?php if(isset($drcaseoverview->Num_MinorDepChildren_ONLY_This_Marriage)){ echo $drcaseoverview->Num_MinorDepChildren_ONLY_This_Marriage; } else { echo "0"; } ?>" min="0" max="8" required> 
+                                </div>
                                <div class="col-sm-6">
                                     <label>Number of children born to and/or adopted by {{$client_name}}’s but not {{$opponent_name}} ?</label>
                                     <input id="Num_Client_Children_NOT_this_Marriage" type="number" class="form-control" name="Num_Client_Children_NOT_this_Marriage" value="<?php if(isset($drcaseoverview->Num_Client_Children_NOT_this_Marriage)){ echo $drcaseoverview->Num_Client_Children_NOT_this_Marriage; } else { echo "0"; } ?>" min="0" max="6" required>
@@ -168,20 +167,10 @@
                                     <label>Number of children born to and/or adopted by  {{$opponent_name}}’s but not {{$client_name}}. ?</label>
                                     <input id="Num_Op_Children_NOT_this_Marriage" type="number" class="form-control" name="Num_Op_Children_NOT_this_Marriage" value="<?php if(isset($drcaseoverview->Num_Op_Children_NOT_this_Marriage)){ echo $drcaseoverview->Num_Op_Children_NOT_this_Marriage; } else { echo "0"; } ?>" min="0" max="6" required>
                                 </div>
-
-
-                                <div style="display:none;">
-                                 <div class="col-sm-6">
-                                        <label>How many children are Minor and/or otherwise Dependent in this marriage?</label>
-                                        <input id="Num_MinorDepChildren_ONLY_This_Marriage" type="number" class="form-control" name="Num_MinorDepChildren_ONLY_This_Marriage" value="<?php if(isset($drcaseoverview->Num_MinorDepChildren_ONLY_This_Marriage)){ echo $drcaseoverview->Num_MinorDepChildren_ONLY_This_Marriage; } else { echo "0"; } ?>" min="0" max="8" required> 
+                                <div class="col-sm-6">
+                                    <label>Number of children born to and/or adopted by {{$client_name}} and  {{$opponent_name}} BEFORE their marriage.. ?</label>
+                                    <input id="Num_Children_Born_ONLY_These_Parties_Before_Marriage" type="number" class="form-control" name="Num_Children_Born_ONLY_These_Parties_Before_Marriage" value="<?php if(isset($drcaseoverview->Num_Children_Born_ONLY_These_Parties_Before_Marriage)){ echo $drcaseoverview->Num_Children_Born_ONLY_These_Parties_Before_Marriage; } else { echo "0"; } ?>" min="0" max="6" required>
                                 </div>
-                              
-
-
-
-
-
-
                                  <div class="col-sm-6">
                                     <label>Number of children born to and/or adopted by  {{$client_name}} and  {{$opponent_name}} who are emancipated and not disabled.. ?</label>
                                     <input id="Num_Children_Born_Emancipated_Not_Dep" type="number" class="form-control" name="Num_Children_Born_Emancipated_Not_Dep" value="<?php if(isset($drcaseoverview->Num_Children_Born_Emancipated_Not_Dep)){ echo $drcaseoverview->Num_Children_Born_Emancipated_Not_Dep; } else { echo "0"; } ?>" min="0" max="6" required>
@@ -194,7 +183,6 @@
                                     <label>Number of children subject to an  existing order of parenting or supporting from another Court.</label>
                                     <input id="Num_Children_Parenting_Support_Order" type="number" class="form-control" name="Num_Children_Parenting_Support_Order" value="<?php if(isset($drcaseoverview->Num_Children_Parenting_Support_Order)){ echo $drcaseoverview->Num_Children_Parenting_Support_Order; } else { echo "0"; } ?>" min="0" max="6" required>
                                 </div>
-                            </div>
                             <!-- </div> -->
                             <h5 class="col-sm-12 mt-5">Vehicles Info Section</h5>
                             <!-- <div class="row mb-5"> -->

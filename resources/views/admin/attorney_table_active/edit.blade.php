@@ -438,7 +438,7 @@ $(document).ready(function () {
         }
     });
 
-        $('.attorneytableactive-reg-state-select').select2({ width: '100%' });
+    $('.attorneytableactive-reg-state-select').select2();
 
     $('.hasDatepicker').datepicker();
 

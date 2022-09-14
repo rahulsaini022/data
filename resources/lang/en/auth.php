@@ -14,9 +14,7 @@ return [
     */
 
     'failed' => 'These credentials do not match our records.',
-    'invalid_password'=> 'Password do not match with our records.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
-    'inactive' => 'Your :user account is not active yet. Please pay your subscription fee to access our services.',
-  
+    'inactive' => 'Your attorney account is not active yet. Please pay your subscription fee to access our services.',
 
 ];

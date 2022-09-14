@@ -84,7 +84,7 @@
 
                             {!! Form::open(['method' => 'DELETE','route' => ['prices.destroy', $price->id],'style'=>'display:inline']) !!}
 
-                                {!! Form::submit('Delete', ['class' => 'btn btn-danger confirm-delete', 'onclick' => 'return ConfirmDelete(event);']) !!}
+                                {!! Form::submit('Delete', ['class' => 'btn btn-danger confirm-delete', 'onclick' => 'return ConfirmDelete();']) !!}
 
                             {!! Form::close() !!}
 
@@ -101,7 +101,15 @@
     </div>
 </div>         
 <script>
- 
+  function ConfirmDelete()
+  {
+      var x = confirm("Are you sure you want to delete this Pricing");
+      if (x)
+          return true;
+      else
+        return false;
+  }
+
   $(document).ready( function () {
     $('.prices-table').DataTable({
         pageLength: 50,

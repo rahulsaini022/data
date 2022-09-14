@@ -1,8 +1,6 @@
-
 @extends('layouts.app')
 
 @section('content')
-
 <div class="container">
     <div class="row justify-content-center case-registration-steps party-registration-main">
         <div class="col-md-12">
@@ -102,19 +100,11 @@
                                     </div>
                                 </div>
                             </div>
-                            
                             <?php if(isset($client_data->org_comp_name)){ ?>
                                 <div class="col-md-12 org_comp_name_main_div">
                             <?php } else { ?>
                                 <div class="col-md-12 org_comp_name_main_div" style="display: none;">
                             <?php } ?>
-                             <div class="col-md-6 org_comp_name_div">
-                                    
-                                    <div class="col-md-8">
-                                        <label for="org_comp_name" class=" col-form-label text-md-left">Organization/Company Name*</label>
-                                        <input type="text" id="org_comp_name" class="form-control" name="org_comp_name" value="<?php if(isset($client_data->org_comp_name)){ echo $client_data->org_comp_name; } ?>">
-                                    </div>
-                                </div>
                                 <div class="col-md-6 care_of_div">
                                     <label class="col-md-4 col-form-label text-md-left">C/O*</label>
                                     <div class="col-md-8">
@@ -125,7 +115,12 @@
                                     </div>
                                 </div>
 
-                               
+                                <div class="col-md-6 org_comp_name_div">
+                                    <label for="org_comp_name" class="col-md-4 col-form-label text-md-left">Organization/Company Name*</label>
+                                    <div class="col-md-8">
+                                        <input type="text" id="org_comp_name" class="form-control" name="org_comp_name" value="<?php if(isset($client_data->org_comp_name)){ echo $client_data->org_comp_name; } ?>">
+                                    </div>
+                                </div>
                                 <div class="col-md-6">
                                 </div>
                             </div>
@@ -145,10 +140,10 @@
 
                             <div class="col-md-12 designation-main-div">
                                 <div class="col-md-12 designation-num-div">
-                                   
-                                        
-                                            <label class=" col-md-2 col-form-label text-md-left">Designation*</label>
-                                        
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <label class="col-form-label text-md-left">Designation*</label>
+                                        </div>
                                         <div class="col-md-10">
                                         <?php if($client_data->party_group =='top' || $client_data->party_group =='bottom') { ?>
                                             <label style="margin-right: 10px;"for="designation1" class="party-designations">1. <input type="checkbox" id="designation1" class="designation" name="designation1" value="{{$client_party_type}}" style="margin-top: 4px; margin-right: 5px;" checked="" readonly="" onclick="return false;"/><span id="designation1_span">{{$client_party_type}}</span></label>
@@ -160,7 +155,7 @@
                                             <label style="margin-right: 10px;"for="designation5" class="third-party-designations">5. <input type="checkbox" id="designation5" class="designation" name="designation5" value="Third-Party {{$case_data->bottom_party_type}}" style="margin-top: 4px; margin-right: 5px;" <?php if(isset($client_data->designation5) && $client_data->designation5=='Third-Party '.$case_data->bottom_party_type){ echo 'checked'; } ?>>Third-Party {{$case_data->bottom_party_type}}</label>
                                         <?php } ?>
                                         </div>
-                                  
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-12 op_ally_div" <?php if(isset($client_data->type) && $client_data->type=='client'){ echo 'style="display:none"'; } ?>>
@@ -174,20 +169,17 @@
                                     </div>
                                 </div>
 
-
-                            </div>
-                            <div class="col-md-12 name_unknown_div m-0" <?php if(isset($client_data->name_unknown) && $client_data->name_unknown =='No'){ echo 'style="display:none"'; } ?>>
-                                                                <div class="col-md-6 name_unknown_div m-0" <?php if(isset($client_data->name_unknown) && $client_data->name_unknown =='No'){ echo 'style="display:none"'; } ?>>
-                                
-                                    <div class="col-md-12  m-0">
-                                          <label for="gen_desc" class=" col-form-label text-md-left">Gen Desc</label>
+                                <div class="col-md-6 name_unknown_div" <?php if(isset($client_data->name_unknown) && $client_data->name_unknown =='No'){ echo 'style="display:none"'; } ?>>
+                                  <label for="gen_desc" class="col-md-4 col-form-label text-md-left">Gen Desc</label>
+                                    <div class="col-md-8">
                                       <input id="gen_desc" type="text" class="form-control" name="gen_desc" value="<?php if(isset($client_data->gen_desc)){ echo $client_data->gen_desc; } ?>">
                                     </div>
                                 </div>
-                                <div class="col-md-6 row mt-3">
-                                     <label class="col-md-5 col-form-label text-md-left">More than one Gen Desc</label>
-                                    <div class="col-md-7 m-0">
-                                       
+                            </div>
+                            <div class="col-md-12 name_unknown_div" <?php if(isset($client_data->name_unknown) && $client_data->name_unknown =='No'){ echo 'style="display:none"'; } ?>>
+                                <div class="col-md-6">
+                                    <label class="col-md-4 col-form-label text-md-left">More than one Gen Desc</label>
+                                    <div class="col-md-8">
                                         <input type="radio" id="is_multi_desc-Yes" name="is_multi_desc" class="is_multi_desc" value="Yes" <?php if(isset($client_data->is_multi_desc) && $client_data->is_multi_desc =='Yes'){ echo 'checked'; } ?>>
                                         <label for="is_multi_desc-Yes"> Yes</label>
                                         <input type="radio" id="is_multi_desc-No" class="is_multi_desc" name="is_multi_desc" value="No" <?php if(isset($client_data->is_multi_desc) && $client_data->is_multi_desc =='No'){ echo 'checked'; } ?>>
@@ -196,18 +188,16 @@
                                 </div>
 
                                 <div class="col-md-6 more_gen_desc" <?php if(isset($client_data->is_multi_desc) && $client_data->is_multi_desc =='No'){ echo 'style="display:none"'; } ?>>
-                                  
+                                  <label for="more_gen_desc" class="col-md-4 col-form-label text-md-left">More Gen Desc</label>
                                     <div class="col-md-8">
-                                        <label for="more_gen_desc" class=" col-form-label text-md-left">More Gen Desc</label>
                                       <input id="more_gen_desc" type="text" class="form-control" name="more_gen_desc" value="<?php if(isset($client_data->more_gen_desc)){ echo $client_data->more_gen_desc; } ?>">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="col-md-6">
-                                   
-                                    <div class="col-md-12 m-0">
-                                         <label for="clprefix" class=" col-form-label text-md-left">Prefix</label>
+                                    <label for="clprefix" class="col-md-4 col-form-label text-md-left">Prefix</label>
+                                    <div class="col-md-8">
                                         <select id="clprefix" name="clprefix" class="form-control" autofocus="">
                                             <option value="">Choose Prefix Type</option>
                                             <option value="Mr."<?php if(isset($client_data->prefix) && $client_data->prefix=='Mr.'){ echo 'selected'; } ?> >Mr.</option>
@@ -220,49 +210,45 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                  
-                                    <div class="col-md-12 m-0">
-                                          <label for="clfname" class=" col-form-label text-md-left">First Name*</label>
+                                    <label for="clfname" class="col-md-4 col-form-label text-md-left">First Name*</label>
+                                    <div class="col-md-8">
                                         <input id="clfname" type="text" class="form-control" name="clfname" value="<?php if(isset($client_data->fname)){ echo $client_data->fname; } ?>" <?php echo $required;?> autofocus="" <?php if(isset($client_data->name_unknown) && $client_data->name_unknown =='Yes'){ echo 'readonly'; } ?>>
                                     </div>
                                 </div>
-                                 <div class="col-md-6">
-                                    <div class="col-md-12 m-0">
-                                   
-                                        <label for="clmname" class=" col-form-label text-md-left">Middle Name</label>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <label for="clmname" class="col-md-4 col-form-label text-md-left">Middle Name</label>
+                                    <div class="col-md-8">
                                         <input id="clmname" type="text" class="form-control " name="clmname" value="<?php if(isset($client_data->mname)){ echo $client_data->mname; } ?>" autofocus="">
                                     </div>
                                 </div>
-                           
-                               
                                 <div class="col-md-6">
-                                  
-                                   <div class="col-md-12 m-0">
-                                          <label for="cllname" class=" col-form-label text-md-left">Last Name*</label>
+                                    <label for="cllname" class="col-md-4 col-form-label text-md-left">Last Name*</label>
+                                    <div class="col-md-8">
                                         <input id="cllname" type="text" class="form-control" name="cllname" value="<?php if(isset($client_data->lname)){ echo $client_data->lname; } ?>" <?php echo $required;?>  autofocus="" <?php if(isset($client_data->name_unknown) && $client_data->name_unknown =='Yes'){ echo 'readonly'; } ?>>
                                     </div>
                                 </div>
-                            
+                            </div>
+                            <div class="col-md-12">
                                 <div class="col-md-6">
-                                   <div class="col-md-12 m-0">
-                                         <label for="clemail" class= "col-form-label text-md-left">Email<span id="email_asterisk" <?php if(isset($client_data->type) && $client_data->type !='client'){ echo 'style="display:none;"'; } ?>>*</span></label>
-                                   
+                                    <label for="clemail" class="col-md-4 col-form-label text-md-left">Email<span id="email_asterisk" <?php if(isset($client_data->type) && $client_data->type !='client'){ echo 'style="display:none;"'; } ?>>*</span></label>
+                                    <div class="col-md-8">
                                         <?php if(isset($client_data->email) && strpos($client_data->email, 'unknown_'.$client_data->case_id.'_') !== false){ echo '<input type="hidden" name="op_ally_email" value="'.$client_data->email.'">'; } ?>
                                         <input id="clemail" type="email" class="form-control" name="clemail" value="<?php if(isset($client_data->email) && strpos($client_data->email, 'unknown_'.$client_data->case_id.'_') === false){ echo $client_data->email; } ?>" <?php if(isset($client_data->type) && $client_data->type =='client'){ echo "required"; } ?>>
-                                   </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
-                                  <div class="col-md-12 m-0">
-                                    
-                                          <label for="clphone" class="col-form-label text-md-left">Telephone</label>
-                                        <input id="clphone" maxlength="14" onkeypress="return onlyNumber(event)" type="text" class="form-control has-pattern-one" name="clphone" value="<?php if(isset($client_data->telephone)){ echo $client_data->telephone; } ?>" autofocus="" placeholder="(XXX) XXX-XXXX">
-                                  </div>
+                                    <label for="clphone" class="col-md-4 col-form-label text-md-left">Telephone</label>
+                                    <div class="col-md-8">
+                                        <input id="clphone" type="text" class="form-control has-pattern-one" name="clphone" value="<?php if(isset($client_data->telephone)){ echo $client_data->telephone; } ?>" autofocus="" placeholder="XXX-XXX-XXXX">
+                                    </div>
                                 </div>
-                            
+                            </div>
+                            <div class="col-md-12">
                                 <div class="col-md-6">
-                                   
-                                    <div class="col-md-12 m-0">
-                                         <label for="clsuffix" class=" col-form-label text-md-left">Suffix</label>
+                                    <label for="clsuffix" class="col-md-4 col-form-label text-md-left">Suffix</label>
+                                    <div class="col-md-8">
                                         <select id="clsuffix" name="clsuffix" class="form-control" autofocus="">
                                             <option value="">Choose Suffix Type</option>
                                             <option value="Sr." <?php if(isset($client_data->suffix) && $client_data->suffix=='Sr.'){ echo 'selected'; } ?>>Sr.</option>
@@ -276,35 +262,34 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                    
-                                    <div class="col-md-12 m-0">
-                                        <label for="clprefname" class=" col-form-label text-md-left">Preferred Name</label>
+                                    <label for="clprefname" class="col-md-4 col-form-label text-md-left">Preferred Name</label>
+                                    <div class="col-md-8">
                                         <input id="clprefname" type="text" class="form-control" name="clprefname" value="<?php if(isset($client_data->prefname)){ echo $client_data->prefname; } ?>" autofocus="">
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="col-md-12">
                                 <div class="col-md-6">
-                                   
-                                    <div class="col-md-12 m-0">
-                                         {{-- <label for="short_name" class="     col-form-label text-md-left">{{$client_party_type}} (#{{$client_data->number}}) Short Name for Pleadings/Motions</label> --}}
-                                         <label for="short_name" class="     col-form-label text-md-left">{{$client_party_type}} Short Name for Pleadings/Motions</label>
+                                    <label for="short_name" class="col-md-4 col-form-label text-md-left">{{$client_party_type}} (#{{$client_data->number}}) Short Name for Pleadings/Motions</label>
+                                    <div class="col-md-8">
                                         <input id="short_name" type="text" class="form-control" name="short_name" value="<?php if(isset($client_data->short_name)){ echo $client_data->short_name; } ?>">
                                     </div>
                                 </div>
-                           
-                                
                                 <?php if(isset($client_data->party_entity) && $client_data->party_entity=='organization_company'){ ?>
                                 <div class="col-md-6 cldob-main-div" style="display: none;">
                                 <?php } else { ?>    
                                 <div class="col-md-6 cldob-main-div">
                                 <?php } ?>
-                                 
-                                    <div class="col-md-12 m-0">
-                                           <label for="cldob" class=" col-form-label text-md-left">Date of Birth</label>
-                                        <input type="text" class="form-control hasDatepicker" id="cldob"  name="cldob" placeholder="MM/DD/YYYY" max="<?= date('Y-m-d'); ?>" value="<?php if(isset($client_data->date_of_birth)){ echo date("m/d/Y", strtotime($client_data->date_of_birth)); } ?>" autofocus="">
+                                    <label for="cldob" class="col-md-4 col-form-label text-md-left">Date of Birth</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control hasDatepicker" id="cldob" name="cldob" placeholder="MM/DD/YYYY" value="<?php if(isset($client_data->date_of_birth)){ echo date("m/d/Y", strtotime($client_data->date_of_birth)); } ?>" autofocus="">
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="col-md-4 single-line-radio-div mt-3">
+                            <div class="col-md-12">
+                                <div class="col-md-4 single-line-radio-div">
                                     <label class="col-md-6 col-form-label text-md-left">Gender*</label>
                                     <div class="col-md-6">
                                         <input type="radio" id="clgen-m" class="gender-input" name="clgender" value="M" required="" <?php if(isset($client_data->gender) && $client_data->gender=='M'){ echo 'checked'; } ?>>
@@ -322,17 +307,15 @@
                                 <?php } else { ?>
                                 <div class="col-md-6 clssno_div">
                                 <?php } ?>
-                                   
-                                    <div class="col-md-12 m-0">
-                                         <label for="clssno" class="col-form-label text-md-left">Social Security (Individual) Number</label>
-                                        <input type="text" maxlength="11" onkeypress="return onlyNumber(event)" class="form-control has-pattern-two" id="clssno" name="clssno" placeholder="XXX-XX-XXXX" value="<?php if(isset($client_data->social_sec_number)){ echo $client_data->social_sec_number; } ?>" autofocus="">
+                                    <label for="clssno" class="col-md-4 col-form-label text-md-left">Social Security (Individual) Number</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control has-pattern-two" id="clssno" name="clssno" placeholder="XXX-XX-XXXX" value="<?php if(isset($client_data->social_sec_number)){ echo $client_data->social_sec_number; } ?>" autofocus="">
                                     </div>
                                 </div>
-                                 @if($hascaseid ==1)
+                                @if($hascaseid == 1)
                                 <div class="col-md-6">
-                                   
-                                    <div class="col-md-12 m-0">
-                                         <label for="clssno" class=" col-form-label text-md-left">Relationship to Child(ren)</label>
+                                    <label for="clssno" class="col-md-4 col-form-label text-md-left">Relationship to Child(ren)</label>
+                                    <div class="col-md-8">
                                          <select id="relation_id" name="relation" class="form-control" autofocus="" required=""> 
                                             <option>Select Relation</option>                                    
                                             <option value="Mother" <?php if(isset($client_data->relation) && $client_data->relation=='Mother'){ echo 'selected'; }?> >Mother</option>
@@ -349,11 +332,10 @@
                                         </select>  
                                     </div>
                                 </div>
-                                @endif
+                            @endif
                                  <div class="col-md-6 client_relation_other_div" style="margin-top: 20px; display: none;">
-                                   
-                                    <div class="col-md-12 m-0">
-                                         <label for="client_relation_other" class="col-form-label text-md-left">Other Relation</label>
+                                    <label for="client_relation_other" class="col-md-4 col-form-label text-md-left">Other Relation</label>
+                                    <div class="col-md-8">
                                         <input type="text" class="form-control" id="relation_other" name="other_relation" value=" <?php if(isset($client_data->other_relation) && $client_data->relation=='Sibling'){ echo $client_data->other_relation; }?>" autofocus>
                                         </select>
                                     </div>
@@ -363,13 +345,13 @@
                                     <?php } else { ?>
                                 <div class="col-md-6 employer_identification_div" style="display: none;">
                                 <?php } ?>    
-                                   
-                                    <div class="col-md-12 m-0">
-                                         <label for="employer_identification" class=" col-form-label text-md-left">Employer Identification (Org/Co) Number</label>
+                                    <label for="employer_identification" class="col-md-4 col-form-label text-md-left">Employer Identification (Org/Co) Number</label>
+                                    <div class="col-md-8">
                                         <input type="text" class="form-control" id="employer_identification" name="employer_identification" placeholder="XX-XXXXXXX" value="<?php if(isset($client_data->employer_identification)){ echo $client_data->employer_identification; } ?>" autofocus="">
                                     </div>
                                 </div>
-                            
+                            </div>
+                            <div class="col-md-12">
                                 <div class="col-md-6 op_ally_div" <?php if(isset($client_data->type) && $client_data->type=='client'){ echo 'style="display:none"'; } ?>>
                                     <label class="col-md-4 col-form-label text-md-left">Address Unknown*</label>
                                     <div class="col-md-8">
@@ -380,19 +362,18 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                   
-                                    <div class="col-md-12 m-0">
-                                         <label for="clzip" class=" col-form-label text-md-left">ZIP*</label>
+                                    <label for="clzip" class="col-md-4 col-form-label text-md-left">ZIP*</label>
+                                    <div class="col-md-8">
                                     <p class="text-danger no-state-county-cl" style="display: none;">No City, State, County found for this zipcode.</p>
                                         <input type="text" class="form-control" id="clzip" name="clzip" value="<?php if(isset($client_data->user_zipcode)){ echo $client_data->user_zipcode; } ?>" autofocus="" required="">
                                     </div>
                                 </div>
-                           
+                            </div>
+                            <div class="col-md-12">
 
                                 <div class="col-md-6">
-                                  
-                                    <div class="col-md-12 m-0">
-                                          <label for="clstate" class=" col-form-label text-md-left">State*</label>
+                                    <label for="clstate" class="col-md-4 col-form-label text-md-left">State*</label>
+                                    <div class="col-md-8">
                                         <input type="hidden" name="selected-state-cl" value="<?php if(isset($client_data->state_id)){ echo $client_data->state_id; } ?>" class="selected-state-cl">
                                         <select id="clstate" name="clstate" class="form-control cl-state" autofocus="" required="">                                     
                                             <option value="">Choose State</option>
@@ -401,9 +382,8 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                  
-                                    <div class="col-md-12 m-0">
-                                          <label for="clcounty" class="col-form-label text-md-left">County*</label>
+                                    <label for="clcounty" class="col-md-4 col-form-label text-md-left">County*</label>
+                                    <div class="col-md-8">
                                         <input type="hidden" name="selected-county-cl" value="<?php if(isset($client_data->county_id)){ echo $client_data->county_id; } ?>" class="selected-county-cl">
                                         <select id="clcounty" name="clcounty" class="form-control cl-county" autofocus="" required="">
                                             <option value="">Choose County</option>
@@ -411,11 +391,11 @@
                                     </div>
                                 </div>
 
-                           
+                            </div> 
+                            <div class="col-md-12">
                                 <div class="col-md-6">
-                                   
-                                    <div class="col-md-12 m-0">
-                                         <label for="clcity" class=" col-form-label text-md-left">City*</label>
+                                    <label for="clcity" class="col-md-4 col-form-label text-md-left">City*</label>
+                                    <div class="col-md-8">
                                         <input type="hidden" name="selected-city-cl" value="<?php if(isset($client_data->user_city)){ echo $client_data->user_city; } ?>" class="selected-city-cl">
                                         <select id="clcity" name="clcity" class="form-control cl-city" required="" autofocus="">
                                             <option value="">Choose City</option>
@@ -423,40 +403,37 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    
-                                    <div class="col-md-12 m-0">
-                                        <label for="clstreetad" class="col-form-label text-md-left">Street Address*</label>
+                                    <label for="clstreetad" class="col-md-4 col-form-label text-md-left">Street Address*</label>
+                                    <div class="col-md-8">
                                         <input type="text" class="form-control" id="clstreetad" name="clstreetad" value="<?php if(isset($client_data->street_address)){ echo $client_data->street_address; } ?>" autofocus="" required="">
                                     </div>
                                 </div>
-                           
+                            </div>
+                            <div class="col-md-12">
                                 <div class="col-md-6">
-                                  
-                                    <div class="col-md-12 m-0">
-                                          <label for="unit" class=" col-form-label text-md-left">Unit</label>
+                                    <label for="unit" class="col-md-4 col-form-label text-md-left">Unit</label>
+                                    <div class="col-md-8">
                                         <input id="unit" type="text" class="form-control " name="unit" value="<?php if(isset($client_data->unit)){ echo $client_data->unit; } ?>">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                   
-                                    <div class="col-md-12 m-0">
-                                         <label for="pobox" class=" col-form-label text-md-left">PO Box</label>
+                                    <label for="pobox" class="col-md-4 col-form-label text-md-left">PO Box</label>
+                                    <div class="col-md-8">
                                         <input id="pobox" type="text" class="form-control" name="pobox" value="<?php if(isset($client_data->pobox)){ echo $client_data->pobox; } ?>">
                                     </div>
                                 </div>
-   
+                            </div> 
+                            <div class="col-md-12">
                                 <div class="col-md-6">
-                                   
-                                    <div class="col-md-12 m-0">
-                                         <label for="clfax"  class=" col-form-label text-md-left">Fax</label>
-                                        <input type="text" maxlength="14" onkeypress="return onlyNumber(event)" class="form-control has-pattern-one" id="clfax" name="clfax" value="<?php if(isset($client_data->fax)){ echo $client_data->fax; } ?>" autofocus="" placeholder="(XXX) XXX-XXXX">
+                                    <label for="clfax" class="col-md-4 col-form-label text-md-left">Fax</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control has-pattern-one" id="clfax" name="clfax" value="<?php if(isset($client_data->fax)){ echo $client_data->fax; } ?>" autofocus="" placeholder="XXX-XXX-XXXX">
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
-                                    
-                                    <div class="col-md-12 m-0">
-                                        <label for="clprimlang" class=" col-form-label text-md-left">Primary Language*</label>
+                                    <label for="clprimlang" class="col-md-4 col-form-label text-md-left">Primary Language*</label>
+                                    <div class="col-md-8">
                                         <input type="hidden" name="selected-lang-cl" value="<?php if(isset($client_data->primary_language)){ echo $client_data->primary_language; } ?>" class="selected-lang-cl" style="display: none;" >
                                         <select id="clprimlang" name="clprimlang" class="form-control languages-select" autofocus="" required="">
                                         </select>
@@ -464,9 +441,8 @@
                                 </div>
 
                                 <div class="col-md-6 client_primlang_other_div" style="margin-top: 20px; display: none;">
-                                   
-                                    <div class="col-md-12 m-0">
-                                         <label for="client_primlang_other" class=" col-form-label text-md-left">Add Primary Language*</label>
+                                    <label for="client_primlang_other" class="col-md-4 col-form-label text-md-left">Add Primary Language*</label>
+                                    <div class="col-md-8">
                                         <input type="text" class="form-control" id="client_primlang_other" name="client_primlang_other" value="" autofocus>
                                         </select>
                                     </div>
@@ -516,9 +492,6 @@
 
 <script type="text/javascript">
 $(document).ready(function () {
-    $("#clphone").inputmask("(999) 999-9999");
-    $("#clssno").inputmask("999-99-9999");
-    $("#clfax").inputmask("(999) 999-9999");
      $('input[type=radio][name=clgender]').change(function() {
             if (this.value == 'M') {
                 $('#relation_id').each(function() {
@@ -540,16 +513,13 @@ $(document).ready(function () {
     $('#multistep_case_form').validate({
         rules: {
             clphone: {
-                pattern:(/\(?[0-9]{3}\) [0-9]{3}-[0-9]{4}$/)
+                pattern: /[0-9]{3}-[0-9]{3}-[0-9]{4}/
             },
             clfax: {
-                pattern: (/\(?[0-9]{3}\) [0-9]{3}-[0-9]{4}$/)
+                pattern: /[0-9]{3}-[0-9]{3}-[0-9]{4}/
             },
             clssno: {
                 pattern: /[0-9]{3}-[0-9]{2}-[0-9]{4}/
-            },
-            clemail:{
-                pattern:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
             },
             employer_identification: {
                 pattern: /[0-9]{2}-[0-9]{7}/
@@ -563,7 +533,6 @@ $(document).ready(function () {
             // opssno: {
             //     pattern: /[0-9]{3}-[0-9]{2}-[0-9]{4}/
             // },
-          
         }
     });
 
@@ -930,35 +899,5 @@ $(document).ready(function () {
         });
     
 });
-//      var tele = document.querySelector('#clphone');
-
-// tele.addEventListener('keydown', function(e){
- 
-//   if (event.key != 'Backspace' && (tele.value.length === 3 ||  tele.value.length === 7 )){
-//   tele.value += '-';
-//   }
-
-// });
-
-
-
-
-//         var fax = document.querySelector('#clfax');
-
-// fax.addEventListener('keydown', function(e){
- 
-//   if (event.key != 'Backspace' && (fax.value.length === 3 ||  fax.value.length === 7 )){
-//   fax.value += '-';
-//   }
-// });        
-//         var clssno = document.querySelector('#clssno');
- 
-// clssno.addEventListener('keydown', function(e){
- 
-
-//   if (event.key != 'Backspace' && (clssno.value.length === 3 || clssno.value.length === 6)){
-//   clssno.value += '-';
-//   }
-// });  
 </script>    
 @endsection

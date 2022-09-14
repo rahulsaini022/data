@@ -81,7 +81,4 @@
         </div>
     </div>
 </div>
-<script>
-  // $('.downloads-table').dataTable();
-</script>
 @endsection

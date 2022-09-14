@@ -19,7 +19,7 @@
                   <div class="pull-right" style="display:none;">
                   <form  action="{{ url('orchard-search') }}" method="POST" style="" class="form-inline">
                                   @csrf
-                                 <inpuqt type="text" class="form-control" name="search" placeholder="" aria-controls="DataTables_Table_0">
+                                 <input type="text" class="form-control" name="search" placeholder="" aria-controls="DataTables_Table_0">
                                  <input type="submit" class="btn btn-primary ml-2" placeholder="" value="submit">
                                 </form>
                                  <br/>
@@ -49,10 +49,8 @@
                     @endif
 
                    <!--  <iframe src="http://orchard.firstdraftdata.com" title="description" style="height:500px;width:100%;"></iframe> -->
-                   <!-- For Dev server -->
-                   <iframe src="http://orchard-dev.firstdraftdata.com" title="description" style="height:500px;width:100%;border:none;"></iframe> 
-                    <!-- For production server -->
-                    <!-- <iframe src="https://orchard.firstdraftdata.com/" title="description" style="height:500px;width:100%;border:none;"></iframe> -->
+                   <!--  <iframe src="http://orchard-dev.firstdraftdata.com" title="description" style="height:500px;width:100%;"></iframe> -->
+                    <iframe src="https://orchard.firstdraftdata.com/" title="description" style="height:500px;width:100%;border:none;"></iframe>
 
 
                     <table class="table table-bordered downloads-table" style="display:none;">

@@ -35,13 +35,13 @@
                       </div>
                     @endif
 
-                    <table class="table table-bordered all-payments-table payments-history-table"  id="user-subs">
+                    <table class="table table-bordered all-payments-table payments-history-table">
                       <thead>
                         <tr>
 
                           <th>Sno.</th>
 
-                          <th style="min-width:70px;">Purchase Date</th>
+                          <th>Purchase Date</th>
 
                           <th>User Id</th>
                           
@@ -87,16 +87,13 @@
                         @endforeach
                       </tbody>
                     </table>
-                    {{-- <div class="row">
+                    <div class="row">
                       <div class="col-xs-12 col-sm-12 col-md-12">{{ $users->links() }}
                       </div>
-                    </div> --}}
+                    </div>
                 </div>
             </div>
         </div> 
     </div>
 </div>
-<script>
-  $('#user-subs').dataTable();
-</script>
 @endsection

@@ -1,4 +1,3 @@
-
 @extends('layouts.app')
 
 @section('content')
@@ -2238,7 +2237,7 @@ amount, enter "0")</td>
             <input type="button" name="reset" value="Reset" class="btn btn-info" onclick="resetForm();">
             <input type="submit" name="submit" value="Calculate" class="btn btn-success">
             <br/><br/>
-            <input type="submit" name="submit_email" value="Print" class="btn btn-success" onclick="printForm();" style="display:none;">
+           <!--  <input type="submit" name="submit_email" value="Print" class="btn btn-success" onclick="printForm();" style="display: none;"> -->
             <input type="submit" name="save_form" value="Save" class="btn btn-success">
             <input type="submit" name="download_form" value="Download" class="btn btn-success" id="download_form">
           </td>
@@ -2318,7 +2317,6 @@ amount, enter "0")</td>
 @endif
 @if(isset($print_sheet) && $print_sheet=='1')
 <script type="text/javascript">
-
   printForm();
   function printForm(){
       window.print();
@@ -2328,30 +2326,6 @@ amount, enter "0")</td>
 @endif
 <script type="text/javascript">
 
-  $('html').bind('keypress', function(e)
-{
-     if(e.keyCode == 13)
-     {
-         return e.keyCode = 9; //set event key to tab
-     }
-});
-/*$('input').on("keypress", function(e) {
-            /* ENTER PRESSED
-            if (e.keyCode == 13) {
-                /* FOCUS ELEMENT 
-                var inputs = $(this).parents("form").eq(0).find(":input");
-                var idx = inputs.index(this);
-
-                if (idx == inputs.length - 1) {
-                    inputs[0].select()
-                } else {
-                    inputs[idx + 1].focus(); //  handles submit buttons
-                    inputs[idx + 1].select();
-                }
-                 e.preventDefault();
-                return false;
-            }
-        });*/
 // function showDelayMessage(){
 //     var modal = document.getElementById("delay-message-myModal");
 //     modal.style.display = "block";

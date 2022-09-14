@@ -116,7 +116,7 @@ function task_promotions($task)
 				default:
 					$timeonline = $promotion['online']*60*60*24;
 			}
-			$sql_where .= "{$and}timeonline > '".$timeonline."'";
+			$sql_where .= "{$and}timeonline <= '".(TIME_NOW-$timeonline)."'";
 			$and = " AND ";
 		}
 
@@ -184,7 +184,7 @@ function task_promotions($task)
 				$log_inserts[] = array(
 					'pid' => $promotion['pid'],
 					'uid' => $user['uid'],
-					'oldusergroup' => $db->escape_string($user['additionalgroups']),
+					'oldusergroup' => $user['additionalgroups'],
 					'newusergroup' => $promotion['newusergroup'],
 					'dateline' => TIME_NOW,
 					'type' => "secondary",

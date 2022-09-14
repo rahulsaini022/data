@@ -22,7 +22,7 @@
 
                     <div class="alert alert-success">
                       <button type="button" class="close" data-dismiss="alert">×</button> 
-                      <strong>{{ $message }}</strong>
+                      <p>{{ $message }}</p>
 
                     </div>
 
@@ -68,14 +68,14 @@
 
                             <!-- {!! Form::open(['method' => 'DELETE','route' => ['casepaymentpackages.destroy', $package->id],'style'=>'display:inline']) !!}
 
-                            {!! Form::submit('Delete', ['class' => 'btn btn-danger mb-1 confirm-delete', 'onclick' => 'return ConfirmDelete(event);']) !!}
+                            {!! Form::submit('Delete', ['class' => 'btn btn-danger mb-1 confirm-delete', 'onclick' => 'return ConfirmDelete();']) !!}
 
                             {!! Form::close() !!} -->
 
                             @if($package->active=='1')
-                              <a class="btn btn-danger mb-1 confirm-deactivate"  onclick="return ConfirmStatus(event);" href="{{ route('casepaymentpackages.deactivate',$package->id) }}">Deactivate</a>
+                              <a class="btn btn-danger mb-1 confirm-deactivate"  onclick="return ConfirmDeActivate();" href="{{ route('casepaymentpackages.deactivate',$package->id) }}">Deactivate</a>
                             @else
-                              <a class="btn btn-success mb-1 confirm-activate"  onclick="return ConfirmStatus(event);" href="{{ route('casepaymentpackages.activate',$package->id) }}">Activate</a>
+                              <a class="btn btn-success mb-1 confirm-activate"  onclick="return ConfirmActivate();" href="{{ route('casepaymentpackages.activate',$package->id) }}">Activate</a>
                             @endif
 
                           </td>
@@ -91,7 +91,32 @@
     </div>
 </div>         
 <script>
- 
+  function ConfirmDelete()
+  {
+      var x = confirm("Are you sure you want to delete this package");
+      if (x)
+          return true;
+      else
+        return false;
+  }
+
+  function ConfirmDeActivate()
+  {
+      var x = confirm("Are you sure you want to deactivate this package?");
+      if (x)
+          return true;
+      else
+        return false;
+  }
+
+  function ConfirmActivate()
+  {
+      var x = confirm("Are you sure you want to activate this package?");
+      if (x)
+          return true;
+      else
+        return false;
+  }
 
   $(document).ready( function () {
     $('.casepaymentpackages-table').DataTable({

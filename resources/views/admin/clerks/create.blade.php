@@ -15,8 +15,28 @@
                     </div>
                 </div>
                 <div class="card-body">
-                 
-                    {!! Form::open(array('route' => 'clerks.store','method'=>'POST', 'id'=>'clerk_form')) !!}
+                    @if (count($errors) > 0)
+
+                      <div class="alert alert-danger">
+
+                        <strong>Whoops!</strong> There were some problems with your input.<br><br>
+
+                        <ul>
+
+                           @foreach ($errors->all() as $error)
+
+                             <li>{{ $error }}</li>
+
+                           @endforeach
+
+                        </ul>
+
+                      </div>
+
+                    @endif
+
+
+                    {!! Form::open(array('route' => 'clerks.store','method'=>'POST', 'id'=>'create_clerk_form')) !!}
 
                     <div class="row">
 
@@ -25,10 +45,9 @@
                             <div class="form-group">
 
                                 <strong>Name:</strong>
-                                {!! Form::text('clerkname', null, array('placeholder' => 'Name','required','class' => 'form-control '.$errors->first('clerkname', 'error'))) !!}
-                                  @error('clerkname')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+
+                                {!! Form::text('clerkname', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+
                             </div>
 
                         </div>
@@ -39,10 +58,8 @@
 
                                 <strong>Clerk Title:</strong>
 
-                                {!! Form::text('clerktitle', null, array('placeholder' => 'Clerk Title','required','class' => 'form-control '.$errors->first('clerktitle', 'error'))) !!}
-                                  @error('clerktitle')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                {!! Form::text('clerktitle', null, array('placeholder' => 'Clerk Title','class' => 'form-control')) !!}
+
                             </div>
 
                         </div>

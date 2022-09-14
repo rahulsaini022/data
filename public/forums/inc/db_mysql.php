@@ -191,7 +191,7 @@ class DB_MySQL implements DB_Base
 			if(array_key_exists('hostname', $connections[$type]))
 			{
 				$details = $connections[$type];
-				unset($connections[$type]);
+				unset($connections);
 				$connections[$type][] = $details;
 			}
 
@@ -485,11 +485,7 @@ class DB_MySQL implements DB_Base
 		if($row === false)
 		{
 			$array = $this->fetch_array($query);
-			if($array !== null)
-			{
-				return $array[$field];
-			}
-			return null;
+			return $array[$field];
 		}
 		else
 		{
@@ -1046,7 +1042,7 @@ class DB_MySQL implements DB_Base
 	 */
 	function escape_string_like($string)
 	{
-		return $this->escape_string(str_replace(array('\\', '%', '_') , array('\\\\', '\\%' , '\\_') , $string));
+		return $this->escape_string(str_replace(array('%', '_') , array('\\%' , '\\_') , $string));
 	}
 
 	/**
@@ -1416,7 +1412,7 @@ class DB_MySQL implements DB_Base
 			$default = '';
 		}
 
-		return (bool)$this->write_query("ALTER TABLE {$this->table_prefix}{$table} MODIFY `{$column}` {$new_definition} {$not_null} {$default}");
+		return (bool)$this->write_query("ALTER TABLE {$this->table_prefix}{$table} MODIFY `{$column}` {$new_definition} {$not_null}");
 	}
 
 	/**

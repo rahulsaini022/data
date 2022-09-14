@@ -1,10 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-{{-- @foreach (auth()->user()->attorney_county as $county)
-     
-@endforeach
-  {{ $county->county_name}} --}}
 <div class="container">
     <div class="row justify-content-center attorney-dashboard">
         <div class="col-md-12">
@@ -32,55 +28,46 @@
                         <div class="col-md-12">
                             <h2>{{$attorney->name}}</h2>
                             <p>This is your dashboard at First Draft Data. From here, you manage your account, your client information, use tools, etc. Here is where you register your clients because clients are not allowed to register themselves.</p>
-                           <div class="row advertiser-dash">
-                            <div class="col-sm-6 ">
-                                <a class="btn btn-info  my-2 register-case-btn " href="{{route('prospects.index')}}">
+                            <p>
+                                <a class="btn btn-info register-case-btn pull-right" href="{{route('prospects.index')}}">
                                     {{ __('Prospects »') }}
                                 </a>
-                            </div>
-                            <div class="col-sm-6 ">
-                                <a class="btn btn-info  my-2  float-sm-right" href="{{route('attorneys.edit', ['id' => Auth::user()->id])}}">
+                            </p>
+                            <p>
+                                <a class="btn btn-info" href="{{route('attorneys.edit', ['id' => Auth::user()->id])}}">
                                     {{ __('Edit Account Info »') }}
                                 </a>
-                            </div>
-                            <div class="col-sm-6 ">
-                                <a class="btn btn-info  my-2 register-case-btn " href="{{route('cases.index')}}">
+                            </p>
+                            <p>
+                                <a class="btn btn-info register-case-btn pull-right" href="{{route('cases.index')}}">
                                     {{ __('Cases »') }}
                                 </a>
-                            </div>
-                            <div class="col-sm-6 ">
-                                <a class="btn btn-info  my-2 register-case-btn  float-sm-right" href="{{route('attorneys.state_seat_license')}}">
-                                    {{ __('State Seat Licenses »') }}
+                            </p>
+                            <p>
+                                <a class="btn btn-info register-case-btn" href="{{route('attorneys.state_seat_license')}}">
+                                    {{ __('Seat Licenses »') }}
                                 </a>
-                            </div>
-                              <div class="col-sm-6">
-                                <a class="btn btn-info my-2 text-center register-case-btn " href="{{ route('change.password') }}">
-                                    {{ __(' Change Password »') }}
-                                </a>
-                           </div>
-                           </div>
+                            </p>
                         </div>
-                        <div class="col-md-8 offset-md-4 ">
-                            <h5 class="text-left">Practice Aids</h5>
-                            
-                           
+                        <div class="col-md-12 text-center">
+                            <h5 class="colmd-12">Practice Aids</h5>
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6" style="display: contents;">
                                 <form method="POST" action="{{ route('draft_practice_aids') }}">
                                     @csrf
-                                   <div class="input-group mb-3">
-                                        <select id="select_practice_aid" name="select_practice_aid" class="form-control col-md-4 custom-select letter_dropdown"  style=" white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" required="">
+                                    <div class="">
+                                        <select id="select_practice_aid" name="select_practice_aid" class="form-control col-md-3 custom-select letter_dropdown mb-2" required="">
                                             <option value="">Select</option>
                                             @foreach($practice_aids as $practice_aid)
                                                 <option value="{{$practice_aid->package_name}}">{{$practice_aid->package_name}}</option>
 
                                             @endforeach
                                         </select>
-                                        <div class="input-group-append">
                                         <input type="submit" class="btn btn-success mb-2" name="submit" value="Draft/Download">
                                     </div>
-                                    </div>
                                 </form>
-                            
-                            
+                            </div>
+                            <div class="col-md-3"></div>
                         </div>
                     </div>
                 </div>
@@ -92,5 +79,28 @@
 </div>
 <script type="text/javascript">
 
+// function showDelayMessage(){
+//     if($('#select_practice_aid').val()){
+//         var modal = document.getElementById("delay-message-myModal");
+//         modal.style.display = "block";
+
+//         // Get the <span> element that closes the modal
+//         var span = document.getElementsByClassName("delay-message-close")[0];
+
+//         // When the user clicks on <span> (x), close the modal
+//         span.onclick = function() {
+//             modal.style.display = "none";
+//         }
+
+//         // Get the <span> element that closes the modal
+//         var btn = document.getElementsByClassName("delay-message-close-btn")[0];
+
+//         // When the user clicks on <span> (x), close the modal
+//         btn.onclick = function() {
+//             modal.style.display = "none";
+//         }
+//     }
+//   return true;
+// }
 </script>
 @endsection

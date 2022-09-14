@@ -34,7 +34,7 @@
                                             data: {
                                                 labels: data.label,
                                                 datasets: [{
-                                                    label: '# Attorneys',
+                                                    label: '# of Attorneys',
                                                     data: data.data,
                                                     backgroundColor: backgroundBorderColor,
                                                     borderColor: backgroundBorderColor,
@@ -104,7 +104,7 @@
                                                 labels: data.label,
                                                 titles: data.title,
                                                 datasets: [{
-                                                    label: '# Attorneys',
+                                                    label: '# of Attorneys',
                                                     data: data.data,
                                                     backgroundColor: backgroundBorderColor,
                                                     borderColor: backgroundBorderColor,

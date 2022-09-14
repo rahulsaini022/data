@@ -34,7 +34,7 @@
                                             data: {
                                                 labels: data.label,
                                                 datasets: [{
-                                                    label: '# Cases',
+                                                    label: '# of Cases',
                                                     data: data.data,
                                                     backgroundColor: backgroundBorderColor,
                                                     borderColor: backgroundBorderColor,
@@ -105,7 +105,7 @@
                                                 labels: data.label,
                                                 titles: data.title,
                                                 datasets: [{
-                                                    label: '# Cases',
+                                                    label: '# of Cases',
                                                     data: data.data,
                                                     backgroundColor: backgroundBorderColor,
                                                     borderColor: backgroundBorderColor,

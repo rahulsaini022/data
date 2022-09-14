@@ -94,7 +94,7 @@
                                     FDD PDF Tools are <u><i>premium</i></u> tools where document submission size is nominally limited to 1GB and each use of a PDF Tool will expend one to five PDF credits.  A seat license gains 5 PDF credits for each case registration – yes, they add up and only expire if and when the seat license is not timely renewed).  Need more PDF credits? Additional credits are easily purchased at the FDD PDF Tools page.
                                 </td>
                             </tr>
-                            <tr>
+                             <tr>
                                 <td width="35%" class="text-center">
                                     <a class="btn btn-info new-btn" href="{{ url('orchard-search') }}">Orchard Search</a>
                                     

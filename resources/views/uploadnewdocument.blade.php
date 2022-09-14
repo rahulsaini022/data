@@ -35,21 +35,21 @@
                             <form method="POST" action="{{ route('uploaddocument')}}" enctype="multipart/form-data">
                               @csrf
                             <div class="row">
-                                <div class="col-sm-5 column-box-width">
+                                <div class="col-sm-4 column-box-width">
                                     <label>Document Title</label>
-                                    <input type="text" class="form-control" maxlength="100" value="{{old('document_title')}}" id="document_title" name="document_title">
+                                    <input type="text" class="form-control" id="document_title" name="document_title">
                                      @error('document_title') 
                                     <em class="error">{{ $message }}</em>
                                 @enderror           
                                 </div>
-                                <div class="col-sm-5 column-box-width">
+                                <div class="col-sm-4 column-box-width">
                                     <label>Document</label>
-                                    <input type="file" name="upload_document" accept="" class="form-control-file">
-                                    @error('upload_document') 
+                                    <input type="file" name="upload_document" class="form-control-file">
+                                    @error('document_title') 
                                     <em class="error">{{ $message }}</em>
                                 @enderror 
                                 </div>
-                                <div class="col-sm-2 column-box-width">
+                                <div class="col-sm-4 column-box-width">
                                     <label></label>
                                     <button type="submit" class="btn btn-primary">Submit</button>       
                                 </div>

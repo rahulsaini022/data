@@ -38,12 +38,6 @@
                                 <input type="text" class="form-control hasDatepicker" id="Marriage_Date" name="Marriage_Date" placeholder="MM/DD/YYYY" autocomplete="nope">
                             </div>
                             <div class="form-group col-sm-6">
-                                <label for="Marriage_Date">Number of children born to and/or adopted by {{$client_name}} and {{$opponent_name}} who are less than 18 years old or Dependent??</label>
-                                <input type="text" class="form-control" id="Marriage_Location" name="Num_Children_Born_Disabled_Dependent" value="">
-                            </div>
-
-
-                            <div class="form-group col-sm-6">
                                 <label>Are there minor children born to and/or adopted during marriage?</label>
                                 <div class="w-100">
                                     <label><input type="radio" id="Minor_Children_these_Parties_Yes" name="Minor_Children_these_Parties" value="Yes" onchange="onRadioChange(this.value,'Num_MinorDependant_Children_of_this_Marriage');"> Yes</label>

@@ -25,60 +25,41 @@
                               <strong>{{ $message }}</strong>
                       </div>
                     @endif
-                    @if($advertiser)
+
                     <div class="row"> 
-                        <div class="col-md-12 dash-btn">
-                            <h2>{{$advertiser->full_name}}</h2>
-                            <div class="row advertiser-dash">
-                                <div class="col-sm-6 ">
-                                <a class="btn btn-info pull-md-right my-2 text-center" href="{{ route('advertise.edit',['id' => $advertiser->id] )}}">
-                                    {{ __('Edit Advertise Account Info »') }}
-                                </a>
-                            </div>
-                              <div class="col-sm-6">
-                                <a class="btn btn-info my-2 text-center register-case-btn float-sm-right " href="{{ route('advertise.createnew')}}">
+                        <div class="col-md-12">
+                            <h2>{{$advertiser->Full_Name}}</h2>
+                          
+                                <a class="btn btn-info register-case-btn pull-right" href="">
                                     {{ __('Create New Listing »') }}
                                 </a>
-                           
-                         </div>
-                              <div class="col-sm-6">
-                                <a class="btn btn-info my-2 text-center register-case-btn " href="{{ route('advertise.new_listing') }}">
-                                    {{ __(' Manage Listings »') }}
+                            </p>
+                            <p>
+                                <a class="btn btn-info" href="{{ route('advertise.edit',['id' => $advertiser->AD_CR_Id] )}}">
+                                    {{ __('Edit Advertise Account Info »') }}
                                 </a>
-                           </div>
-                            <div class="col-sm-6">
-                                <a class="btn btn-info my-2 text-center register-case-btn float-sm-right " href="">
+                            </p>
+                            <p>
+                                <a class="btn btn-info register-case-btn pull-right" href="">
                                     {{ __('Mandatory Listing Agreement  »') }}
                                 </a>
-                          </div>
-                           <div class="col-sm-6">
-                                <a class="btn btn-info my-2 text-center register-case-btn " href="{{ route('advertise.subscriptions') }}">
-                                    {{ __(' Subscriptions »') }}
+                            </p>
+                            <p>
+                                <a class="btn btn-info register-case-btn" href="">
+                                    {{ __(' Manage Listings »') }}
                                 </a>
-                            </div>
-                            <div class="col-sm-6">
-                                <a class="btn btn-info my-2 text-center register-case-btn float-sm-right" href="{{ route('change.password') }}">
-                                    {{ __(' Change Password »') }}
-                                </a>
-                           </div>
-                           
-                            </div>
-
+                            </p>
                         </div>
-                        @else
-                        <p> Please register as a advertiser. </p>
+                        
                     </div>
-                    @endif
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div id="dashloader " ></div>
- <div id="loader" class="center"></div>
+<div id="dashloader"></div>
 </div>
 <script type="text/javascript">
-
 var spinner = $('#dashloader');
 // function showDelayMessage(){
 //     if($('#select_practice_aid').val()){
@@ -117,18 +98,5 @@ $(document).on('change','.custom-select',function(){
      // $('#dashloader').show();
     }
 });
- document.onreadystatechange = function() {
-            if (document.readyState !== "complete") {
-                document.querySelector(
-                  "body").style.visibility = "hidden";
-                document.querySelector(
-                  "#loader").style.visibility = "visible";
-            } else {
-                document.querySelector(
-                  "#loader").style.display = "none";
-                document.querySelector(
-                  "body").style.visibility = "visible";
-            }
-        };
 </script>
 @endsection

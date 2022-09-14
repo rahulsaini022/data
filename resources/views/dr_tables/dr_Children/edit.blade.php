@@ -32,13 +32,13 @@
                         <div class="row form-group num_child_during_marriage">
                             <div class="col-md-12"><h4>Children born to and/or adopted by {{$client_name}} & {{$opponent_name}}.</h4>
                                 <div class="col-md-6">
-                                    <label for="Num_Children_ONLY_This_Marriage" class="col-form-label text-md-left">Number of children that have born and/or adopted to {{$client_name}} and {{$opponent_name}}</label>
+                                    <label for="Num_Children_ONLY_This_Marriage" class="col-form-label text-md-left">How many children born to and/or adopted in this marriage?</label>
                                     <input id="Num_Children_ONLY_This_Marriage" type="number" class="form-control" name="Num_Children_ONLY_This_Marriage" value="<?php if(isset($drchildren->Num_Children_ONLY_This_Marriage)){ echo $drchildren->Num_Children_ONLY_This_Marriage; } ?>" min="0" max="8"> 
                                 </div>
-                               <!--  <div class="col-md-6 marriage_info_section" style="display: none;">
+                                <div class="col-md-6 marriage_info_section" style="display: none;">
                                     <label for="Num_MinorDepChildren_ONLY_This_Marriage" class="col-form-label text-md-left">How many children are Minor and/or otherwise Dependent in this marriage?</label>
-                                    <input id="Num_MinorDepChildren_ONLY_This_Marriage" type="number" class="form-control" name="Num_MinorDepChildren_ONLY_This_Marriage" value="<?php //if(isset($drchildren->Num_MinorDepChildren_ONLY_This_Marriage)){ echo $drchildren->Num_MinorDepChildren_ONLY_This_Marriage; } ?>" min="0" max="8"> 
-                                </div> -->
+                                    <input id="Num_MinorDepChildren_ONLY_This_Marriage" type="number" class="form-control" name="Num_MinorDepChildren_ONLY_This_Marriage" value="<?php if(isset($drchildren->Num_MinorDepChildren_ONLY_This_Marriage)){ echo $drchildren->Num_MinorDepChildren_ONLY_This_Marriage; } ?>" min="0" max="8"> 
+                                </div>
                             </div>
                         </div>
                         <!-- This Marriage Info Section -->
@@ -112,7 +112,7 @@
                                     <input id="This_Marriage_First_Child_DOB" type="text" class="form-control hasDatepicker Child_DOB" autocomplete="nope" name="This_Marriage_First_Child_DOB" value="<?php if(isset($drchildren->This_Marriage_First_Child_DOB)){ echo date("m/d/Y", strtotime($drchildren->This_Marriage_First_Child_DOB)); } ?>"> 
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="col-form-label text-md-left">Mentally or physically disabled and incapable of supporting/maintaining themselves? </label><br>
+                                    <label class="col-form-label text-md-left">Disabled Dependent </label><br>
                                     <label for="This_Marriage_First_Child_Disabled_Dependent_Y_N_Yes" class="radio-label">YES
                                         <input id="This_Marriage_First_Child_Disabled_Dependent_Y_N_Yes" type="radio" name="This_Marriage_First_Child_Disabled_Dependent_Y_N" class="This_Marriage_Child_Disabled_Dependent_Y_N" value="Yes" <?php if(isset($drchildren->This_Marriage_First_Child_Disabled_Dependent_Y_N) && $drchildren->This_Marriage_First_Child_Disabled_Dependent_Y_N=='Yes'){ echo "checked"; } ?>>
                                     </label>
@@ -145,12 +145,8 @@
                                         <input id="This_Marriage_First_Child_Resides_With_Both" type="radio" name="This_Marriage_First_Child_Resides_With" class="This_Marriage_Child_Resides_With First Both" value="Both" <?php if(isset($drchildren->This_Marriage_First_Child_Resides_With) && $drchildren->This_Marriage_First_Child_Resides_With=="Both"){ echo "checked"; } ?>> 
                                     </label>
                                     <label for="This_Marriage_First_Child_Resides_With_Other" class="radio-label">Other
-                                        <input id="This_Marriage_First_Child_Resides_With_Other" type="radio" name="This_Marriage_First_Child_Resides_With" class="This_Marriage_Child_Resides_With First Other" value="Other" <?php if(isset($drchildren->This_Marriage_First_Child_Resides_With) && $drchildren->This_Marriage_First_Child_Resides_With=="Other"){ echo "checked"; } ?> onchange="ResideWithOther(this,'First');" data-onload="ResideWithOtherInitial(this,'First');"> 
+                                        <input id="This_Marriage_First_Child_Resides_With_Other" type="radio" name="This_Marriage_First_Child_Resides_With" class="This_Marriage_Child_Resides_With First Other" value="Other" <?php if(isset($drchildren->This_Marriage_First_Child_Resides_With) && $drchildren->This_Marriage_First_Child_Resides_With=="Other"){ echo "checked"; } ?>> 
                                     </label>
-                                </div>
-                                <div class="col-md-6 First_Child_Resides_With_Other_Div" style="display: none;">
-                                    <label for="This_Marriage_First_Child_Resides_With_Other" class="col-form-label text-md-right">Name of Person  Reside with</label>
-                                    <input id="This_Marriage_First_Child_Resides_With_Other_Name" type="text" class="form-control" name="This_Marriage_First_Child_Resides_With_Other_Name" value="">
                                 </div>
                                 <div class="col-md-6">
                                     <label class="col-form-label text-md-left">Will Reside with </label><br>
@@ -204,27 +200,6 @@
                                         <option value="12" <?php if(isset($drchildren->This_Marriage_First_Child_Grade) && $drchildren->This_Marriage_First_Child_Grade=='12'){ echo "selected"; } ?>>12</option>
                                     </select>   
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="Subject to an existing order of parenting or support from another Court?">Subject to an existing order of parenting or support from another Court?</label>
-                                    <br>
-                                    <label for="This_Marriage_First_Child_Sub_to_Court_Order_Y_N_Yes" class="radio-label">YES
-                                        <input id="This_Marriage_First_First_Sub_to_Court_Order_Y_N_Yes" type="radio" name="This_Marriage_First_Child_Sub_to_Court_Order" class="This_Marriage_First_Child_Sub_to_Court_Order_Y_N" value="Yes" <?php if(isset($drchildren->This_Marriage_First_Child_Sub_to_Court_Order) && $drchildren->This_Marriage_First_Child_Sub_to_Court_Order=='Yes'){ echo "checked"; } ?> onchange="childsubcourtorder(this,'First');" data-onload="childsubcourtorderIntial(this,'First');">
-                                    </label>
-                                    <label for="This_Marriage_First_Child_Sub_to_Court_Order_Y_N_No" class="radio-label">NO
-                                        <input id="This_Marriage_First_Child_Sub_to_Court_Order_Y_N_No" type="radio" name="This_Marriage_First_Child_Sub_to_Court_Order" class="This_Marriage_First_Child_Sub_to_Court_Order_Y_N" value="NO" <?php if(isset($drchildren->This_Marriage_First_Child_Sub_to_Court_Order) && $drchildren->This_Marriage_First_Child_Sub_to_Court_Order=='NO'){ echo "checked"; } ?> onchange="childsubcourtorder(this,'First');" data-onload="childsubcourtorderIntial(this,'First');"> 
-                                    </label>
-                                </div>
-
-                                 <div class="col-md-6 First_Child_Court_div" style="display: none;">
-                                    <label for="This_Marriage_First_Child_Court" class="col-form-label text-md-left">Which Court?</label>
-                                    <input id="This_Marriage_First_Child_Court" type="text" class="form-control Child_Court" name="This_Marriage_First_Child_Court" value="<?php if(isset($drchildren->This_Marriage_First_Child_Court)){ echo $drchildren->This_Marriage_First_Child_Court; } ?>"> 
-                                </div>
-
-                                <div class="col-md-6 First_Child_Court_Case_Num_div" style="display: none;">
-                                    <label for="This_Marriage_First_Child_Court_Case_Num" class="col-form-label text-md-left">Case Number?</label>
-                                    <input id="This_Marriage_First_Child_Court_Case_Num" type="text" class="form-control Case_Num" name="This_Marriage_First_Child_Court_Case_Num" value="<?php if(isset($drchildren->This_Marriage_First_Child_Court_Case_Num)){ echo $drchildren->This_Marriage_First_Child_Court_Case_Num; } ?>"> 
-                                </div>
-
                             </div>
 
                             <div class="col-md-12 mt-4 2_child_info_section" style="display: none;"><h5>Second Child Info</h5>
@@ -257,7 +232,7 @@
                                     <input id="This_Marriage_Second_Child_DOB" type="text" class="form-control hasDatepicker Child_DOB" autocomplete="nope" name="This_Marriage_Second_Child_DOB" value="<?php if(isset($drchildren->This_Marriage_Second_Child_DOB)){ echo date("m/d/Y", strtotime($drchildren->This_Marriage_Second_Child_DOB)); } ?>"> 
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="col-form-label text-md-left">Mentally or physically disabled and incapable of supporting/maintaining themselves? </label><br>
+                                    <label class="col-form-label text-md-left">Disabled Dependent </label><br>
                                     <label for="This_Marriage_Second_Child_Disabled_Dependent_Y_N_Yes" class="radio-label">YES
                                         <input id="This_Marriage_Second_Child_Disabled_Dependent_Y_N_Yes" type="radio" name="This_Marriage_Second_Child_Disabled_Dependent_Y_N" class="This_Marriage_Child_Disabled_Dependent_Y_N" value="Yes" <?php if(isset($drchildren->This_Marriage_Second_Child_Disabled_Dependent_Y_N) && $drchildren->This_Marriage_Second_Child_Disabled_Dependent_Y_N=='Yes'){ echo "checked"; } ?>>
                                     </label>
@@ -290,14 +265,8 @@
                                         <input id="This_Marriage_Second_Child_Resides_With_Both" type="radio" name="This_Marriage_Second_Child_Resides_With" class="This_Marriage_Child_Resides_With Second Both" value="Both" <?php if(isset($drchildren->This_Marriage_Second_Child_Resides_With) && $drchildren->This_Marriage_Second_Child_Resides_With=="Both"){ echo "checked"; } ?>> 
                                     </label>
                                     <label for="This_Marriage_Second_Child_Resides_With_Other" class="radio-label">Other
-                                        <input id="This_Marriage_Second_Child_Resides_With_Other" type="radio" name="This_Marriage_Second_Child_Resides_With" class="This_Marriage_Child_Resides_With Second Other" value="Other" <?php if(isset($drchildren->This_Marriage_Second_Child_Resides_With) && $drchildren->This_Marriage_Second_Child_Resides_With=="Other"){ echo "checked"; } ?> onchange="ResideWithOther(this,'Second');" data-onload="ResideWithOtherInitial(this,'Second');"> 
+                                        <input id="This_Marriage_Second_Child_Resides_With_Other" type="radio" name="This_Marriage_Second_Child_Resides_With" class="This_Marriage_Child_Resides_With Second Other" value="Other" <?php if(isset($drchildren->This_Marriage_Second_Child_Resides_With) && $drchildren->This_Marriage_Second_Child_Resides_With=="Other"){ echo "checked"; } ?>> 
                                     </label>
-                                </div>
-                                <div class="col-md-6 Second_Child_Resides_With_Other_Div" style="display: none;">
-                                    <label for="This_Marriage_Second_Child_Resides_With_Other" class="col-form-label text-md-right">Name of Person  Reside with</label>
-                                    <input id="This_Marriage_Second_Child_Resides_With_Other_Name" type="text" class="form-control" name="This_Marriage_Second_Child_Resides_With_Other_Name" value="<?php if(isset($drchildren->This_Marriage_Second_Child_Resides_With_Other_Name)){
-                                         echo $drchildren->This_Marriage_Second_Child_Resides_With_Other_Name;
-                                        }?>">
                                 </div>
                                 <div class="col-md-6">
                                     <label class="col-form-label text-md-left">Will Reside with </label><br>
@@ -351,27 +320,6 @@
                                         <option value="12" <?php if(isset($drchildren->This_Marriage_Second_Child_Grade) && $drchildren->This_Marriage_Second_Child_Grade=='12'){ echo "selected"; } ?>>12</option>
                                     </select>   
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="Subject to an existing order of parenting or support from another Court?">Subject to an existing order of parenting or support from another Court?</label>
-                                    <br>
-                                    <label for="This_Marriage_Second_Child_Sub_to_Court_Order_Y_N_Yes" class="radio-label">YES
-                                        <input id="This_Marriage_Second_Child_Sub_to_Court_Order_Y_N_Yes" type="radio" name="This_Marriage_Second_Child_Sub_to_Court_Order" class="This_Marriage_Second_Child_Sub_to_Court_Order_Y_N" value="Yes" <?php if(isset($drchildren->This_Marriage_Second_Child_Sub_to_Court_Order) && $drchildren->This_Marriage_Second_Child_Sub_to_Court_Order=='Yes'){ echo "checked"; } ?> onchange="childsubcourtorder(this,'Second');" data-onload="childsubcourtorderIntial(this,'Second');">
-                                    </label>
-                                    <label for="This_Marriage_Second_Child_Sub_to_Court_Order_Y_N_No" class="radio-label">NO
-                                        <input id="This_Marriage_Second_Child_Sub_to_Court_Order_Y_N_No" type="radio" name="This_Marriage_Second_Child_Sub_to_Court_Order" class="This_Marriage_Second_Child_Sub_to_Court_Order_Y_N" value="NO" <?php if(isset($drchildren->This_Marriage_Second_Child_Sub_to_Court_Order) && $drchildren->This_Marriage_Second_Child_Sub_to_Court_Order=='NO'){ echo "checked"; } ?> onchange="childsubcourtorder(this,'Second');" data-onload="childsubcourtorderIntial(this,'Second');"> 
-                                    </label>
-                                </div>
-
-                                 <div class="col-md-6 Second_Child_Court_div" style="display: none;">
-                                    <label for="This_Marriage_Second_Child_Court" class="col-form-label text-md-left">Which Court?</label>
-                                    <input id="This_Marriage_Second_Child_Court" type="text" class="form-control Child_Court" name="This_Marriage_Second_Child_Court" value="<?php if(isset($drchildren->This_Marriage_Second_Child_Court)){ echo $drchildren->This_Marriage_Second_Child_Court; } ?>"> 
-                                </div>
-
-                                <div class="col-md-6 Second_Child_Court_Case_Num_div" style="display: none;">
-                                    <label for="This_Marriage_Second_Child_Court_Case_Num" class="col-form-label text-md-left">Case Number?</label>
-                                    <input id="This_Marriage_Second_Child_Court_Case_Num" type="text" class="form-control Case_Num" name="This_Marriage_Second_Child_Court_Case_Num" value="<?php if(isset($drchildren->This_Marriage_Second_Child_Court_Case_Num)){ echo $drchildren->This_Marriage_Second_Child_Court_Case_Num; } ?>"> 
-                                </div>
-
                             </div>
 
                             <div class="col-md-12 mt-4 3_child_info_section" style="display: none;"><h5>Third Child Info</h5>
@@ -404,7 +352,7 @@
                                     <input id="This_Marriage_Third_Child_DOB" type="text" class="form-control hasDatepicker Child_DOB" autocomplete="nope" name="This_Marriage_Third_Child_DOB" value="<?php if(isset($drchildren->This_Marriage_Third_Child_DOB)){ echo date("m/d/Y", strtotime($drchildren->This_Marriage_Third_Child_DOB)); } ?>"> 
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="col-form-label text-md-left">Mentally or physically disabled and incapable of supporting/maintaining themselves? </label><br>
+                                    <label class="col-form-label text-md-left">Disabled Dependent </label><br>
                                     <label for="This_Marriage_Third_Child_Disabled_Dependent_Y_N_Yes" class="radio-label">YES
                                         <input id="This_Marriage_Third_Child_Disabled_Dependent_Y_N_Yes" type="radio" name="This_Marriage_Third_Child_Disabled_Dependent_Y_N" class="This_Marriage_Child_Disabled_Dependent_Y_N" value="Yes" <?php if(isset($drchildren->This_Marriage_Third_Child_Disabled_Dependent_Y_N) && $drchildren->This_Marriage_Third_Child_Disabled_Dependent_Y_N=='Yes'){ echo "checked"; } ?>>
                                     </label>
@@ -437,14 +385,8 @@
                                         <input id="This_Marriage_Third_Child_Resides_With_Both" type="radio" name="This_Marriage_Third_Child_Resides_With" class="This_Marriage_Child_Resides_With Third Both" value="Both" <?php if(isset($drchildren->This_Marriage_Third_Child_Resides_With) && $drchildren->This_Marriage_Third_Child_Resides_With=="Both"){ echo "checked"; } ?>> 
                                     </label>
                                     <label for="This_Marriage_Third_Child_Resides_With_Other" class="radio-label">Other
-                                        <input id="This_Marriage_Third_Child_Resides_With_Other" type="radio" name="This_Marriage_Third_Child_Resides_With" class="This_Marriage_Child_Resides_With Third Other" value="Other" <?php if(isset($drchildren->This_Marriage_Third_Child_Resides_With) && $drchildren->This_Marriage_Third_Child_Resides_With=="Other"){ echo "checked"; } ?>  onchange="ResideWithOther(this,'Third');" data-onload="ResideWithOtherInitial(this,'Third');"> 
+                                        <input id="This_Marriage_Third_Child_Resides_With_Other" type="radio" name="This_Marriage_Third_Child_Resides_With" class="This_Marriage_Child_Resides_With Third Other" value="Other" <?php if(isset($drchildren->This_Marriage_Third_Child_Resides_With) && $drchildren->This_Marriage_Third_Child_Resides_With=="Other"){ echo "checked"; } ?>> 
                                     </label>
-                                </div>
-                                <div class="col-md-6 Third_Child_Resides_With_Other_Div" style="display: none;">
-                                    <label for="This_Marriage_Third_Child_Resides_With_Other" class="col-form-label text-md-right">Name of Person  Reside with</label>
-                                    <input id="This_Marriage_Third_Child_Resides_With_Other_Name" type="text" class="form-control" name="This_Marriage_Third_Child_Resides_With_Other_Name" value="<?php if(isset($drchildren->This_Marriage_Third_Child_Resides_With_Other_Name)){
-                                         echo $drchildren->This_Marriage_Third_Child_Resides_With_Other_Name;
-                                        }?>">
                                 </div>
                                 <div class="col-md-6">
                                     <label class="col-form-label text-md-left">Will Reside with </label><br>
@@ -498,26 +440,6 @@
                                         <option value="12" <?php if(isset($drchildren->This_Marriage_Third_Child_Grade) && $drchildren->This_Marriage_Third_Child_Grade=='12'){ echo "selected"; } ?>>12</option>
                                     </select>   
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="Subject to an existing order of parenting or support from another Court?">Subject to an existing order of parenting or support from another Court?</label>
-                                    <br>
-                                    <label for="This_Marriage_Third_Child_Sub_to_Court_Order_Y_N_Yes" class="radio-label">YES
-                                        <input id="This_Marriage_Third_Child_Sub_to_Court_Order_Y_N_Yes" type="radio" name="This_Marriage_Third_Child_Sub_to_Court_Order" class="This_Marriage_Third_Child_Sub_to_Court_Order_Y_N" value="Yes" <?php if(isset($drchildren->This_Marriage_Third_Child_Sub_to_Court_Order) && $drchildren->This_Marriage_Third_Child_Sub_to_Court_Order=='Yes'){ echo "checked"; } ?> onchange="childsubcourtorder(this,'Third');" data-onload="childsubcourtorderIntial(this,'Third');">
-                                    </label>
-                                    <label for="This_Marriage_Third_Child_Sub_to_Court_Order_Y_N_No" class="radio-label">NO
-                                        <input id="This_Marriage_Third_Child_Sub_to_Court_Order_Y_N_No" type="radio" name="This_Marriage_Third_Child_Sub_to_Court_Order" class="This_Marriage_Third_Child_Sub_to_Court_Order_Y_N" value="NO" <?php if(isset($drchildren->This_Marriage_Third_Child_Sub_to_Court_Order) && $drchildren->This_Marriage_Third_Child_Sub_to_Court_Order=='NO'){ echo "checked"; } ?> onchange="childsubcourtorder(this,'Third');" data-onload="childsubcourtorderIntial(this,'Third');"> 
-                                    </label>
-                                </div>
-
-                                 <div class="col-md-6 Third_Child_Court_div" style="display: none;">
-                                    <label for="This_Marriage_Third_Child_Court" class="col-form-label text-md-left">Which Court?</label>
-                                    <input id="This_Marriage_Third_Child_Court" type="text" class="form-control Child_Court" name="This_Marriage_Third_Child_Court" value="<?php if(isset($drchildren->This_Marriage_Third_Child_Court)){ echo $drchildren->This_Marriage_Third_Child_Court; } ?>"> 
-                                </div>
-
-                                <div class="col-md-6 Third_Child_Court_Case_Num_div" style="display: none;">
-                                    <label for="This_Marriage_Third_Child_Court_Case_Num" class="col-form-label text-md-left">Case Number?</label>
-                                    <input id="This_Marriage_Third_Child_Court_Case_Num" type="text" class="form-control Case_Num" name="This_Marriage_Third_Child_Court_Case_Num" value="<?php if(isset($drchildren->This_Marriage_Third_Child_Court_Case_Num)){ echo $drchildren->This_Marriage_Third_Child_Court_Case_Num; } ?>"> 
-                                </div>
                             </div>
 
                             <div class="col-md-12 mt-4 4_child_info_section" style="display: none;"><h5>Fourth Child Info</h5>
@@ -550,7 +472,7 @@
                                     <input id="This_Marriage_Fourth_Child_DOB" type="text" class="form-control hasDatepicker Child_DOB" autocomplete="nope" name="This_Marriage_Fourth_Child_DOB" value="<?php if(isset($drchildren->This_Marriage_Fourth_Child_DOB)){ echo date("m/d/Y", strtotime($drchildren->This_Marriage_Fourth_Child_DOB)); } ?>"> 
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="col-form-label text-md-left">Mentally or physically disabled and incapable of supporting/maintaining themselves? </label><br>
+                                    <label class="col-form-label text-md-left">Disabled Dependent </label><br>
                                     <label for="This_Marriage_Fourth_Child_Disabled_Dependent_Y_N_Yes" class="radio-label">YES
                                         <input id="This_Marriage_Fourth_Child_Disabled_Dependent_Y_N_Yes" type="radio" name="This_Marriage_Fourth_Child_Disabled_Dependent_Y_N" class="This_Marriage_Child_Disabled_Dependent_Y_N" value="Yes" <?php if(isset($drchildren->This_Marriage_Fourth_Child_Disabled_Dependent_Y_N) && $drchildren->This_Marriage_Fourth_Child_Disabled_Dependent_Y_N=='Yes'){ echo "checked"; } ?>>
                                     </label>
@@ -583,14 +505,8 @@
                                         <input id="This_Marriage_Fourth_Child_Resides_With_Both" type="radio" name="This_Marriage_Fourth_Child_Resides_With" class="This_Marriage_Child_Resides_With Fourth Both" value="Both" <?php if(isset($drchildren->This_Marriage_Fourth_Child_Resides_With) && $drchildren->This_Marriage_Fourth_Child_Resides_With=="Both"){ echo "checked"; } ?>> 
                                     </label>
                                     <label for="This_Marriage_Fourth_Child_Resides_With_Other" class="radio-label">Other
-                                        <input id="This_Marriage_Fourth_Child_Resides_With_Other" type="radio" name="This_Marriage_Fourth_Child_Resides_With" class="This_Marriage_Child_Resides_With Fourth Other" value="Other" <?php if(isset($drchildren->This_Marriage_Fourth_Child_Resides_With) && $drchildren->This_Marriage_Fourth_Child_Resides_With=="Other"){ echo "checked"; } ?> onchange="ResideWithOther(this,'Fourth');" data-onload="ResideWithOtherInitial(this,'Fourth');"> 
+                                        <input id="This_Marriage_Fourth_Child_Resides_With_Other" type="radio" name="This_Marriage_Fourth_Child_Resides_With" class="This_Marriage_Child_Resides_With Fourth Other" value="Other" <?php if(isset($drchildren->This_Marriage_Fourth_Child_Resides_With) && $drchildren->This_Marriage_Fourth_Child_Resides_With=="Other"){ echo "checked"; } ?>> 
                                     </label>
-                                </div>
-                                 <div class="col-md-6 Fourth_Child_Resides_With_Other_Div" style="display: none;">
-                                    <label for="This_Marriage_Fourth_Child_Resides_With_Other" class="col-form-label text-md-right">Name of Person  Reside with</label>
-                                    <input id="This_Marriage_Fourth_Child_Resides_With_Other_Name" type="text" class="form-control" name="This_Marriage_Fourth_Child_Resides_With_Other_Name" value="<?php if(isset($drchildren->This_Marriage_Fourth_Child_Resides_With_Other_Name)){
-                                         echo $drchildren->This_Marriage_Fourth_Child_Resides_With_Other_Name;
-                                        }?>">
                                 </div>
                                 <div class="col-md-6">
                                     <label class="col-form-label text-md-left">Will Reside with </label><br>
@@ -644,26 +560,6 @@
                                         <option value="12" <?php if(isset($drchildren->This_Marriage_Fourth_Child_Grade) && $drchildren->This_Marriage_Fourth_Child_Grade=='12'){ echo "selected"; } ?>>12</option>
                                     </select>   
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="Subject to an existing order of parenting or support from another Court?">Subject to an existing order of parenting or support from another Court?</label>
-                                    <br>
-                                    <label for="This_Marriage_Fourth_Child_Sub_to_Court_Order_Y_N_Yes" class="radio-label">YES
-                                        <input id="This_Marriage_Fourth_Child_Sub_to_Court_Order_Y_N_Yes" type="radio" name="This_Marriage_Fourth_Child_Sub_to_Court_Order" class="This_Marriage_Fourth_Child_Sub_to_Court_Order_Y_N" value="Yes" <?php if(isset($drchildren->This_Marriage_Fourth_Child_Sub_to_Court_Order) && $drchildren->This_Marriage_Fourth_Child_Sub_to_Court_Order=='Yes'){ echo "checked"; } ?> onchange="childsubcourtorder(this,'Fourth');" data-onload="childsubcourtorderIntial(this,'Fourth');">
-                                    </label>
-                                    <label for="This_Marriage_Fourth_Child_Sub_to_Court_Order_Y_N_No" class="radio-label">NO
-                                        <input id="This_Marriage_Fourth_Child_Sub_to_Court_Order_Y_N_No" type="radio" name="This_Marriage_Fourth_Child_Sub_to_Court_Order" class="This_Marriage_Fourth_Child_Sub_to_Court_Order_Y_N" value="NO" <?php if(isset($drchildren->This_Marriage_Fourth_Child_Sub_to_Court_Order) && $drchildren->This_Marriage_Fourth_Child_Sub_to_Court_Order=='NO'){ echo "checked"; } ?> onchange="childsubcourtorder(this,'Fourth');" data-onload="childsubcourtorderIntial(this,'Fourth');"> 
-                                    </label>
-                                </div>
-
-                                 <div class="col-md-6 Fourth_Child_Court_div" style="display: none;">
-                                    <label for="This_Marriage_Fourth_Child_Court" class="col-form-label text-md-left">Which Court?</label>
-                                    <input id="This_Marriage_Fourth_Child_Court" type="text" class="form-control Child_Court" name="This_Marriage_Fourth_Child_Court" value="<?php if(isset($drchildren->This_Marriage_Fourth_Child_Court)){ echo $drchildren->This_Marriage_Fourth_Child_Court; } ?>"> 
-                                </div>
-
-                                <div class="col-md-6 Fourth_Child_Court_Case_Num_div" style="display: none;">
-                                    <label for="This_Marriage_Fourth_Child_Court_Case_Num" class="col-form-label text-md-left">Case Number?</label>
-                                    <input id="This_Marriage_Fourth_Child_Court_Case_Num" type="text" class="form-control Case_Num" name="This_Marriage_Fourth_Child_Court_Case_Num" value="<?php if(isset($drchildren->This_Marriage_Fourth_Child_Court_Case_Num)){ echo $drchildren->This_Marriage_Fourth_Child_Court_Case_Num; } ?>"> 
-                                </div>
                             </div>
 
                             <div class="col-md-12 mt-4 5_child_info_section" style="display: none;"><h5>Fifth Child Info</h5>
@@ -696,7 +592,7 @@
                                     <input id="This_Marriage_Fifth_Child_DOB" type="text" class="form-control hasDatepicker Child_DOB" autocomplete="nope" name="This_Marriage_Fifth_Child_DOB" value="<?php if(isset($drchildren->This_Marriage_Fifth_Child_DOB)){ echo date("m/d/Y", strtotime($drchildren->This_Marriage_Fifth_Child_DOB)); } ?>"> 
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="col-form-label text-md-left">Mentally or physically disabled and incapable of supporting/maintaining themselves? </label><br>
+                                    <label class="col-form-label text-md-left">Disabled Dependent </label><br>
                                     <label for="This_Marriage_Fifth_Child_Disabled_Dependent_Y_N_Yes" class="radio-label">YES
                                         <input id="This_Marriage_Fifth_Child_Disabled_Dependent_Y_N_Yes" type="radio" name="This_Marriage_Fifth_Child_Disabled_Dependent_Y_N" class="This_Marriage_Child_Disabled_Dependent_Y_N" value="Yes" <?php if(isset($drchildren->This_Marriage_Fifth_Child_Disabled_Dependent_Y_N) && $drchildren->This_Marriage_Fifth_Child_Disabled_Dependent_Y_N=='Yes'){ echo "checked"; } ?>>
                                     </label>
@@ -729,14 +625,8 @@
                                         <input id="This_Marriage_Fifth_Child_Resides_With_Both" type="radio" name="This_Marriage_Fifth_Child_Resides_With" class="This_Marriage_Child_Resides_With Fifth Both" value="Both" <?php if(isset($drchildren->This_Marriage_Fifth_Child_Resides_With) && $drchildren->This_Marriage_Fifth_Child_Resides_With=="Both"){ echo "checked"; } ?>> 
                                     </label>
                                     <label for="This_Marriage_Fifth_Child_Resides_With_Other" class="radio-label">Other
-                                        <input id="This_Marriage_Fifth_Child_Resides_With_Other" type="radio" name="This_Marriage_Fifth_Child_Resides_With" class="This_Marriage_Child_Resides_With Fifth Other" value="Other" <?php if(isset($drchildren->This_Marriage_Fifth_Child_Resides_With) && $drchildren->This_Marriage_Fifth_Child_Resides_With=="Other"){ echo "checked"; } ?> onchange="ResideWithOther(this,'Fifth');" data-onload="ResideWithOtherInitial(this,'Fifth');"> 
+                                        <input id="This_Marriage_Fifth_Child_Resides_With_Other" type="radio" name="This_Marriage_Fifth_Child_Resides_With" class="This_Marriage_Child_Resides_With Fifth Other" value="Other" <?php if(isset($drchildren->This_Marriage_Fifth_Child_Resides_With) && $drchildren->This_Marriage_Fifth_Child_Resides_With=="Other"){ echo "checked"; } ?>> 
                                     </label>
-                                </div>
-                                <div class="col-md-6 Fifth_Child_Resides_With_Other_Div" style="display: none;">
-                                    <label for="This_Marriage_Fifth_Child_Resides_With_Other" class="col-form-label text-md-right">Name of Person  Reside with</label>
-                                    <input id="This_Marriage_Fifth_Child_Resides_With_Other_Name" type="text" class="form-control" name="This_Marriage_Fifth_Child_Resides_With_Other_Name" value="<?php if(isset($drchildren->This_Marriage_Fifth_Child_Resides_With_Other_Name)){
-                                         echo $drchildren->This_Marriage_Fifth_Child_Resides_With_Other_Name;
-                                        }?>">
                                 </div>
                                 <div class="col-md-6">
                                     <label class="col-form-label text-md-left">Will Reside with </label><br>
@@ -790,26 +680,6 @@
                                         <option value="12" <?php if(isset($drchildren->This_Marriage_Fifth_Child_Grade) && $drchildren->This_Marriage_Fifth_Child_Grade=='12'){ echo "selected"; } ?>>12</option>
                                     </select>   
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="Subject to an existing order of parenting or support from another Court?">Subject to an existing order of parenting or support from another Court?</label>
-                                    <br>
-                                    <label for="This_Marriage_Fifth_Child_Sub_to_Court_Order_Y_N_Yes" class="radio-label">YES
-                                        <input id="This_Marriage_Fifth_Child_Sub_to_Court_Order_Y_N_Yes" type="radio" name="This_Marriage_Fifth_Child_Sub_to_Court_Order" class="This_Marriage_Fifth_Child_Sub_to_Court_Order_Y_N" value="Yes" <?php if(isset($drchildren->This_Marriage_Fifth_Child_Sub_to_Court_Order) && $drchildren->This_Marriage_Fifth_Child_Sub_to_Court_Order=='Yes'){ echo "checked"; } ?> onchange="childsubcourtorder(this,'Fifth');" data-onload="childsubcourtorderIntial(this,'Fifth');">
-                                    </label>
-                                    <label for="This_Marriage_Fifth_Child_Sub_to_Court_Order_Y_N_No" class="radio-label">NO
-                                        <input id="This_Marriage_Fifth_Child_Sub_to_Court_Order_Y_N_No" type="radio" name="This_Marriage_Fifth_Child_Sub_to_Court_Order" class="This_Marriage_Fifth_Child_Sub_to_Court_Order_Y_N" value="NO" <?php if(isset($drchildren->This_Marriage_Fifth_Child_Sub_to_Court_Order) && $drchildren->This_Marriage_Fifth_Child_Sub_to_Court_Order=='NO'){ echo "checked"; } ?> onchange="childsubcourtorder(this,'Fifth');" data-onload="childsubcourtorderIntial(this,'Fifth');"> 
-                                    </label>
-                                </div>
-
-                                 <div class="col-md-6 Fifth_Child_Court_div" style="display: none;">
-                                    <label for="This_Marriage_Fifth_Child_Court" class="col-form-label text-md-left">Which Court?</label>
-                                    <input id="This_Marriage_Fifth_Child_Court" type="text" class="form-control Child_Court" name="This_Marriage_Fifth_Child_Court" value="<?php if(isset($drchildren->This_Marriage_Fifth_Child_Court)){ echo $drchildren->This_Marriage_Fifth_Child_Court; } ?>"> 
-                                </div>
-
-                                <div class="col-md-6 Fifth_Child_Court_Case_Num_div" style="display: none;">
-                                    <label for="This_Marriage_Fifth_Child_Court_Case_Num" class="col-form-label text-md-left">Case Number?</label>
-                                    <input id="This_Marriage_Fifth_Child_Court_Case_Num" type="text" class="form-control Case_Num" name="This_Marriage_Fifth_Child_Court_Case_Num" value="<?php if(isset($drchildren->This_Marriage_Fifth_Child_Court_Case_Num)){ echo $drchildren->This_Marriage_Fifth_Child_Court_Case_Num; } ?>"> 
-                                </div>
                             </div>
 
                             <div class="col-md-12 mt-4 6_child_info_section" style="display: none;"><h5>Sixth Child Info</h5>
@@ -842,7 +712,7 @@
                                     <input id="This_Marriage_Sixth_Child_DOB" type="text" class="form-control hasDatepicker Child_DOB" autocomplete="nope" name="This_Marriage_Sixth_Child_DOB" value="<?php if(isset($drchildren->This_Marriage_Sixth_Child_DOB)){ echo date("m/d/Y", strtotime($drchildren->This_Marriage_Sixth_Child_DOB)); } ?>"> 
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="col-form-label text-md-left">Mentally or physically disabled and incapable of supporting/maintaining themselves? </label><br>
+                                    <label class="col-form-label text-md-left">Disabled Dependent </label><br>
                                     <label for="This_Marriage_Sixth_Child_Disabled_Dependent_Y_N_Yes" class="radio-label">YES
                                         <input id="This_Marriage_Sixth_Child_Disabled_Dependent_Y_N_Yes" type="radio" name="This_Marriage_Sixth_Child_Disabled_Dependent_Y_N" class="This_Marriage_Child_Disabled_Dependent_Y_N" value="Yes" <?php if(isset($drchildren->This_Marriage_Sixth_Child_Disabled_Dependent_Y_N) && $drchildren->This_Marriage_Sixth_Child_Disabled_Dependent_Y_N=='Yes'){ echo "checked"; } ?>>
                                     </label>
@@ -875,14 +745,8 @@
                                         <input id="This_Marriage_Sixth_Child_Resides_With_Both" type="radio" name="This_Marriage_Sixth_Child_Resides_With" class="This_Marriage_Child_Resides_With Sixth Both" value="Both" <?php if(isset($drchildren->This_Marriage_Sixth_Child_Resides_With) && $drchildren->This_Marriage_Sixth_Child_Resides_With=="Both"){ echo "checked"; } ?>> 
                                     </label>
                                     <label for="This_Marriage_Sixth_Child_Resides_With_Other" class="radio-label">Other
-                                        <input id="This_Marriage_Sixth_Child_Resides_With_Other" type="radio" name="This_Marriage_Sixth_Child_Resides_With" class="This_Marriage_Child_Resides_With Sixth Other" value="Other" <?php if(isset($drchildren->This_Marriage_Sixth_Child_Resides_With) && $drchildren->This_Marriage_Sixth_Child_Resides_With=="Other"){ echo "checked"; } ?> onchange="ResideWithOther(this,'Sixth');" data-onload="ResideWithOtherInitial(this,'Sixth');"> 
+                                        <input id="This_Marriage_Sixth_Child_Resides_With_Other" type="radio" name="This_Marriage_Sixth_Child_Resides_With" class="This_Marriage_Child_Resides_With Sixth Other" value="Other" <?php if(isset($drchildren->This_Marriage_Sixth_Child_Resides_With) && $drchildren->This_Marriage_Sixth_Child_Resides_With=="Other"){ echo "checked"; } ?>> 
                                     </label>
-                                </div>
-                                <div class="col-md-6 Sixth_Child_Resides_With_Other_Div" style="display: none;">
-                                    <label for="This_Marriage_Sixth_Child_Resides_With_Other" class="col-form-label text-md-right">Name of Person  Reside with</label>
-                                    <input id="This_Marriage_Sixth_Child_Resides_With_Other_Name" type="text" class="form-control" name="This_Marriage_Sixth_Child_Resides_With_Other_Name" value="<?php if(isset($drchildren->This_Marriage_Sixth_Child_Resides_With_Other_Name)){
-                                         echo $drchildren->This_Marriage_Sixth_Child_Resides_With_Other_Name;
-                                        }?>">
                                 </div>
                                 <div class="col-md-6">
                                     <label class="col-form-label text-md-left">Will Reside with </label><br>
@@ -936,26 +800,6 @@
                                         <option value="12" <?php if(isset($drchildren->This_Marriage_Sixth_Child_Grade) && $drchildren->This_Marriage_Sixth_Child_Grade=='12'){ echo "selected"; } ?>>12</option>
                                     </select>   
                                 </div>
-                                 <div class="col-md-6">
-                                    <label for="Subject to an existing order of parenting or support from another Court?">Subject to an existing order of parenting or support from another Court?</label>
-                                    <br>
-                                    <label for="This_Marriage_Sixth_Child_Sub_to_Court_Order_Y_N_Yes" class="radio-label">YES
-                                        <input id="This_Marriage_Sixth_Child_Sub_to_Court_Order_Y_N_Yes" type="radio" name="This_Marriage_Sixth_Child_Sub_to_Court_Order" class="This_Marriage_Sixth_Child_Sub_to_Court_Order_Y_N" value="Yes" <?php if(isset($drchildren->This_Marriage_Sixth_Child_Sub_to_Court_Order) && $drchildren->This_Marriage_Sixth_Child_Sub_to_Court_Order=='Yes'){ echo "checked"; } ?> onchange="childsubcourtorder(this,'Sixth');" data-onload="childsubcourtorderIntial(this,'Sixth');">
-                                    </label>
-                                    <label for="This_Marriage_Sixth_Child_Sub_to_Court_Order_Y_N_No" class="radio-label">NO
-                                        <input id="This_Marriage_Sixth_Child_Sub_to_Court_Order_Y_N_No" type="radio" name="This_Marriage_Sixth_Child_Sub_to_Court_Order" class="This_Marriage_Sixth_Child_Sub_to_Court_Order_Y_N" value="NO" <?php if(isset($drchildren->This_Marriage_Sixth_Child_Sub_to_Court_Order) && $drchildren->This_Marriage_Sixth_Child_Sub_to_Court_Order=='NO'){ echo "checked"; } ?> onchange="childsubcourtorder(this,'Sixth');" data-onload="childsubcourtorderIntial(this,'Sixth');"> 
-                                    </label>
-                                </div>
-
-                                 <div class="col-md-6 Sixth_Child_Court_div" style="display: none;">
-                                    <label for="This_Marriage_Sixth_Child_Court" class="col-form-label text-md-left">Which Court?</label>
-                                    <input id="This_Marriage_Sixth_Child_Court" type="text" class="form-control Child_Court" name="This_Marriage_Sixth_Child_Court" value="<?php if(isset($drchildren->This_Marriage_Sixth_Child_Court)){ echo $drchildren->This_Marriage_Sixth_Child_Court; } ?>"> 
-                                </div>
-
-                                <div class="col-md-6 Sixth_Child_Court_Case_Num_div" style="display: none;">
-                                    <label for="This_Marriage_Sixth_Child_Court_Case_Num" class="col-form-label text-md-left">Case Number?</label>
-                                    <input id="This_Marriage_Sixth_Child_Court_Case_Num" type="text" class="form-control Case_Num" name="This_Marriage_Sixth_Child_Court_Case_Num" value="<?php if(isset($drchildren->This_Marriage_Sixth_Child_Court_Case_Num)){ echo $drchildren->This_Marriage_Sixth_Child_Court_Case_Num; } ?>"> 
-                                </div>
                             </div>
 
                             <div class="col-md-12 mt-4 7_child_info_section" style="display: none;"><h5>Seventh Child Info</h5>
@@ -988,7 +832,7 @@
                                     <input id="This_Marriage_Seventh_Child_DOB" type="text" class="form-control hasDatepicker Child_DOB" autocomplete="nope" name="This_Marriage_Seventh_Child_DOB" value="<?php if(isset($drchildren->This_Marriage_Seventh_Child_DOB)){ echo date("m/d/Y", strtotime($drchildren->This_Marriage_Seventh_Child_DOB)); } ?>"> 
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="col-form-label text-md-left">Mentally or physically disabled and incapable of supporting/maintaining themselves? </label><br>
+                                    <label class="col-form-label text-md-left">Disabled Dependent </label><br>
                                     <label for="This_Marriage_Seventh_Child_Disabled_Dependent_Y_N_Yes" class="radio-label">YES
                                         <input id="This_Marriage_Seventh_Child_Disabled_Dependent_Y_N_Yes" type="radio" name="This_Marriage_Seventh_Child_Disabled_Dependent_Y_N" class="This_Marriage_Child_Disabled_Dependent_Y_N" value="Yes" <?php if(isset($drchildren->This_Marriage_Seventh_Child_Disabled_Dependent_Y_N) && $drchildren->This_Marriage_Seventh_Child_Disabled_Dependent_Y_N=='Yes'){ echo "checked"; } ?>>
                                     </label>
@@ -1021,14 +865,8 @@
                                         <input id="This_Marriage_Seventh_Child_Resides_With_Both" type="radio" name="This_Marriage_Seventh_Child_Resides_With" class="This_Marriage_Child_Resides_With Seventh Both" value="Both" <?php if(isset($drchildren->This_Marriage_Seventh_Child_Resides_With) && $drchildren->This_Marriage_Seventh_Child_Resides_With=="Both"){ echo "checked"; } ?>> 
                                     </label>
                                     <label for="This_Marriage_Seventh_Child_Resides_With_Other" class="radio-label">Other
-                                        <input id="This_Marriage_Seventh_Child_Resides_With_Other" type="radio" name="This_Marriage_Seventh_Child_Resides_With" class="This_Marriage_Child_Resides_With Seventh Other" value="Other" <?php if(isset($drchildren->This_Marriage_Seventh_Child_Resides_With) && $drchildren->This_Marriage_Seventh_Child_Resides_With=="Other"){ echo "checked"; } ?> onchange="ResideWithOther(this,'Seventh');" data-onload="ResideWithOtherInitial(this,'Seventh');"> 
+                                        <input id="This_Marriage_Seventh_Child_Resides_With_Other" type="radio" name="This_Marriage_Seventh_Child_Resides_With" class="This_Marriage_Child_Resides_With Seventh Other" value="Other" <?php if(isset($drchildren->This_Marriage_Seventh_Child_Resides_With) && $drchildren->This_Marriage_Seventh_Child_Resides_With=="Other"){ echo "checked"; } ?>> 
                                     </label>
-                                </div>
-                                <div class="col-md-6 Seventh_Child_Resides_With_Other_Div" style="display: none;">
-                                    <label for="This_Marriage_Seventh_Child_Resides_With_Other" class="col-form-label text-md-right">Name of Person  Reside with</label>
-                                    <input id="This_Marriage_Seventh_Child_Resides_With_Other_Name" type="text" class="form-control" name="This_Marriage_Seventh_Child_Resides_With_Other_Name" value="<?php if(isset($drchildren->This_Marriage_Seventh_Child_Resides_With_Other_Name)){
-                                         echo $drchildren->This_Marriage_Seventh_Child_Resides_With_Other_Name;
-                                        }?>">
                                 </div>
                                 <div class="col-md-6">
                                     <label class="col-form-label text-md-left">Will Reside with </label><br>
@@ -1082,26 +920,6 @@
                                         <option value="12" <?php if(isset($drchildren->This_Marriage_Seventh_Child_Grade) && $drchildren->This_Marriage_Seventh_Child_Grade=='12'){ echo "selected"; } ?>>12</option>
                                     </select>   
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="Subject to an existing order of parenting or support from another Court?">Subject to an existing order of parenting or support from another Court?</label>
-                                    <br>
-                                    <label for="This_Marriage_Seventh_Child_Sub_to_Court_Order_Y_N_Yes" class="radio-label">YES
-                                        <input id="This_Marriage_Seventh_Child_Sub_to_Court_Order_Y_N_Yes" type="radio" name="This_Marriage_Seventh_Child_Sub_to_Court_Order" class="This_Marriage_Seventh_Child_Sub_to_Court_Order_Y_N" value="Yes" <?php if(isset($drchildren->This_Marriage_Sixth_Child_Sub_to_Court_Order) && $drchildren->This_Marriage_Sixth_Child_Sub_to_Court_Order=='Yes'){ echo "checked"; } ?> onchange="childsubcourtorder(this,'Seventh');" data-onload="childsubcourtorderIntial(this,'Seventh');">
-                                    </label>
-                                    <label for="This_Marriage_Seventh_Child_Sub_to_Court_Order_Y_N_No" class="radio-label">NO
-                                        <input id="This_Marriage_Seventh_Child_Sub_to_Court_Order_Y_N_No" type="radio" name="This_Marriage_Seventh_Child_Sub_to_Court_Order" class="This_Marriage_Seventh_Child_Sub_to_Court_Order_Y_N" value="NO" <?php if(isset($drchildren->This_Marriage_Seventh_Child_Sub_to_Court_Order) && $drchildren->This_Marriage_Seventh_Child_Sub_to_Court_Order=='NO'){ echo "checked"; } ?> onchange="childsubcourtorder(this,'Seventh');" data-onload="childsubcourtorderIntial(this,'Seventh');"> 
-                                    </label>
-                                </div>
-
-                                 <div class="col-md-6 Seventh_Child_Court_div" style="display: none;">
-                                    <label for="This_Marriage_Seventh_Child_Court" class="col-form-label text-md-left">Which Court?</label>
-                                    <input id="This_Marriage_Seventh_Child_Court" type="text" class="form-control Child_Court" name="This_Marriage_Seventh_Child_Court" value="<?php if(isset($drchildren->This_Marriage_Seventh_Child_Court)){ echo $drchildren->This_Marriage_Seventh_Child_Court; } ?>"> 
-                                </div>
-
-                                <div class="col-md-6 Seventh_Child_Court_Case_Num_div" style="display: none;">
-                                    <label for="This_Marriage_Seventh_Child_Court_Case_Num" class="col-form-label text-md-left">Case Number?</label>
-                                    <input id="This_Marriage_Seventh_Child_Court_Case_Num" type="text" class="form-control Case_Num" name="This_Marriage_Seventh_Child_Court_Case_Num" value="<?php if(isset($drchildren->This_Marriage_Seventh_Child_Court_Case_Num)){ echo $drchildren->This_Marriage_Seventh_Child_Court_Case_Num ; } ?>"> 
-                                </div>
                             </div>
 
                             <div class="col-md-12 mt-4 8_child_info_section" style="display: none;"><h5>Eighth Child Info</h5>
@@ -1134,7 +952,7 @@
                                     <input id="This_Marriage_Eighth_Child_DOB" type="text" class="form-control hasDatepicker Child_DOB" autocomplete="nope" name="This_Marriage_Eighth_Child_DOB" value="<?php if(isset($drchildren->This_Marriage_Eighth_Child_DOB)){ echo date("m/d/Y", strtotime($drchildren->This_Marriage_Eighth_Child_DOB)); } ?>"> 
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="col-form-label text-md-left">Mentally or physically disabled and incapable of supporting/maintaining themselves? </label><br>
+                                    <label class="col-form-label text-md-left">Disabled Dependent </label><br>
                                     <label for="This_Marriage_Eighth_Child_Disabled_Dependent_Y_N_Yes" class="radio-label">YES
                                         <input id="This_Marriage_Eighth_Child_Disabled_Dependent_Y_N_Yes" type="radio" name="This_Marriage_Eighth_Child_Disabled_Dependent_Y_N" class="This_Marriage_Child_Disabled_Dependent_Y_N" value="Yes" <?php if(isset($drchildren->This_Marriage_Eighth_Child_Disabled_Dependent_Y_N) && $drchildren->This_Marriage_Eighth_Child_Disabled_Dependent_Y_N=='Yes'){ echo "checked"; } ?>>
                                     </label>
@@ -1167,14 +985,8 @@
                                         <input id="This_Marriage_Eighth_Child_Resides_With_Both" type="radio" name="This_Marriage_Eighth_Child_Resides_With" class="This_Marriage_Child_Resides_With Eighth Both" value="Both" <?php if(isset($drchildren->This_Marriage_Eighth_Child_Resides_With) && $drchildren->This_Marriage_Eighth_Child_Resides_With=="Both"){ echo "checked"; } ?>> 
                                     </label>
                                     <label for="This_Marriage_Eighth_Child_Resides_With_Other" class="radio-label">Other
-                                        <input id="This_Marriage_Eighth_Child_Resides_With_Other" type="radio" name="This_Marriage_Eighth_Child_Resides_With" class="This_Marriage_Child_Resides_With Eighth Other" value="Other" <?php if(isset($drchildren->This_Marriage_Eighth_Child_Resides_With) && $drchildren->This_Marriage_Eighth_Child_Resides_With=="Other"){ echo "checked"; } ?> onchange="ResideWithOther(this,'Eight');" data-onload="ResideWithOtherInitial(this,'Eight');"> 
+                                        <input id="This_Marriage_Eighth_Child_Resides_With_Other" type="radio" name="This_Marriage_Eighth_Child_Resides_With" class="This_Marriage_Child_Resides_With Eighth Other" value="Other" <?php if(isset($drchildren->This_Marriage_Eighth_Child_Resides_With) && $drchildren->This_Marriage_Eighth_Child_Resides_With=="Other"){ echo "checked"; } ?>> 
                                     </label>
-                                </div>
-                                <div class="col-md-6 Eighth_Child_Resides_With_Other_Div" style="display: none;">
-                                    <label for="This_Marriage_Eighth_Child_Resides_With_Other" class="col-form-label text-md-right">Name of Person  Reside with</label>
-                                    <input id="This_Marriage_Eighth_Child_Resides_With_Other_Name" type="text" class="form-control" name="This_Marriage_Eighth_Child_Resides_With_Other_Name" value="<?php if(isset($drchildren->This_Marriage_Eighth_Child_Resides_With_Other_Name)){
-                                         echo $drchildren->This_Marriage_Eighth_Child_Resides_With_Other_Name;
-                                        }?>">
                                 </div>
                                 <div class="col-md-6">
                                     <label class="col-form-label text-md-left">Will Reside with </label><br>
@@ -1228,26 +1040,6 @@
                                         <option value="12" <?php if(isset($drchildren->This_Marriage_Eighth_Child_Grade) && $drchildren->This_Marriage_Eighth_Child_Grade=='12'){ echo "selected"; } ?>>12</option>
                                     </select>   
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="Subject to an existing order of parenting or support from another Court?">Subject to an existing order of parenting or support from another Court?</label>
-                                    <br>
-                                    <label for="This_Marriage_Eighth_Child_Sub_to_Court_Order_Y_N_Yes" class="radio-label">YES
-                                        <input id="This_Marriage_Eighth_Child_Sub_to_Court_Order_Y_N_Yes" type="radio" name="This_Marriage_Eighth_Child_Sub_to_Court_Order" class="This_Marriage_Eighth_Child_Sub_to_Court_Order_Y_N" value="Yes" <?php if(isset($drchildren->This_Marriage_Eighth_Child_Sub_to_Court_Order) && $drchildren->This_Marriage_Eighth_Child_Sub_to_Court_Order=='Yes'){ echo "checked"; } ?> onchange="childsubcourtorder(this,'Eighth');" data-onload="childsubcourtorderIntial(this,'Eighth');">
-                                    </label>
-                                    <label for="This_Marriage_Eighth_Child_Sub_to_Court_Order_Y_N_No" class="radio-label">NO
-                                        <input id="This_Marriage_Eighth_Child_Sub_to_Court_Order_Y_N_No" type="radio" name="This_Marriage_Eighth_Child_Sub_to_Court_Order" class="This_Marriage_Eighth_Child_Sub_to_Court_Order_Y_N" value="NO" <?php if(isset($drchildren->This_Marriage_Eighth_Child_Sub_to_Court_Order) && $drchildren->This_Marriage_Eighth_Child_Sub_to_Court_Order=='NO'){ echo "checked"; } ?> onchange="childsubcourtorder(this,'Eighth');" data-onload="childsubcourtorderIntial(this,'Eighth');"> 
-                                    </label>
-                                </div>
-
-                                 <div class="col-md-6 Eighth_Child_Court_div" style="display: none;">
-                                    <label for="This_Marriage_Eighth_Child_Court" class="col-form-label text-md-left">Which Court?</label>
-                                    <input id="This_Marriage_Eighth_Child_Court" type="text" class="form-control Child_Court" name="This_Marriage_Eighth_Child_Court" value="<?php if(isset($drchildren->This_Marriage_Eighth_Child_Court)){ echo $drchildren->This_Marriage_Eighth_Child_Court; } ?>"> 
-                                </div>
-
-                                <div class="col-md-6 Eighth_Child_Court_Case_Num_div" style="display: none;">
-                                    <label for="This_Marriage_Eighth_Child_Court_Case_Num" class="col-form-label text-md-left">Case Number?</label>
-                                    <input id="This_Marriage_Eighth_Child_Court_Case_Num" type="text" class="form-control Case_Num" name="This_Marriage_Eighth_Child_Court_Case_Num" value="<?php if(isset($drchildren->This_Marriage_Eighth_Child_Court_Case_Num)){ echo $drchildren->This_Marriage_Eighth_Child_Court_Case_Num; } ?>"> 
-                                </div>
                             </div>
 
 
@@ -1282,7 +1074,7 @@
                                     <input id="Client_First_Child_NOM_DOB" type="text" class="form-control hasDatepicker" autocomplete="nope" name="Client_First_Child_NOM_DOB" value="<?php if(isset($drchildren->Client_First_Child_NOM_DOB)){ echo date("m/d/Y", strtotime($drchildren->Client_First_Child_NOM_DOB)); } ?>">
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="col-form-label text-md-left">Mentally or physically disabled and incapable of supporting/maintaining themselves? </label><br>
+                                    <label class="col-form-label text-md-left">Disabled Dependent </label><br>
                                     <label for="Client_First_Child_NOM_Disabled_Dependent_Y_N_Yes" class="radio-label">Yes
                                         <input id="Client_First_Child_NOM_Disabled_Dependent_Y_N_Yes" type="radio" name="Client_First_Child_NOM_Disabled_Dependent_Y_N" value="Yes" <?php if(isset($drchildren->Client_First_Child_NOM_Disabled_Dependent_Y_N) && $drchildren->Client_First_Child_NOM_Disabled_Dependent_Y_N=='Yes'){ echo "checked"; } ?>>
                                     </label>
@@ -1343,7 +1135,7 @@
                                     <input id="Client_Second_Child_NOM_DOB" type="text" class="form-control hasDatepicker" autocomplete="nope" name="Client_Second_Child_NOM_DOB" value="<?php if(isset($drchildren->Client_Second_Child_NOM_DOB)){ echo date("m/d/Y", strtotime($drchildren->Client_Second_Child_NOM_DOB)); } ?>">
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="col-form-label text-md-left">Mentally or physically disabled and incapable of supporting/maintaining themselves? </label><br>
+                                    <label class="col-form-label text-md-left">Disabled Dependent </label><br>
                                     <label for="Client_Second_Child_NOM_Disabled_Dependent_Y_N_Yes" class="radio-label">Yes
                                         <input id="Client_Second_Child_NOM_Disabled_Dependent_Y_N_Yes" type="radio" name="Client_Second_Child_NOM_Disabled_Dependent_Y_N" value="Yes" <?php if(isset($drchildren->Client_Second_Child_NOM_Disabled_Dependent_Y_N) && $drchildren->Client_Second_Child_NOM_Disabled_Dependent_Y_N=='Yes'){ echo "checked"; } ?>>
                                     </label>
@@ -1404,7 +1196,7 @@
                                     <input id="Client_Third_Child_NOM_DOB" type="text" class="form-control hasDatepicker" autocomplete="nope" name="Client_Third_Child_NOM_DOB" value="<?php if(isset($drchildren->Client_Third_Child_NOM_DOB)){ echo date("m/d/Y", strtotime($drchildren->Client_Third_Child_NOM_DOB)); } ?>">
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="col-form-label text-md-left">Mentally or physically disabled and incapable of supporting/maintaining themselves? </label><br>
+                                    <label class="col-form-label text-md-left">Disabled Dependent </label><br>
                                     <label for="Client_Third_Child_NOM_Disabled_Dependent_Y_N_Yes" class="radio-label">Yes
                                         <input id="Client_Third_Child_NOM_Disabled_Dependent_Y_N_Yes" type="radio" name="Client_Third_Child_NOM_Disabled_Dependent_Y_N" value="Yes" <?php if(isset($drchildren->Client_Third_Child_NOM_Disabled_Dependent_Y_N) && $drchildren->Client_Third_Child_NOM_Disabled_Dependent_Y_N=='Yes'){ echo "checked"; } ?>>
                                     </label>
@@ -1465,7 +1257,7 @@
                                     <input id="Client_Fourth_Child_NOM_DOB" type="text" class="form-control hasDatepicker" autocomplete="nope" name="Client_Fourth_Child_NOM_DOB" value="<?php if(isset($drchildren->Client_Fourth_Child_NOM_DOB)){ echo date("m/d/Y", strtotime($drchildren->Client_Fourth_Child_NOM_DOB)); } ?>">
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="col-form-label text-md-left">Mentally or physically disabled and incapable of supporting/maintaining themselves? </label><br>
+                                    <label class="col-form-label text-md-left">Disabled Dependent </label><br>
                                     <label for="Client_Fourth_Child_NOM_Disabled_Dependent_Y_N_Yes" class="radio-label">Yes
                                         <input id="Client_Fourth_Child_NOM_Disabled_Dependent_Y_N_Yes" type="radio" name="Client_Fourth_Child_NOM_Disabled_Dependent_Y_N" value="Yes" <?php if(isset($drchildren->Client_Fourth_Child_NOM_Disabled_Dependent_Y_N) && $drchildren->Client_Fourth_Child_NOM_Disabled_Dependent_Y_N=='Yes'){ echo "checked"; } ?>>
                                     </label>
@@ -1526,7 +1318,7 @@
                                     <input id="Client_Fifth_Child_NOM_DOB" type="text" class="form-control hasDatepicker" autocomplete="nope" name="Client_Fifth_Child_NOM_DOB" value="<?php if(isset($drchildren->Client_Fifth_Child_NOM_DOB)){ echo date("m/d/Y", strtotime($drchildren->Client_Fifth_Child_NOM_DOB)); } ?>">
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="col-form-label text-md-left">Mentally or physically disabled and incapable of supporting/maintaining themselves? </label><br>
+                                    <label class="col-form-label text-md-left">Disabled Dependent </label><br>
                                     <label for="Client_Fifth_Child_NOM_Disabled_Dependent_Y_N_Yes" class="radio-label">Yes
                                         <input id="Client_Fifth_Child_NOM_Disabled_Dependent_Y_N_Yes" type="radio" name="Client_Fifth_Child_NOM_Disabled_Dependent_Y_N" value="Yes" <?php if(isset($drchildren->Client_Fifth_Child_NOM_Disabled_Dependent_Y_N) && $drchildren->Client_Fifth_Child_NOM_Disabled_Dependent_Y_N=='Yes'){ echo "checked"; } ?>>
                                     </label>
@@ -1587,7 +1379,7 @@
                                     <input id="Client_Sixth_Child_NOM_DOB" type="text" class="form-control hasDatepicker" autocomplete="nope" name="Client_Sixth_Child_NOM_DOB" value="<?php if(isset($drchildren->Client_Sixth_Child_NOM_DOB)){ echo date("m/d/Y", strtotime($drchildren->Client_Sixth_Child_NOM_DOB)); } ?>">
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="col-form-label text-md-left">Mentally or physically disabled and incapable of supporting/maintaining themselves? </label><br>
+                                    <label class="col-form-label text-md-left">Disabled Dependent </label><br>
                                     <label for="Client_Sixth_Child_NOM_Disabled_Dependent_Y_N_Yes" class="radio-label">Yes
                                         <input id="Client_Sixth_Child_NOM_Disabled_Dependent_Y_N_Yes" type="radio" name="Client_Sixth_Child_NOM_Disabled_Dependent_Y_N" value="Yes" <?php if(isset($drchildren->Client_Sixth_Child_NOM_Disabled_Dependent_Y_N) && $drchildren->Client_Sixth_Child_NOM_Disabled_Dependent_Y_N=='Yes'){ echo "checked"; } ?>>
                                     </label>
@@ -1661,7 +1453,7 @@
                                     <input id="Op_First_Child_NOM_DOB" type="text" class="form-control hasDatepicker" autocomplete="nope" name="Op_First_Child_NOM_DOB" value="<?php if(isset($drchildren->Op_First_Child_NOM_DOB)){ echo date("m/d/Y", strtotime($drchildren->Op_First_Child_NOM_DOB)); } ?>">
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="col-form-label text-md-left">Mentally or physically disabled and incapable of supporting/maintaining themselves? </label><br>
+                                    <label class="col-form-label text-md-left">Disabled Dependent </label><br>
                                     <label for="Op_First_Child_NOM_Disabled_Dependent_Y_N_Yes" class="radio-label">Yes
                                         <input id="Op_First_Child_NOM_Disabled_Dependent_Y_N_Yes" type="radio" name="Op_First_Child_NOM_Disabled_Dependent_Y_N" value="Yes" <?php if(isset($drchildren->Op_First_Child_NOM_Disabled_Dependent_Y_N) && $drchildren->Op_First_Child_NOM_Disabled_Dependent_Y_N=='Yes'){ echo "checked"; } ?>>
                                     </label>
@@ -1722,7 +1514,7 @@
                                     <input id="Op_Second_Child_NOM_DOB" type="text" class="form-control hasDatepicker" autocomplete="nope" name="Op_Second_Child_NOM_DOB" value="<?php if(isset($drchildren->Op_Second_Child_NOM_DOB)){ echo date("m/d/Y", strtotime($drchildren->Op_Second_Child_NOM_DOB)); } ?>">
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="col-form-label text-md-left">Mentally or physically disabled and incapable of supporting/maintaining themselves? </label><br>
+                                    <label class="col-form-label text-md-left">Disabled Dependent </label><br>
                                     <label for="Op_Second_Child_NOM_Disabled_Dependent_Y_N_Yes" class="radio-label">Yes
                                         <input id="Op_Second_Child_NOM_Disabled_Dependent_Y_N_Yes" type="radio" name="Op_Second_Child_NOM_Disabled_Dependent_Y_N" value="Yes" <?php if(isset($drchildren->Op_Second_Child_NOM_Disabled_Dependent_Y_N) && $drchildren->Op_Second_Child_NOM_Disabled_Dependent_Y_N=='Yes'){ echo "checked"; } ?>>
                                     </label>
@@ -1783,7 +1575,7 @@
                                     <input id="Op_Third_Child_NOM_DOB" type="text" class="form-control hasDatepicker" autocomplete="nope" name="Op_Third_Child_NOM_DOB" value="<?php if(isset($drchildren->Op_Third_Child_NOM_DOB)){ echo date("m/d/Y", strtotime($drchildren->Op_Third_Child_NOM_DOB)); } ?>">
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="col-form-label text-md-left">Mentally or physically disabled and incapable of supporting/maintaining themselves? </label><br>
+                                    <label class="col-form-label text-md-left">Disabled Dependent </label><br>
                                     <label for="Op_Third_Child_NOM_Disabled_Dependent_Y_N_Yes" class="radio-label">Yes
                                         <input id="Op_Third_Child_NOM_Disabled_Dependent_Y_N_Yes" type="radio" name="Op_Third_Child_NOM_Disabled_Dependent_Y_N" value="Yes" <?php if(isset($drchildren->Op_Third_Child_NOM_Disabled_Dependent_Y_N) && $drchildren->Op_Third_Child_NOM_Disabled_Dependent_Y_N=='Yes'){ echo "checked"; } ?>>
                                     </label>
@@ -1844,7 +1636,7 @@
                                     <input id="Op_Fourth_Child_NOM_DOB" type="text" class="form-control hasDatepicker" autocomplete="nope" name="Op_Fourth_Child_NOM_DOB" value="<?php if(isset($drchildren->Op_Fourth_Child_NOM_DOB)){ echo date("m/d/Y", strtotime($drchildren->Op_Fourth_Child_NOM_DOB)); } ?>">
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="col-form-label text-md-left">Mentally or physically disabled and incapable of supporting/maintaining themselves? </label><br>
+                                    <label class="col-form-label text-md-left">Disabled Dependent </label><br>
                                     <label for="Op_Fourth_Child_NOM_Disabled_Dependent_Y_N_Yes" class="radio-label">Yes
                                         <input id="Op_Fourth_Child_NOM_Disabled_Dependent_Y_N_Yes" type="radio" name="Op_Fourth_Child_NOM_Disabled_Dependent_Y_N" value="Yes" <?php if(isset($drchildren->Op_Fourth_Child_NOM_Disabled_Dependent_Y_N) && $drchildren->Op_Fourth_Child_NOM_Disabled_Dependent_Y_N=='Yes'){ echo "checked"; } ?>>
                                     </label>
@@ -1905,7 +1697,7 @@
                                     <input id="Op_Fifth_Child_NOM_DOB" type="text" class="form-control hasDatepicker" autocomplete="nope" name="Op_Fifth_Child_NOM_DOB" value="<?php if(isset($drchildren->Op_Fifth_Child_NOM_DOB)){ echo date("m/d/Y", strtotime($drchildren->Op_Fifth_Child_NOM_DOB)); } ?>">
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="col-form-label text-md-left">Mentally or physically disabled and incapable of supporting/maintaining themselves? </label><br>
+                                    <label class="col-form-label text-md-left">Disabled Dependent </label><br>
                                     <label for="Op_Fifth_Child_NOM_Disabled_Dependent_Y_N_Yes" class="radio-label">Yes
                                         <input id="Op_Fifth_Child_NOM_Disabled_Dependent_Y_N_Yes" type="radio" name="Op_Fifth_Child_NOM_Disabled_Dependent_Y_N" value="Yes" <?php if(isset($drchildren->Op_Fifth_Child_NOM_Disabled_Dependent_Y_N) && $drchildren->Op_Fifth_Child_NOM_Disabled_Dependent_Y_N=='Yes'){ echo "checked"; } ?>>
                                     </label>
@@ -1966,7 +1758,7 @@
                                     <input id="Op_Sixth_Child_NOM_DOB" type="text" class="form-control hasDatepicker" autocomplete="nope" name="Op_Sixth_Child_NOM_DOB" value="<?php if(isset($drchildren->Op_Sixth_Child_NOM_DOB)){ echo date("m/d/Y", strtotime($drchildren->Op_Sixth_Child_NOM_DOB)); } ?>">
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="col-form-label text-md-left">Mentally or physically disabled and incapable of supporting/maintaining themselves? </label><br>
+                                    <label class="col-form-label text-md-left">Disabled Dependent </label><br>
                                     <label for="Op_Sixth_Child_NOM_Disabled_Dependent_Y_N_Yes" class="radio-label">Yes
                                         <input id="Op_Sixth_Child_NOM_Disabled_Dependent_Y_N_Yes" type="radio" name="Op_Sixth_Child_NOM_Disabled_Dependent_Y_N" value="Yes" <?php if(isset($drchildren->Op_Sixth_Child_NOM_Disabled_Dependent_Y_N) && $drchildren->Op_Sixth_Child_NOM_Disabled_Dependent_Y_N=='Yes'){ echo "checked"; } ?>>
                                     </label>
@@ -2112,60 +1904,6 @@
             }
         }
     }
-
-    // show resdie eith other
-
-     function ResideWithOtherInitial(other, num){
-        if(other.checked && other.value=='Other'){
-            $('.'+num+'_Child_Resides_With_Other_Div').show();
-            $('#This_Marriage_'+num+'_Child_Resides_With_Other_Name').prop('required', true);
-        } else {
-            $('.'+num+'_Child_Resides_With_Other_Div').hide();
-            $('#This_Marriage_'+num+'_Child_Resides_With_Other_Name').prop('required', false);
-
-        }
-    }
- function ResideWithOther(other, num){
-        if(other.checked && other.value=='Other'){
-            $('.'+num+'_Child_Resides_With_Other_Div').show();
-            $('#This_Marriage_'+num+'_Child_Resides_With_Other_Name').prop('required', true);
-        } else {
-            $('.'+num+'_Child_Resides_With_Other_Div').hide();
-            $('#This_Marriage_'+num+'_Child_Resides_With_Other_Name').prop('required', false);
-
-        }
-    }
-
-    //show coourt number and court 
-
-    function childsubcourtorder(other,num){
-        if(other.checked && other.value =="Yes"){
-          $('.'+num+'_Child_Court_div').show();
-          $('#This_Marriage_'+num+'_Child_Court').prop('required', true);
-          $('.'+num+'_Child_Court_Case_Num_div').show();
-          $('#This_Marriage_'+num+'_Child_Court_Case_Num').prop('required', true);
-        }else{
-            $('.'+num+'_Child_Court_div').hide();
-          $('#This_Marriage_'+num+'_Child_Court').prop('required', false);
-          $('.'+num+'_Child_Court_Case_Num_div').hide();
-          $('#This_Marriage_'+num+'_Child_Court_Case_Num').prop('required', false);
-        }
-    }
- //show coourt number and court Intial
-    function childsubcourtorderIntial(other,num){
-        if(other.checked && other.value =="Yes"){
-          $('.'+num+'_Child_Court_div').show();
-          $('#This_Marriage_'+num+'_Child_Court').prop('required', true);
-          $('.'+num+'_Child_Court_Case_Num_div').show();
-          $('#This_Marriage_'+num+'_Child_Court_Case_Num').prop('required', true);
-        }else{
-            $('.'+num+'_Child_Court_div').hide();
-          $('#This_Marriage_'+num+'_Child_Court').prop('required', false);
-          $('.'+num+'_Child_Court_Case_Num_div').hide();
-          $('#This_Marriage_'+num+'_Child_Court_Case_Num').prop('required', false);
-        }
-    }
-
 
     $(document).ready(function(){
 

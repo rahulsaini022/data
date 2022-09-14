@@ -43,18 +43,9 @@
                                         <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="E-Mail Address or Username" style="border-radius: 0px;">
 
                                         @error('email')
-                                            @if($errors->has('user_id')  )
+                                            @if($errors->has('user_id'))
                                                 <span class="invalid-feedback" role="alert">
-                                                    
-                                                        @if(($errors->first('role') === 'attorney'))
-                                                       <strong>{{ $message }} <a class="btn btn-link text-primary" href="{{ route('attorneys.subscription', ['id' => $errors->first('user_id')]) }}">Click here</a>to Subscribe.</strong>
-                                                        @elseif (($errors->first('role') === 'Advertise'))
-                                                        <strong>Your Advertiser account not active.Please contact admin or register as advertiser.</strong>
-                                                      @else
-                                                       <strong>Your  account not active yet.Please contact admin </strong>
-                                                        @endif
-                                                        
-                                                        
+                                                    <strong>{{ $message }}<a class="btn btn-link" href="{{ route('attorneys.subscription', ['id' => $errors->first('user_id')]) }}">Click here</a>to Subscribe.</strong>
                                                 </span>
                                             @else
                                                 <span class="invalid-feedback" role="alert">
@@ -104,7 +95,6 @@
                             <div class="col-sm-12 mt-5">
                                 <p>Not an Attorney/Legal Professional? <br> <a href="{{url('/page/how-fdd-can-save-you-money')}}">Click here</a> to see how <br> FDD can save you money.</p>
                             </div>
-                            <a href="{{ route('advertise') }}" class="btn btn-primary nextBtn">Advertise to Ohio Attorneys on FDD</a> 
                         </div>
                         @else
                         <div class="col-sm-6 SignIn-form">

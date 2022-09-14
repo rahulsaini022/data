@@ -5,10 +5,15 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header"><strong>{{ __('Login as Advertiser') }}</strong></div>
+                <div class="card-header"><strong>{{ __('Login') }}</strong></div>
 
                 <div class="card-body">
-                 @include('layouts.message')
+                    @if ($message = Session::get('error'))
+                        <div class="alert alert-danger alert-block">
+                            <button type="button" class="close" data-dismiss="alert">×</button> 
+                                <strong>{{ $message }}</strong>
+                        </div>
+                    @endif
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
@@ -18,26 +23,17 @@
                             <div class="col-md-6">
                                 <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
-                              @error('email')
-                                            @if($errors->has('user_id')  )
-                                                <span class="invalid-feedback" role="alert">
-                                                    
-                                                        @if(($errors->first('role') === 'attorney'))
-                                                       <strong>{{ $message }} <a class="btn btn-link text-primary" href="{{ route('attorneys.subscription', ['id' => $errors->first('user_id')]) }}">Click here</a>to Subscribe.</strong>
-                                                        @elseif (($errors->first('role') === 'Advertise'))
-                                                        <strong>Your Advertiser account not active.Please contact admin or register as advertiser.</strong>
-                                                        @else
-                                                       <strong>Your  account not active yet.Please contact admin </strong>
-                                                        @endif
-                                                        
-                                                        
-                                                </span>
-                                            @else
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @endif
-                                        @enderror
+                                @error('email')
+                                    @if($errors->has('user_id'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}<a class="btn btn-link" href="{{ route('attorneys.subscription', ['id' => $errors->first('user_id')]) }}">Click here</a>to Subscribe.</strong>
+                                        </span>
+                                    @else
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @endif
+                                @enderror
                             </div>
                         </div>
 
@@ -74,7 +70,7 @@
                                 </button>
 
                                 @if (Route::has('password.request'))
-                                    <a class="btn btn-link text-primary" href="{{ route('password.request') }}">
+                                    <a class="btn btn-link" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif

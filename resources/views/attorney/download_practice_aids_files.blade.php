@@ -81,7 +81,7 @@
  <script>
   function ConfirmDelete()
   {
-      var x = confirm("Are you sure you want to delete this file?");
+      var x = confirm("Are you sure you want to delete this file.");
       if (x)
           return true;
       else

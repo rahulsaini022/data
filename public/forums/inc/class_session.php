@@ -36,21 +36,11 @@ class session
 	public $is_spider = false;
 
 	/**
-	 * Request parameters that are to be ignored for location storage
-	 *
-	 * @var array
-	 */
-	public $ignore_parameters = array(
-		'my_post_key',
-		'logoutkey',
-	);
-
-	/**
 	 * Initialize a session
 	 */
 	function init()
 	{
-		global $db, $mybb, $cache, $plugins;
+		global $db, $mybb, $cache;
 
 		// Get our visitor's IP.
 		$this->ipaddress = get_ip();
@@ -63,22 +53,13 @@ class session
 		if(isset($mybb->cookies['sid']) && !defined('IN_UPGRADE'))
 		{
 			$sid = $db->escape_string($mybb->cookies['sid']);
-
-			// Load the session if not using a bot sid
-			if(substr($sid, 3, 1) !== '=')
+			// Load the session
+			$query = $db->simple_select("sessions", "*", "sid='{$sid}' AND ip=".$db->escape_binary($this->packedip));
+			$session = $db->fetch_array($query);
+			if($session['sid'])
 			{
-				$query = $db->simple_select("sessions", "*", "sid='{$sid}'");
-				$session = $db->fetch_array($query);
-				if(!empty($session) && $session['sid'])
-				{
-					$this->sid = $session['sid'];
-				}
+				$this->sid = $session['sid'];
 			}
-		}
-
-		if(isset($plugins))
-		{
-			$plugins->run_hooks('pre_session_load', $this);
 		}
 
 		// If we have a valid session id and user id, load that users session.
@@ -132,6 +113,16 @@ class session
 	{
 		global $mybb, $db, $time, $lang, $mybbgroups, $cache;
 
+		// Read the banned cache
+		$bannedcache = $cache->read("banned");
+
+		// If the banned cache doesn't exist, update it and re-read it
+		if(!is_array($bannedcache))
+		{
+			$cache->update_banned();
+			$bannedcache = $cache->read("banned");
+		}
+
 		$uid = (int)$uid;
 		$query = $db->query("
 			SELECT u.*, f.*
@@ -141,6 +132,16 @@ class session
 			LIMIT 1
 		");
 		$mybb->user = $db->fetch_array($query);
+
+		if(!empty($bannedcache[$uid]))
+		{
+			$banned_user = $bannedcache[$uid];
+			$mybb->user['bandate'] = $banned_user['dateline'];
+			$mybb->user['banlifted'] = $banned_user['lifted'];
+			$mybb->user['banoldgroup'] = $banned_user['oldgroup'];
+			$mybb->user['banolddisplaygroup'] = $banned_user['olddisplaygroup'];
+			$mybb->user['banoldadditionalgroups'] = $banned_user['oldadditionalgroups'];
+		}
 
 		// Check the password if we're not using a session
 		if(empty($loginkey) || $loginkey !== $mybb->user['loginkey'] || !$mybb->user['uid'])
@@ -247,40 +248,17 @@ class session
 			$mybb->settings['postlayout'] = 'horizontal';
 		}
 
-		$usergroups = $cache->read('usergroups');
-
-		if(!empty($usergroups[$mybb->user['usergroup']]) && $usergroups[$mybb->user['usergroup']]['isbannedgroup'] == 1)
-		{
-			$ban = $db->fetch_array(
-				$db->simple_select('banned', '*', 'uid='.(int)$mybb->user['uid'], array('limit' => 1))
-			);
-
-			if($ban)
-			{
-				$mybb->user['banned'] = 1;
-				$mybb->user['bandate'] = $ban['dateline'];
-				$mybb->user['banlifted'] = $ban['lifted'];
-				$mybb->user['banoldgroup'] = $ban['oldgroup'];
-				$mybb->user['banolddisplaygroup'] = $ban['olddisplaygroup'];
-				$mybb->user['banoldadditionalgroups'] = $ban['oldadditionalgroups'];
-				$mybb->user['banreason'] = $ban['reason'];
-			}
-			else
-			{
-				$mybb->user['banned'] = 0;
-			}
-		}
-
 		// Check if this user is currently banned and if we have to lift it.
 		if(!empty($mybb->user['bandate']) && (isset($mybb->user['banlifted']) && !empty($mybb->user['banlifted'])) && $mybb->user['banlifted'] < $time)  // hmmm...bad user... how did you get banned =/
 		{
 			// must have been good.. bans up :D
-			$db->shutdown_query("UPDATE ".TABLE_PREFIX."users SET usergroup='".(int)$mybb->user['banoldgroup']."', additionalgroups='".$db->escape_string($mybb->user['banoldadditionalgroups'])."', displaygroup='".(int)$mybb->user['banolddisplaygroup']."' WHERE uid='".$mybb->user['uid']."'");
+			$db->shutdown_query("UPDATE ".TABLE_PREFIX."users SET usergroup='".(int)$mybb->user['banoldgroup']."', additionalgroups='".$mybb->user['banoldadditionalgroups']."', displaygroup='".(int)$mybb->user['banolddisplaygroup']."' WHERE uid='".$mybb->user['uid']."'");
 			$db->shutdown_query("DELETE FROM ".TABLE_PREFIX."banned WHERE uid='".$mybb->user['uid']."'");
 			// we better do this..otherwise they have dodgy permissions
 			$mybb->user['usergroup'] = $mybb->user['banoldgroup'];
 			$mybb->user['displaygroup'] = $mybb->user['banolddisplaygroup'];
 			$mybb->user['additionalgroups'] = $mybb->user['banoldadditionalgroups'];
+			$cache->update_banned();
 
 			$mybbgroups = $mybb->user['usergroup'];
 			if($mybb->user['additionalgroups'])
@@ -345,12 +323,10 @@ class session
 		// Set up some defaults
 		$time = TIME_NOW;
 		$mybb->user['usergroup'] = 1;
-		$mybb->user['additionalgroups'] = '';
 		$mybb->user['username'] = '';
 		$mybb->user['uid'] = 0;
 		$mybbgroups = 1;
 		$mybb->user['displaygroup'] = 1;
-		$mybb->user['invisible'] = 0;
 
 		// Has this user visited before? Lastvisit need updating?
 		if(isset($mybb->cookies['mybb']['lastvisit']))
@@ -434,8 +410,6 @@ class session
 		$mybb->user['username'] = '';
 		$mybb->user['uid'] = 0;
 		$mybb->user['displaygroup'] = $mybb->user['usergroup'];
-		$mybb->user['additionalgroups'] = '';
-		$mybb->user['invisible'] = 0;
 
 		// Set spider language
 		if($spider['language'] && $lang->language_exists($spider['language']))
@@ -496,10 +470,10 @@ class session
 			$onlinedata['uid'] = 0;
 		}
 		$onlinedata['time'] = TIME_NOW;
-
-		$onlinedata['location'] = $db->escape_string(substr(get_current_location(false, $this->ignore_parameters), 0, 150));
+		
+		$onlinedata['location'] = $db->escape_string(substr(get_current_location(), 0, 150));
 		$onlinedata['useragent'] = $db->escape_string(my_substr($this->useragent, 0, 200));
-
+		
 		$onlinedata['location1'] = (int)$speciallocs['1'];
 		$onlinedata['location2'] = (int)$speciallocs['2'];
 		$onlinedata['nopermission'] = 0;
@@ -524,14 +498,15 @@ class session
 			$db->delete_query("sessions", "uid='{$uid}'");
 			$onlinedata['uid'] = $uid;
 		}
+		// Is a spider - delete all other spider references
+		else if($this->is_spider == true)
+		{
+			$db->delete_query("sessions", "sid='{$this->sid}'");
+		}
+		// Else delete by ip.
 		else
 		{
-			// Is a spider - delete all other spider references
-			if($this->is_spider == true)
-			{
-				$db->delete_query("sessions", "sid='{$this->sid}'");
-			}
-
+			$db->delete_query("sessions", "ip=".$db->escape_binary($this->packedip));
 			$onlinedata['uid'] = 0;
 		}
 
@@ -546,10 +521,10 @@ class session
 		}
 		$onlinedata['time'] = TIME_NOW;
 		$onlinedata['ip'] = $db->escape_binary($this->packedip);
-
-		$onlinedata['location'] = $db->escape_string(substr(get_current_location(false, $this->ignore_parameters), 0, 150));
+		
+		$onlinedata['location'] = $db->escape_string(substr(get_current_location(), 0, 150));
 		$onlinedata['useragent'] = $db->escape_string(my_substr($this->useragent, 0, 200));
-
+		
 		$onlinedata['location1'] = (int)$speciallocs['1'];
 		$onlinedata['location2'] = (int)$speciallocs['2'];
 		$onlinedata['nopermission'] = 0;

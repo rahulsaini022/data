@@ -41,11 +41,9 @@ function build_forumbits($pid=0, $depth=1)
 	{
 		foreach($parent as $forum)
 		{
-			$forum['viewers'] = 0;
 			$subforums = $sub_forums = '';
 			$lastpost_data = array(
-				'lastpost' => 0,
-				'lastposter' => '',
+				'lastpost' => 0
 			);
 			$forum_viewers_text = '';
 			$forum_viewers_text_plain = '';
@@ -64,14 +62,13 @@ function build_forumbits($pid=0, $depth=1)
 			// Build the link to this forum
 			$forum_url = get_forum_link($forum['fid']);
 
+			// This forum has a password, and the user isn't authenticated with it - hide post information
 			$hideinfo = $hidecounters = false;
 			$hidelastpostinfo = false;
 			$showlockicon = 0;
-
-			// Hide post info if user cannot view forum or cannot view threads
-			if($permissions['canview'] != 1 || (isset($permissions['canviewthreads']) && $permissions['canviewthreads'] != 1))
+			if(isset($permissions['canviewthreads']) && $permissions['canviewthreads'] != 1)
 			{
-				$hideinfo = true;
+			    $hideinfo = true;
 			}
 
 			if(isset($permissions['canonlyviewownthreads']) && $permissions['canonlyviewownthreads'] == 1)
@@ -111,7 +108,7 @@ function build_forumbits($pid=0, $depth=1)
 					}
 				}
 
-				if(!empty($private_forums[$forum['fid']]['lastpost']))
+				if($private_forums[$forum['fid']]['lastpost'])
 				{
 					$forum['lastpost'] = $private_forums[$forum['fid']]['lastpost'];
 
@@ -145,16 +142,13 @@ function build_forumbits($pid=0, $depth=1)
 				);
 			}
 
-			// This forum has a password, and the user isn't authenticated with it - hide post information
-			if(!forum_password_validated($forum, true))
+			if($forum['password'])
 			{
-				$hideinfo = true;
-				$showlockicon = 1;
-			}
-
-			if(is_array($forum_viewers) && isset($forum_viewers[$forum['fid']]) && $forum_viewers[$forum['fid']] > 0)
-			{
-				$forum['viewers'] = $forum_viewers[$forum['fid']];
+				if(!isset($mybb->cookies['forumpass'][$forum['fid']]) || !my_hash_equals($mybb->cookies['forumpass'][$forum['fid']], md5($mybb->user['uid'].$forum['password'])))
+				{
+					$hideinfo = true;
+					$showlockicon = 1;
+				}
 			}
 
 			// Fetch subforums of this forum
@@ -168,13 +162,13 @@ function build_forumbits($pid=0, $depth=1)
 				$forum['unapprovedthreads'] += $forum_info['counters']['unapprovedthreads'];
 				$forum['unapprovedposts'] += $forum_info['counters']['unapprovedposts'];
 
-				if(!empty($forum_info['counters']['viewers']))
+				if(!empty($forum_info['counters']['viewing']))
 				{
-					$forum['viewers'] += $forum_info['counters']['viewers'];
+					$forum['viewers'] += $forum_info['counters']['viewing'];
 				}
 
 				// If the child forums' lastpost is greater than the one for this forum, set it as the child forums greatest.
-				if(isset($forum_info['lastpost']['lastpost']) && $forum_info['lastpost']['lastpost'] > $lastpost_data['lastpost'])
+				if($forum_info['lastpost']['lastpost'] > $lastpost_data['lastpost'])
 				{
 					$lastpost_data = $forum_info['lastpost'];
 
@@ -195,13 +189,11 @@ function build_forumbits($pid=0, $depth=1)
 			}
 
 			// If we are hiding information (lastpost) because we aren't authenticated against the password for this forum, remove them
-			if($hideinfo == true || $hidelastpostinfo == true)
+			if($hidelastpostinfo == true)
 			{
-				// Used later for get_forum_lightbulb function call - Setting to 0 prevents the bulb from being lit up
-				// If hiding info or hiding lastpost info no "unread" posts indication should be shown to the user.
 				$lastpost_data = array(
 					'lastpost' => 0,
-					'lastposter' => '',
+					'lastposter' => ''
 				);
 			}
 
@@ -209,6 +201,11 @@ function build_forumbits($pid=0, $depth=1)
 			if((!isset($parent_lastpost) || $lastpost_data['lastpost'] > $parent_lastpost['lastpost']) && $hideinfo != true)
 			{
 				$parent_lastpost = $lastpost_data;
+			}
+
+			if(is_array($forum_viewers) && isset($forum_viewers[$forum['fid']]) && $forum_viewers[$forum['fid']] > 0)
+			{
+				$forum['viewers'] = $forum_viewers[$forum['fid']];
 			}
 
 			// Increment the counters for the parent forum (returned later)
@@ -235,16 +232,11 @@ function build_forumbits($pid=0, $depth=1)
 			$lightbulb = get_forum_lightbulb($forum, $lastpost_data, $showlockicon);
 
 			// Fetch the number of unapproved threads and posts for this forum
+			$unapproved = get_forum_unapproved($forum);
+
 			if($hideinfo == true)
 			{
-				$unapproved = array(
-					"unapproved_posts" => '',
-					"unapproved_threads" => '',
-				);
-			}
-			else
-			{
-				$unapproved = get_forum_unapproved($forum);
+				unset($unapproved);
 			}
 
 			// Sanitize name and description of forum.
@@ -435,19 +427,19 @@ function build_forumbits($pid=0, $depth=1)
 
 			// Check if this category is either expanded or collapsed and hide it as necessary.
 			$expdisplay = '';
-			$collapsed_name = "cat_{$forum['fid']}_e";
-			if(isset($collapsed[$collapsed_name]) && $collapsed[$collapsed_name] == "display: none;")
+			$collapsed_name = "cat_{$forum['fid']}_c";
+			if(isset($collapsed[$collapsed_name]) && $collapsed[$collapsed_name] == "display: show;")
 			{
 				$expcolimage = "collapse_collapsed.png";
 				$expdisplay = "display: none;";
 				$expthead = " thead_collapsed";
-				$expaltext = $lang->expcol_expand;
+				$expaltext = "[+]";
 			}
 			else
 			{
 				$expcolimage = "collapse.png";
 				$expthead = "";
-				$expaltext = $lang->expcol_collapse;
+				$expaltext = "[-]";
 			}
 
 			// Swap over the alternate backgrounds

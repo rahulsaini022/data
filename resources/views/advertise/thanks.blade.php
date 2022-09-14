@@ -16,10 +16,10 @@
                     <div class="row"> 
                         <div class="col-md-12" align="center">
                             <h2>WELCOME TO FDD!<h2>
-                                <!-- <p>We have emailed you the credentials you’ll need to sign into the advertisers sections of our website.</p> -->  
+                                <p>We have emailed you the credentials you’ll need to sign into the advertisers sections of our website.</p>  
                             @if ($message = Session::get('success'))
                                 <div class="alert alert-success alert-block">
-                                    <button type="button" class="close" style="font-size: 24px!important;" data-dismiss="alert">×</button> 
+                                    <button type="button" class="close" data-dismiss="alert">×</button> 
                                         <strong>{{ $message }}</strong>
                                 </div>
                             @endif

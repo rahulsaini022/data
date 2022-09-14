@@ -1,26 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-<style type="text/css">
-    table.formatHTML5 tr.selected {
-    background-color: #e92929 !important;
-    color:#fff;
-    vertical-align: middle;
-    padding: 1.5em;
-}
- table.formatHTML5 tbody tr
-        {
-            cursor:pointer;
-            /* add gradient */
-          
-        }
-
-</style>
 <div class="container">
     <div class="row justify-content-center attorney-registration">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Update Attorney Information
+                <div class="card-header">Update Attorney Info
                     <div class="pull-right">
 
                         <a class="btn btn-primary" href="{{ route('cases.show_attorney_reg_form',['party_id' => $party_id, 'case_id' => $case_id, 'number' => $party_number]) }}"> Back</a>
@@ -96,12 +81,10 @@
                                 @enderror
                             </div>
 
-                            <label for="attorney_reg_1_num" class="col-md-2 col-form-label text-md-left attorney_reg_1_num_label">{{ __('Attorney Reg #*') }}
-                                <i class="fa fa-search lookupicone col-md-1 text-md-left" aria-hidden="true" data-toggle="modal" data-target="#myNewDynamicModal"></i>
-                            </label>
+                            <label for="attorney_reg_1_num" class="col-md-2 col-form-label text-md-left attorney_reg_1_num_label">{{ __('Attorney Reg #*') }}</label>
 
                             <div class="col-md-4 attorney_reg_1_num_label">
-                                <input id="attorney_reg_1_num" type="text" class="form-control @error('attorney_reg_1_num') is-invalid @enderror" name="attorney_reg_1_num" value="<?php if(isset($attorney_data)){ echo $attorney_data->attorney_reg_1_num; } ?>" autocomplete="attorney_reg_1_num" autofocus required="">
+                                <input id="attorney_reg_1_num" type="text" class="form-control @error('attorney_reg_1_num') is-invalid @enderror" name="attorney_reg_1_num" value="<?php if(isset($attorney_data)){ echo $attorney_data->attorney_reg_1_num; } ?>" autocomplete="attorney_reg_1_num" autofocus required="" readonly="">
 
                                 @error('attorney_reg_1_num')
                                     <span class="invalid-feedback" role="alert">
@@ -167,10 +150,10 @@
 
                         </div>
                         <div class="form-group row">
-                            <label for="email" class="col-md-2 col-form-label text-md-left">{{ __('E-Mail Address') }}</label>
+                            <label for="email" class="col-md-2 col-form-label text-md-left">{{ __('E-Mail Address*') }}</label>
 
                             <div class="col-md-4">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="<?php if(isset($attorney->email) && strpos($attorney->email, 'unknown_'.$case_id.'_') === false){ echo $attorney->email; } ?>"  autocomplete="email" >
+                                <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value=" <?php if(isset($attorney->email) && strpos($attorney->email, 'unknown_'.$case_id.'_') === false){ echo $attorney->email; } ?>"  autocomplete="email" >
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -547,7 +530,7 @@
                             <label for="firm_telephone" class="col-md-2 col-form-label text-md-left">{{ __('Firm Telephone') }}</label>
 
                             <div class="col-md-4">
-                                <input id="firm_telephone" maxlength="14" type="text" onkeypress='return onlyNumber(event)' class="form-control @error('firm_telephone') is-invalid @enderror" name="firm_telephone" value="<?php if(isset($attorney_data)){ echo $attorney_data->firm_telephone; } ?>" autocomplete="firm_telephone" placeholder="(XXX) XXX-XXXX">
+                                <input id="firm_telephone" type="text" class="form-control @error('firm_telephone') is-invalid @enderror" name="firm_telephone" value="<?php if(isset($attorney_data)){ echo $attorney_data->firm_telephone; } ?>" autocomplete="firm_telephone" placeholder="(XXX) XXX-XXXX">
 
                                 @error('firm_telephone')
                                     <span class="invalid-feedback" role="alert">
@@ -559,7 +542,7 @@
                             <label for="firm_fax" class="col-md-2 col-form-label text-md-left">{{ __('Firm Fax') }}</label>
 
                             <div class="col-md-4">
-                                <input id="firm_fax" type="text" maxlength="14" onkeypress='return onlyNumber(event)' class="form-control @error('firm_fax') is-invalid @enderror" name="firm_fax" value="<?php if(isset($attorney_data)){ echo $attorney_data->firm_fax; } ?>" placeholder="(XXX) XXX-XXXX">
+                                <input id="firm_fax" type="text" class="form-control @error('firm_fax') is-invalid @enderror" name="firm_fax" value="<?php if(isset($attorney_data)){ echo $attorney_data->firm_fax; } ?>" placeholder="(XXX) XXX-XXXX">
 
                                 @error('firm_fax')
                                     <span class="invalid-feedback" role="alert">
@@ -668,127 +651,12 @@
     </div>
 
 </div>
-<!-- The New Dynamic Modal -->
-<div class="modal" id="myNewDynamicModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title"></h4>
-        <h2>Search Attorney</h2>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-
-      <!-- Modal body -->
-      <div class="modal-body text-center">
-        <form method="POST" action="">
-            @csrf
-            
-            <input id="type" type="hidden" name="type" value="" style="display: none;" required="">
-            <DIV class="row">
-                <div class="col-sm-12 mb-3">
-                
-                    <input type="number" min="0" class="form-control" name="" id="search_reg" placeholder="Registration Number" autocomplete="off">
-                </div>
-                 <div class="col-sm-6 mb-3">
-                
-                    <input type="text" class="form-control" name="" id="first_name" placeholder=" First Name" autocomplete="off">
-                </div>
-                <div class="col-sm-6 mb-3">
-                
-                    <input type="text" class="form-control" name="" id="last_name" placeholder=" Last Name" autocomplete="off">
-             
-                </div>
-                <div class="col-sm-6 mb-3 text-left">
-                    <input type="button"  id="search" class="btn btn-success mb-2" name="submit" value="Search">
-                </div>
-                
-            <div class="col-sm-12 d-inline-flex mb-2 result" style="display:none;">
-                <table id="extradata" class="formatHTML5 table table-hover">
-                    <thead>
-                    <tr>
-                        <th>Registration Number</th>
-                        <th>First name</th>
-                        <th>Last Name</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                </table>
-                
-            </div>
-           <div class="col-sm-12"> <p id="errormsg" style="display: none; text-align: center;"> No records found.</p></div>
-        </div>
-          
-        </form>
-      </div>
-
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-      </div>
-
-    </div>
-  </div>
-</div>
 <script type="text/javascript">
     $(document).ready(function(){
 
-         var token= $('input[name=_token]').val();
-    var state_id = 35;
-        $('#search').on('click',function(e){
-             var words = $("#search_reg").val();
-             var first_name =$("#first_name").val();
-             var last_name = $("#last_name").val(); 
-             if(words.length == 0){
-                $('#extradata tbody').html(' ');
-             }
-             
-           $.ajax({
-                    url:"{{route('ajax_get_search_data')}}",
-                    method:"GET",
-                    dataType: 'json',
-                    data:{
-                        search_tag: words, 
-                        state_id: state_id,
-                        first_name:first_name,
-                        last_name:last_name,
-                        _token: token, 
-                    },
-                    success: function(data){
-                          $('#extradata tbody').html(' ');
-                        if(data != ''){
-                            if(data==null || data=='null'){
-                                 $("#errormsg").show();
-                                 $(".result").hide();
-
-                                } else {
-                                     $("#errormsg").hide();
-                                     $('#extradata tbody').html(' ');
-                                    $(".result").show();
-                                    $.each(data, function (key, val) {
-                                        $('#extradata').append('<tr><td class="r">'+val.registrationnumber+'</td><td class="f">'+val.fname+'</td><td class="l">'+val.lname+'</td></tr>');
-                                    });
-                                  $('#extradata').append('</tbody>');
-                                } 
-                        }else{
-                            $('#extradata tbody').html(' ');
-                        }
-                    }
-                });
-            
-        });
-        $(document).on('keyup','#search_reg,#first_name,#last_name',function(event){
-
-        if (event.keyCode === 13) {
-                $("#search").click();
-            }
-      });
-
         $('#attorney_reg_form').validate({
             rules: {
-                  firm_telephone: {
+                firm_telephone: {
                     // phoneUS: true
                     // pattern: /[0-9]{3}-[0-9]{3}-[0-9]{4}/
                      pattern:(/\(?[\d\s]{3}\) [\d\s]{3}-[\d\s]{4}$/)
@@ -796,149 +664,8 @@
                 firm_fax: {
                      pattern:(/\(?[\d\s]{3}\) [\d\s]{3}-[\d\s]{4}$/)
                 },
-                email:{
-                     pattern:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-                },
-            }
-
-        });
-
-        $('#attorney_reg_1_num').on('input', function(){
-            $('#noattorney').hide();
-            var reg_num=this.value;
-            $('#attorney_reg_form').trigger("reset");
-            $('#attorney_reg_1_num').val(reg_num);
-            var state_id=$('#attorney_reg_1_state_id').val();
-            if(reg_num){
-                var token= $('input[name=_token]').val();
-                $.ajax({
-                    url:"{{route('ajax_get_attorney_by_reg_num')}}",
-                    method:"POST",
-                    dataType: 'json',
-                    data:{
-                        reg_num: reg_num, 
-                        state_id: state_id, 
-                        _token: token, 
-                    },
-                    success: function(data){
-                        // console.log(data);
-                        if(data==null || data=='null'){
-                            $('#noattorney').show();
-
-                        } else {
-                            $('#noattorney').hide();
-                            //$('#attorney_reg_1_num').val(data.registrationnumber_state1);
-                            $('#fname').val(data.fname);
-                            $('#mname').val(data.mname);
-                            $('#lname').val(data.lname);
-                            $('#email').val(data.email);
-                            $('#document_sign_name').val(data.document_sign_name);
-                            $('#firm_name').val(data.firm_name);
-                            $('#firm_street_address').val(data.firm_street_address);
-                            $('#firm_city').val(data.firm_city);
-                            $('#firm_zipcode').val(data.firm_zip);
-                            $('#firm_telephone').val(data.firm_telephone);
-                            $('#firm_fax').val(data.firm_fax);
-                            $('#firm_suite_unit_mailcode').val(data.firm_suite_unit_mailcode);
-                            $('#po_box').val(data.po_box);
-
-                            $("#sufname option[value='"+data.sufname+"']").attr('selected','selected');
-                            $('#currentstatus').val(data.currentstatus);
-                            $("input[name='gender'][value='" + data.gender + "']").prop('checked', true);
-                            $('#attorneytitle').val(data.attorneytitle);
-                            $("input[name='insured'][value='" + data.insured + "']").prop('checked', true);
-                            $('#admissiondate').val(data.admissiondate);
-                            $('#admissiondate').datepicker("setDate", new Date(data.admissiondate));
-                            $('#howadmitted').val(data.howadmitted);
-                            $('#birthdate').datepicker("setDate", new Date(data.birthdate));
-                            $('#firm_tagline').val(data.firm_tagline);
-                            
-                            // $('#firm_state option[value='+data.registration_state_id+']').attr('selected','selected');
-
-                            /*if(reg_num=='{{Auth::user()->attorney->attorney_reg_1_num}}'){
-                                $(".customer_attorney").prop('checked', true);
-                            }*/
-
-                            var county_id=data.county_id;
-                            var firm_city=data.firm_city;
-                            var state_id=data.registration_state_id;
-
-
-                            $('.no-state-county-found').hide();
-                            $('#firm_city').find('option').remove().end().append('<option value="">Choose City</option>');
-                            $('#firm_state').find('option').remove().end().append('<option value="">Choose State</option>');
-                            $('#firm_county').find('option').remove().end().append('<option value="">Choose County</option>');
-                            if( data.firm_zip != '' && data.firm_zip != null){
-                                var token= $('input[name=_token]').val();
-                                $.ajax({
-                                    url:"{{route('ajax_get_city_state_county_by_zip')}}",
-                                    method:"POST",
-                                    dataType: 'json',
-                                    data:{
-                                        zip: data.firm_zip, 
-                                        _token: token, 
-                                    },
-                                    success: function(data){
-                                        // console.log(data);
-                                        if(data=='null' || data==''){
-                                            $('.no-state-county-found').show();
-                                        } else {
-                                            $.each(data, function (key, val) {
-                                                $('#firm_city').append('<option value="'+data[key].city+'">'+data[key].city+'</option>');
-                                                $('#firm_state').append('<option value="'+data[key].state_id+'">'+data[key].state+'</option>');
-                                                $('#firm_county').append('<option value="'+data[key].id+'">'+data[key].county_name+'</option>');
-                                            });
-                                            var a = new Array();
-                                            $('#firm_city').children("option").each(function(x){
-                                                test = false;
-                                                b = a[x] = $(this).val();
-                                                for (i=0;i<a.length-1;i++){
-                                                    if (b ==a[i]) test =true;
-                                                }
-                                                if (test) $(this).remove();
-                                            })
-                                            var a = new Array();
-                                            $('#firm_state').children("option").each(function(x){
-                                                test = false;
-                                                b = a[x] = $(this).val();
-                                                for (i=0;i<a.length-1;i++){
-                                                    if (b ==a[i]) test =true;
-                                                }
-                                                if (test) $(this).remove();
-                                            })
-                                            var a = new Array();
-                                            $('#firm_county').children("option").each(function(x){
-                                                test = false;
-                                                b = a[x] = $(this).val();
-                                                for (i=0;i<a.length-1;i++){
-                                                    if (b ==a[i]) test =true;
-                                                }
-                                                if (test) $(this).remove();
-                                            })
-                                            if($('#firm_city').children('option').length=='2'){
-                                                $('#firm_city').children('option').first().remove();
-                                            }
-                                            if($('#firm_state').children('option').length=='2'){
-                                                $('#firm_state').children('option').first().remove();
-                                            }
-                                            if($('#firm_county').children('option').length=='2'){
-                                                $('#firm_county').children('option').first().remove();
-                                            }
-                                            $('#firm_state option[value="'+state_id+'"]').attr('selected','selected');
-                                            $('#firm_county option[value="'+county_id+'"]').attr('selected','selected');
-                                            $('#firm_city option[value="'+firm_city+'"]').attr('selected','selected');
-                                            
-                                            $('.no-state-county-found').hide();
-                                        }
-                                    }
-                                });        
-                            }
-                        }
-                    }
-                });
             }
         });
-        
 
         $(window).keydown(function(event){
             if(event.keyCode == 13) {
@@ -1142,58 +869,5 @@
             // $('#attorney_reg_1_num').val('');
         } 
     });
-
-$(document).on('click', 'tbody tr',function () {
-           
-            $('.selected').removeClass('selected');
-            $(this).addClass("selected");
-           
-            var name = $(this).closest('tr').find('.r').text();
-            var fname =$(this).closest('tr').find('.f').text();
-            var mname =$(this).closest('tr').find('.m').text();
-            var lname =$(this).closest('tr').find('.l').text();
-            
-            $("#attorney_reg_1_num").val(name).trigger('input');
-       
-            $("#fname").val(fname);
-            $("#mname").val(mname);
-            $("#lname").val(lname);
-           $('#myNewDynamicModal').modal('hide');
-        });
-        var tele = document.querySelector('#firm_telephone');
-
-tele.addEventListener('keydown', function(e){
- 
-  if (event.key != 'Backspace' && (tele.value.length === 0 )){
-  tele.value += '(';
-  }
-  if (event.key != 'Backspace' && (tele.value.length === 4 )){
-  tele.value += ')';
-  }
-  if (event.key != 'Backspace' && (tele.value.length === 5 )){
-  tele.value += ' ';
-  }
-  if (event.key != 'Backspace' && (tele.value.length === 9 )){
-  tele.value += '-';
-  }
-});
-        var fax = document.querySelector('#firm_fax');
-// console.log(fax);
-fax.addEventListener('keydown', function(e){
- 
-  if (event.key != 'Backspace' && (fax.value.length === 0 )){
-  fax.value += '(';
-  }
-  if (event.key != 'Backspace' && (fax.value.length === 4 )){
-  fax.value += ')';
-  }
-  if (event.key != 'Backspace' && (fax.value.length === 5 )){
-  fax.value += ' ';
-  }
-  if (event.key != 'Backspace' && (fax.value.length === 9 )){
-  fax.value += '-';
-  }
-});
-
 </script>
 @endsection

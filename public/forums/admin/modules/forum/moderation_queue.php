@@ -45,11 +45,11 @@ if($mybb->request_method == "post")
 	require_once MYBB_ROOT."inc/class_moderation.php";
 	$moderation = new Moderation;
 
-	if($mybb->get_input('threads', MyBB::INPUT_ARRAY))
+	if(is_array($mybb->input['threads']))
 	{
 		$threads_to_approve = $threads_to_delete = array();
 		// Fetch threads
-		$query = $db->simple_select("threads", "tid", "tid IN (".implode(",", array_map("intval", array_keys($mybb->input['threads']))).")");
+		$query = $db->simple_select("threads", "tid", "tid IN (".implode(",", array_map("intval", array_keys($mybb->input['threads'])))."){$flist}");
 		while($thread = $db->fetch_array($query))
 		{
 			$action = $mybb->input['threads'][$thread['tid']];
@@ -83,16 +83,11 @@ if($mybb->request_method == "post")
 		flash_message($lang->success_threads, 'success');
 		admin_redirect("index.php?module=forum-moderation_queue&type=threads");
 	}
-	else if($mybb->get_input('posts', MyBB::INPUT_ARRAY))
+	else if(is_array($mybb->input['posts']))
 	{
 		$posts_to_approve = $posts_to_delete = array();
 		// Fetch posts
-		$pids = array_map(
-			"intval",
-			array_keys($mybb->get_input('posts', MyBB::INPUT_ARRAY))
-		);
-
-		$query = $db->simple_select("posts", "pid", "pid IN (".implode(",", $pids).")");
+		$query = $db->simple_select("posts", "pid", "pid IN (".implode(",", array_map("intval", array_keys($mybb->input['posts'])))."){$flist}");
 		while($post = $db->fetch_array($query))
 		{
 			$action = $mybb->input['posts'][$post['pid']];
@@ -127,9 +122,9 @@ if($mybb->request_method == "post")
 		admin_redirect("index.php?module=forum-moderation_queue&type=posts");
 
 	}
-	else if($mybb->get_input('attachments', MyBB::INPUT_ARRAY))
+	else if(is_array($mybb->input['attachments']))
 	{
-		$query = $db->simple_select("attachments", "aid, pid", "aid IN (".implode(",", array_map("intval", array_keys($mybb->input['attachments']))).")");
+		$query = $db->simple_select("attachments", "aid, pid", "aid IN (".implode(",", array_map("intval", array_keys($mybb->input['attachments'])))."){$flist}");
 		while($attachment = $db->fetch_array($query))
 		{
 			$action = $mybb->input['attachments'][$attachment['aid']];
@@ -160,7 +155,7 @@ $all_options .= "<li><a href=\"#\" class=\"mass_approve\">{$lang->mark_as_approv
 $all_options .= "</ul>\n";
 
 // Threads awaiting moderation
-if(empty($mybb->input['type']) || $mybb->input['type'] == "threads")
+if($mybb->input['type'] == "threads" || !$mybb->input['type'])
 {
 	$plugins->run_hooks("admin_forum_moderation_queue_threads");
 
@@ -173,10 +168,9 @@ if(empty($mybb->input['type']) || $mybb->input['type'] == "threads")
 	{
 		// Figure out if we need to display multiple pages.
 		$per_page = 15;
-		$mybb->input['page'] = $mybb->get_input('page', MyBB::INPUT_INT);
 		if($mybb->input['page'] > 0)
 		{
-			$current_page = $mybb->input['page'];
+			$current_page = $mybb->get_input('page', MyBB::INPUT_INT);
 			$start = ($current_page-1)*$per_page;
 			$pages = $unapproved_threads / $per_page;
 			$pages = ceil($pages);
@@ -257,7 +251,7 @@ if(empty($mybb->input['type']) || $mybb->input['type'] == "threads")
 			$table->construct_row();
 		}
 
-		$table->output($lang->threads_awaiting_moderation, 1, "general tfixed");
+		$table->output($lang->threads_awaiting_moderation);
 		echo $all_options;
 		echo $pagination;
 
@@ -291,7 +285,7 @@ if(empty($mybb->input['type']) || $mybb->input['type'] == "threads")
 }
 
 // Posts awaiting moderation
-if($mybb->get_input('type') == "posts" || $mybb->get_input('type') == "")
+if($mybb->input['type'] == "posts" || $mybb->input['type'] == "")
 {
 	$plugins->run_hooks("admin_forum_moderation_queue_posts");
 
@@ -309,7 +303,7 @@ if($mybb->get_input('type') == "posts" || $mybb->get_input('type') == "")
 	{
 		// Figure out if we need to display multiple pages.
 		$per_page = 15;
-		if($mybb->get_input('page') > 0)
+		if($mybb->input['page'] > 0)
 		{
 			$current_page = $mybb->get_input('page', MyBB::INPUT_INT);
 			$start = ($current_page-1)*$per_page;
@@ -403,7 +397,7 @@ if($mybb->get_input('type') == "posts" || $mybb->get_input('type') == "")
 			$table->construct_row();
 		}
 
-		$table->output($lang->posts_awaiting_moderation, 1, "general tfixed");
+		$table->output($lang->posts_awaiting_moderation);
 		echo $all_options;
 		echo $pagination;
 
@@ -434,7 +428,7 @@ if($mybb->get_input('type') == "posts" || $mybb->get_input('type') == "")
 
 		$page->output_footer();
 	}
-	else if($mybb->get_input('type') == "posts")
+	else if($mybb->input['type'] == "posts")
 	{
 		$page->output_header($lang->moderation_queue);
 		$page->output_nav_tabs($sub_tabs, "posts");
@@ -444,7 +438,7 @@ if($mybb->get_input('type') == "posts" || $mybb->get_input('type') == "")
 }
 
 // Attachments awaiting moderation
-if($mybb->get_input('type') == "attachments" || $mybb->get_input('type') == "")
+if($mybb->input['type'] == "attachments" || $mybb->input['type'] == "")
 {
 	$plugins->run_hooks("admin_forum_moderation_queue_attachments");
 
@@ -573,7 +567,7 @@ if($mybb->get_input('type') == "attachments" || $mybb->get_input('type') == "")
 
 		$page->output_footer();
 	}
-	else if($mybb->get_input('type') == "attachments")
+	else if($mybb->input['type'] == "attachments")
 	{
 		$page->output_header($lang->moderation_queue);
 		$page->output_nav_tabs($sub_tabs, "attachments");

@@ -167,8 +167,7 @@
                                 <input type="radio" id="atgen-f" class="gender-input" name="gender" value="F">
                                 <label for="atgen-f">F</label>&nbsp;&nbsp;&nbsp;
                                 <input type="radio" id="atgen-n" class="gender-input" name="gender" value="N">
-                                <label  for="atgen-n">N</label>
-                                <span class="gender-error-11"></span>
+                                <label for="atgen-n">N</label>
                                 
 
                             </div>
@@ -434,31 +433,10 @@ $(document).ready(function () {
             firm_fax: {
                 pattern:(/\([\d\s]{3}\) [\d\s]{3}-[\d\s]{4}$/)
             },
-        },
-         
-      errorPlacement: function(error, element) {
-            if (element.attr("name") === "registration_state_id") {
-             var elem = $(element);
-       if (elem.hasClass("select2-hidden-accessible")) {
-           element = $("#select2-" + elem.attr("id") + "-container").parent(); 
-           error.insertAfter(element);
-       } else {
-           error.insertAfter(element);
-       }
-            }
-             if (element.attr("name") === "gender") {
-             error.appendTo('.gender-error-11');
-             }
-               else {
-               
-                error.insertAfter(element);
-            }
         }
-
     });
 
-    $('.attorneytableactive-reg-state-select').select2({ width: '100%' });
-  
+    $('.attorneytableactive-reg-state-select').select2();
 
     $('.hasDatepicker').datepicker();
 

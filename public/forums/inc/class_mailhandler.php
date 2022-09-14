@@ -157,7 +157,6 @@ class MailHandler
 		if($from)
 		{
 			$this->from = $from;
-			$this->from_named = $this->from;
 		}
 		else
 		{
@@ -172,6 +171,7 @@ class MailHandler
 		}
 		else
 		{
+			$this->return_email = "";
 			$this->return_email = $this->get_from_email();
 		}
 

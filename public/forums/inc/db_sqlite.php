@@ -141,13 +141,7 @@ class DB_SQLite implements DB_Base
 
 		require_once MYBB_ROOT."inc/db_pdo.php";
 
-		try {
-			$this->db = new dbpdoEngine("sqlite:{$config['database']}");
-		} catch (Exception $ex) {
-			$this->error("[READ] Unable to open the SQLite database");
-
-			return false;
-		}
+		$this->db = new dbpdoEngine("sqlite:{$config['database']}");
 
 		$query_time = get_execution_time();
 
@@ -331,11 +325,7 @@ class DB_SQLite implements DB_Base
 			$this->data_seek($query, $row);
 		}
 		$array = $this->fetch_array($query);
-		if($array !== null && $array !== false)
-		{
-			return $array[$field];
-		}
-		return null;
+		return $array[$field];
 	}
 
 	/**
@@ -894,7 +884,7 @@ class DB_SQLite implements DB_Base
 	 */
 	function escape_string_like($string)
 	{
-		return $this->escape_string(str_replace(array('\\', '%', '_') , array('\\\\', '\\%' , '\\_') , $string));
+		return $this->escape_string(str_replace(array('%', '_') , array('\\%' , '\\_') , $string));
 	}
 
 	/**

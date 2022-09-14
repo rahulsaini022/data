@@ -34,7 +34,7 @@
                                             data: {
                                                 labels: data.label,
                                                 datasets: [{
-                                                    label: '# User Logins',
+                                                    label: '# of User Logins',
                                                     data: data.data,
                                                     backgroundColor: backgroundBorderColor,
                                                     borderColor: backgroundBorderColor,
@@ -105,7 +105,7 @@
                                                 labels: data.label,
                                                 titles: data.title,
                                                 datasets: [{
-                                                    label: '# User Logins',
+                                                    label: '# of User Logins',
                                                     data: data.data,
                                                     backgroundColor: backgroundBorderColor,
                                                     borderColor: backgroundBorderColor,

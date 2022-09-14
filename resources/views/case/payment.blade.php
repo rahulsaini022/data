@@ -146,8 +146,7 @@
             $('#payment_method').val(setupIntent.payment_method);
             $('#stripe_message').text('');
             $("#submit_btn").click();  
-   $("#card-button").html(' <i class="fa fa-spinner fa-spin"></i>Loading ')
-                    $("#card-button").prop('disabled', true);
+
         }
     });
 </script>

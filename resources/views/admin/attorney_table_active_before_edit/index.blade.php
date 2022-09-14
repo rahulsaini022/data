@@ -9,29 +9,29 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header"><strong>{{ __('Restore Attorney Table Active Records') }}</strong>
-                  <div class="row  mt-3">
-                    <div class="col-md-7">
+                  <div class="row col-sm-12 mt-3">
+                    <div class="col-sm-8">
 
                         <!-- <a class="btn btn-success" href="{{ route('attorneytableactivebeforeedit.create') }}"> Create New Attorney Table Active Record</a> -->
-                        <form method="POST"class="form-inline"  autocomplete="off" action="{{ route('attorneytableactivebeforeedit.get_records_by_reg_number') }}">
-                         
-                          <div class="input-group">
-                              
-                            
+                        <form method="POST" autocomplete="off" action="{{ route('attorneytableactivebeforeedit.get_records_by_reg_number') }}">
+                          <table>
+                            <tr>
+                              <td>
+                                <label>Get Records By Reg Num:</label>
+                              </td>
+                              <td>
                                 @csrf
                                 <input type="number" class="form-control" name="reg_num" id="reg_num" value="" min="1" placeholder="Enter Reg Num" required="">
-                          
-                              <div class="input-group-append">
-                                <input type="submit"  class="btn btn-primary mb-2" value="Search">
-                              </div>
-                          </div>
-                              
+                              </td>
+                              <td>
+                                <input type="submit" class="btn btn-primary" value="Submit">
+                              </td>
+                            </tr>
+                          </table>
                         </form>
                     </div>
-                    <div class="col-md-5 ">
-                      <div class="form-group mb-2">
-                                 <a  class="btn btn-primary mb-2" href="{{ route('attorneytableactivebeforeedit.index') }}"> View All Records</a>
-                               </div>
+                    <div class="col-md-4 text-right">
+                      <a class="btn btn-primary" href="{{ route('attorneytableactivebeforeedit.index') }}"> View All Records</a>
                     </div>
                   </div>
                 </div>
@@ -91,10 +91,10 @@
                           <td>{{ date("m/d/Y H:i:m",strtotime($attorneytableactivebeforeedit->created_at)) }}</td>
 
                           <td>
-       
+
                              {!! Form::open(['method' => 'POST','route' => ['attorneytableactivebeforeedit.restore'],'style'=>'display:inline']) !!}
                                   {!! Form::hidden('id', $attorneytableactivebeforeedit->id, array('placeholder' => 'Id','class' => 'form-control', 'required' => 'required')) !!}
-                                  {!! Form::submit('Restore', ['class' => 'btn btn-success confirm-restore mb-1 ', 'onclick' => 'ConfirmDelete(event);']) !!}
+                                  {!! Form::submit('Restore', ['class' => 'btn btn-success confirm-restore', 'onclick' => 'return ConfirmRestore();']) !!}
 
                               {!! Form::close() !!}
 
@@ -102,10 +102,10 @@
                              
                               {!! Form::open(['method' => 'DELETE','route' => ['attorneytableactivebeforeedit.destroy', $attorneytableactivebeforeedit->id],'style'=>'display:inline']) !!}
 
-                                  {!! Form::submit('Delete', ['class' => 'btn btn-danger confirm-delete mb-1 ', 'onclick' => 'return ConfirmDelete(event);']) !!}
+                                  {!! Form::submit('Delete', ['class' => 'btn btn-danger confirm-delete', 'onclick' => 'return ConfirmDelete();']) !!}
 
                               {!! Form::close() !!}
-      
+
                           </td>
 
                         </tr>
@@ -140,22 +140,22 @@
     </div>
 </div>         
 <script>
-  // function ConfirmDelete()
-  // {
-  //     var x = confirm("Are you sure you want to delete this attorney table active record?");
-  //     if (x)
-  //         return true;
-  //     else
-  //       return false;
-  // }
-  // function ConfirmRestore()
-  // {
-  //     var x = confirm("Are you sure you want to restore this attorney table active record?");
-  //     if (x)
-  //         return true;
-  //     else
-  //       return false;
-  // }
+  function ConfirmDelete()
+  {
+      var x = confirm("Are you sure you want to delete this attorney table active record.");
+      if (x)
+          return true;
+      else
+        return false;
+  }
+  function ConfirmRestore()
+  {
+      var x = confirm("Are you sure you want to restore this attorney table active record.");
+      if (x)
+          return true;
+      else
+        return false;
+  }
 
   function goToPage(){
     var page_num=$('#go_to_page').val();

@@ -68,7 +68,7 @@
 
                             {!! Form::open(['method' => 'DELETE','route' => ['pages.destroy', $page->id],'style'=>'display:inline']) !!}
 
-                            {!! Form::submit('Delete', ['class' => 'btn btn-danger mb-1 confirm-delete', 'onclick' => 'return ConfirmDelete(event);']) !!}
+                            {!! Form::submit('Delete', ['class' => 'btn btn-danger mb-1 confirm-delete', 'onclick' => 'return ConfirmDelete();']) !!}
 
                             {!! Form::close() !!}
 
@@ -85,7 +85,15 @@
     </div>
 </div>         
 <script>
- 
+  function ConfirmDelete()
+  {
+      var x = confirm("Are you sure you want to delete this page");
+      if (x)
+          return true;
+      else
+        return false;
+  }
+
   $(document).ready( function () {
     $('.pages-table').DataTable({
         pageLength: 50,

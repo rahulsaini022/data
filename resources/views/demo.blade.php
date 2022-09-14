@@ -46,8 +46,7 @@
                                     <select id="state_of_registration" name="state_of_registration" class="form-control" required="" autofocus="" style="display:none;">
                                         <option value="">Choose State</option>
                                     </select>
-
-                                    <input type="hidden" name="state_of_registration" value="OH">
+                                     <input type="hidden" name="state_of_registration" value="OH">
                                     @error('state_of_registration')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
